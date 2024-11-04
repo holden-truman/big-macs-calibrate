@@ -2,7 +2,7 @@
 #def import_lib():
 
 if __name__ != '__main__':
-    print 'importing modules'
+    print('importing modules')
     import os, re, string
     import random, scipy, commands, anydbm
     import astropy.io.fits as pyfits
@@ -101,6 +101,8 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
 
         ''' cannot query SDSS database more than once per second '''
         print query
+        print sqlcl.query(query).readlines()
+        sys.exit();
         lines = sqlcl.query(query).readlines()
         #print lines
         print len(lines) - 2, 'STAR(S) FOUND'
