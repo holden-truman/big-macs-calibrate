@@ -83,10 +83,10 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
     print('WILL SEARCH FOR STARS WITHIN ' + str(RADIUS) + 'min OF ' + str(RA) + ' ' + str(DEC))
 
     if survey == 'SDSS':
-	#colors = ['u','g','r','i','z']
-	#color_AB = [['u',-0.04],['g',0],['r',0],['i',0],['z',0.02]]
-	colors = ['r']
-	color_AB = [['r',0]]
+	    #colors = ['u','g','r','i','z']
+	    #color_AB = [['u',-0.04],['g',0],['r',0],['i',0],['z',0.02]]
+        colors = ['r']
+        color_AB = [['r',0]]
 
         ''' includes conversion to Pogson magnitudes from luptitudes '''
         keys = ['ra','dec']
