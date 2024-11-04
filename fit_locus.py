@@ -79,6 +79,7 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
     import astropy.io.fits as pyfits
 
     RA, DEC, RADIUS = get_catalog_parameters(inputcat, racol, deccol)
+    print("Radius: " + RADIUS)
 
     print('WILL SEARCH FOR STARS WITHIN ' + str(RADIUS) + 'min OF ' + str(RA) + ' ' + str(DEC))
 
@@ -233,6 +234,7 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
                     catalogStars[returned_keys[i]].append(float(res[i]))
                
     elif survey == '2MASS':
+    print("HERE2")
 	if RADIUS > 59:
 		RADIUS = 59
         coordinate = str(RA) + '+' + str(DEC)
@@ -465,7 +467,6 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
     fitSDSS = False
     foundSDSS = 0 
     if addSDSS:
-        print("HERE")
         fulltable, foundSDSS, necessary_columns = get_survey_stars(file, fulltable, racol, deccol, necessary_columns, EBV, survey='SDSS', sdssUnit=sdssUnit)
         if foundSDSS: fitSDSS = True
             
