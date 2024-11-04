@@ -1,3 +1,4 @@
+
 #!/usr/local/bin/python
 """>> sqlcl << command line query tool by Tamas Budavari <budavari@jhu.edu>
 Usage: sqlcl [options] sqlfile(s)
@@ -24,9 +25,9 @@ default_fmt='csv'
 
 def usage(status, msg=''):
     "Error message and usage"
-    print __doc__
+    print(__doc__)
     if msg:
-        print '-- ERROR: %s' % msg
+        print('-- ERROR: %s' % msg)
     sys.exit(status)
 
 def filtercomment(sql):
@@ -52,7 +53,7 @@ def gaia_query(file, query, EBV):
 	''' Que Gaia SQL server '''
 	job = Gaia.launch_job_async(query)
 	gaia_data = job.get_results()
-	print "obtained gaia data"
+	print("obtained gaia data")
 
 
 	''' calculate the extinction (Gaia Data Release 2:Observational Hertzsprung-Russell diagrams) '''
@@ -200,7 +201,7 @@ def pan_catalog_cut(file, cat_raw_name, RA, DEC):
     coeffs = {'g':3.172, 'r':2.271, 'i':1.682, 'z':1.322, 'y':1.087}
     for psfMag, color in zip(psfMags, colors):
         catalog_raw[psfMag] -= EBV * coeffs[color]
-        print 'dust extinction for PanSTARRS band ' + color + ':', EBV*coeffs[color]
+        print('dust extinction for PanSTARRS band ' + color + ':', EBV*coeffs[color])
 
     catalog_raw.write(file + ".csv", format='ascii.csv', overwrite=True)
     return file + ".csv"
@@ -280,8 +281,3 @@ def main(argv):
 if __name__=='__main__':
     import sys
     main(sys.argv)
-
-
-
-
-

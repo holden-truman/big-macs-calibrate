@@ -1422,7 +1422,7 @@ if __name__ == '__main__':
     
     #args = ['-f','stars.fits','-c','sdss.columns','-e','1','-a']
     #args = ['-f','A383.fits','-c','sdss.columns','-e','1','0','-a']
-    args = ['-f','MACS0717+37.stars.calibrated.cat','-c','sdss.columns','-e','1','-b','0','-a']
+    #args = ['-f','MACS0717+37.stars.calibrated.cat','-c','sdss.columns','-e','1','-b','0','-a']
     #args = ['-f','HDFN.fits','-c','sdss.columns','-e','1','-b','0','-a']
     #args = ['-f','A2552.stars.calibrated.cat','-c','A2552.columns','-e','1','-b','0']
     #args = ['-f','A2552.stars.calibrated.cat','-c','A2552.columns','-e','1','-b','0']
