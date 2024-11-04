@@ -103,8 +103,7 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
 
         ''' cannot query SDSS database more than once per second '''
         print(query)
-        #print(sqlcl.query(query).readlines())
-        print(sqlcl.query(query))
+        print(sqlcl.query(query).readlines())
         sys.exit();
         lines = sqlcl.query(query).readlines()
         print(len(lines) - 2, 'STAR(S) FOUND')
