@@ -234,53 +234,53 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
                     catalogStars[returned_keys[i]].append(float(res[i]))
                
     elif survey == '2MASS':
-    print("HERE2")
-	if RADIUS > 59:
-		RADIUS = 59
-        coordinate = str(RA) + '+' + str(DEC)
-        catalog = '2MASS_stars.cat'
+        print("HERE2")
+        if RADIUS > 59:
+            RADIUS = 59
+            coordinate = str(RA) + '+' + str(DEC)
+            catalog = '2MASS_stars.cat'
 
-        ''' NOTE 2MASS MAGS NOT CORRECTED FOR DUST -- SHOULD BE CORRECTED '''
+            ''' NOTE 2MASS MAGS NOT CORRECTED FOR DUST -- SHOULD BE CORRECTED '''
 
-        ''' select 2MASS stars with ph_qual=A for J band (includes a S/N cut) and use_src=1 '''
-        command = "wget \"http://irsa.ipac.caltech.edu/cgi-bin/Gator/nph-query?outfmt=1&objstr=" + coordinate + "&spatial=Cone&radius=" + str(RADIUS) + "&radunits=arcmin&catalog=fp_psc&selcols=ph_qual,ra,dec,j_m,j_cmsig&constraints=ph_qual+like+%27A__%27+and+use_src%3D1\" -O "  + catalog
-        print(command)
+            ''' select 2MASS stars with ph_qual=A for J band (includes a S/N cut) and use_src=1 '''
+            command = "wget \"http://irsa.ipac.caltech.edu/cgi-bin/Gator/nph-query?outfmt=1&objstr=" + coordinate + "&spatial=Cone&radius=" + str(RADIUS) + "&radunits=arcmin&catalog=fp_psc&selcols=ph_qual,ra,dec,j_m,j_cmsig&constraints=ph_qual+like+%27A__%27+and+use_src%3D1\" -O "  + catalog
+            print(command)
 
-        import os
-        os.system(command)
+            import os
+            os.system(command)
 
-        lines = open(catalog,'r').readlines()
-       
-        keyDict = {} 
-        saveKeys = ['ra','dec','j_m','j_cmsig']
-        for line in lines:
-            if line[0] == '|' and keyDict == {}:
-                returned_keys_full = re.split('\|',line)[1:]
-                returned_keys = [r.replace(' ','') for r in returned_keys_full]
-                index = 1
-                for key_full in returned_keys_full:
-                    indexStart = index 
-                    index += len(key_full) + 1
-                    indexEnd = index  
-                
-                    keyDict[key_full.replace(' ','')] = {'indexStart': indexStart, 'indexEnd': indexEnd}
-
-                catalogStars = dict(zip(returned_keys,list([[] for x in returned_keys])))
-
-            elif line[0] != '#' and line[0] != '|' and line[0] != '\\':
-                for key in saveKeys:
-                    value = float(line[keyDict[key]['indexStart']:keyDict[key]['indexEnd']])
-                    if key == 'j_m':
-                        ''' correct J magnitude for extinction '''
-                        value = value - EBV * 0.709
-                    catalogStars[key].append(value)
+            lines = open(catalog,'r').readlines()
         
-        if catalogStars.values()[0]:
-            print('NO USABLE 2MASS DATA FOUND, PROCEEDING')
-            matched = False 
-            returnCat = inputcat
-        else: 
-            matched = True
+            keyDict = {} 
+            saveKeys = ['ra','dec','j_m','j_cmsig']
+            for line in lines:
+                if line[0] == '|' and keyDict == {}:
+                    returned_keys_full = re.split('\|',line)[1:]
+                    returned_keys = [r.replace(' ','') for r in returned_keys_full]
+                    index = 1
+                    for key_full in returned_keys_full:
+                        indexStart = index 
+                        index += len(key_full) + 1
+                        indexEnd = index  
+                    
+                        keyDict[key_full.replace(' ','')] = {'indexStart': indexStart, 'indexEnd': indexEnd}
+
+                    catalogStars = dict(zip(returned_keys,list([[] for x in returned_keys])))
+
+                elif line[0] != '#' and line[0] != '|' and line[0] != '\\':
+                    for key in saveKeys:
+                        value = float(line[keyDict[key]['indexStart']:keyDict[key]['indexEnd']])
+                        if key == 'j_m':
+                            ''' correct J magnitude for extinction '''
+                            value = value - EBV * 0.709
+                        catalogStars[key].append(value)
+            
+            if catalogStars.values()[0]:
+                print('NO USABLE 2MASS DATA FOUND, PROCEEDING')
+                matched = False 
+                returnCat = inputcat
+            else: 
+                matched = True
 
     if matched:
         print('making KDTrees')                                                                                                                                                                                                                                
