@@ -43,6 +43,7 @@ def query(sql,url=default_url,fmt=default_fmt):
     import urllib
     fsql = filtercomment(sql)
     params = urllib.urlencode({'cmd': fsql, 'format': fmt})
+    print(url+params)
     return urllib.urlopen(url+params)    
 
 def gaia_query(file, query, EBV):
