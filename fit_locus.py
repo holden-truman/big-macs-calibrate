@@ -234,7 +234,7 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
                     catalogStars[returned_keys[i]].append(float(res[i]))
                
     elif survey == '2MASS':
-        print("HERE2")
+        #print("HERE2")
         if RADIUS > 59:
             RADIUS = 59
             coordinate = str(RA) + '+' + str(DEC)
