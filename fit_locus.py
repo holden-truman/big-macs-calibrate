@@ -78,7 +78,7 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
 
     RA, DEC, RADIUS = get_catalog_parameters(inputcat, racol, deccol)
 
-    print()'WILL SEARCH FOR STARS WITHIN ' + str(RADIUS) + 'min OF ' + str(RA) + ' ' + str(DEC))
+    print('WILL SEARCH FOR STARS WITHIN ' + str(RADIUS) + 'min OF ' + str(RA) + ' ' + str(DEC))
 
     if survey == 'SDSS':
 	#colors = ['u','g','r','i','z']
