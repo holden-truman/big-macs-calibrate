@@ -465,6 +465,7 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
     fitSDSS = False
     foundSDSS = 0 
     if addSDSS:
+        print("HERE")
         fulltable, foundSDSS, necessary_columns = get_survey_stars(file, fulltable, racol, deccol, necessary_columns, EBV, survey='SDSS', sdssUnit=sdssUnit)
         if foundSDSS: fitSDSS = True
             
