@@ -153,7 +153,7 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
             cmd += "&n" + c + ">0"
         cmd += "\' > " + file + ".pan_raw.csv"
         print(cmd)
-
+        print("END")
         pan_bands = ''
         for c in colors:
             pan_bands += c
