@@ -139,30 +139,29 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
         keys += ['%(color)sPSFMag' % {'color':color} for color in colors ] 
         keys += ['%(color)sKronMag' % {'color':color} for color in colors ]
         keys += ['%(color)sPSFMagErr' % {'color':color} for color in colors ] 
-
-	columns = '['
-	for key in keys:
-		columns += key + ','
-	columns = columns[:-1] + ']'
-
- 	cmd = "curl -g \'https://catalogs.mast.stsci.edu/api/v0.1/panstarrs/dr2/stack.csv"
+        
+        columns = '['
+        for key in keys:
+            columns += key + ','
+        columns = columns[:-1] + ']'
+        
+        cmd = "curl -g \'https://catalogs.mast.stsci.edu/api/v0.1/panstarrs/dr2/stack.csv"
         cmd += "?ra=" + str(RA) + "&dec=" + str(DEC) + "&radius=" + str(RADIUS/60) + "&columns=" + columns   ## RADIUS in arcmin -> degree
-	cmd += "&nDetections>1"
-	for c in colors:
-		cmd += "&" + c + "KronMag>0"
-		cmd += "&n" + c + ">0"
-	cmd += "\' > " + file + ".pan_raw.csv"
-	print(cmd)
+        cmd += "&nDetections>1"
+        for c in colors:
+            cmd += "&" + c + "KronMag>0"
+            cmd += "&n" + c + ">0"
+        cmd += "\' > " + file + ".pan_raw.csv"
+        print(cmd)
 
-	pan_bands = ''
-	for c in colors:
-		pan_bands += c
-	print("Query PanSTARRS " + pan_bands + " for reference")
-	print(cmd)
+        pan_bands = ''
+        for c in colors:
+            pan_bands += c
+        print("Query PanSTARRS " + pan_bands + " for reference")
+        print(cmd)
         
         import sqlcl
-
-	ref_cat_name = sqlcl.pan_query(file, cmd, RA, DEC)
+        ref_cat_name = sqlcl.pan_query(file, cmd, RA, DEC)
 
         with open(ref_cat_name) as ref_cat:
             lines = ref_cat.readlines()
@@ -189,31 +188,29 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
                     catalogStars[returned_keys[i]].append(float(res[i]))
 
     elif survey == 'Gaia':
-	
-	import sqlcl
+        import sqlcl
         ''' Gaia ADQL, Radius in degrees. Color excess cut:
-            https://gea.esac.esa.int/archive/documentation/GDR2/Data_processing/chap_cu5pho/sec_cu5pho_qa/ssec_cu5pho_excessflux.html '''
-
-	RAD = RADIUS / 60
+        https://gea.esac.esa.int/archive/documentation/GDR2/Data_processing/chap_cu5pho/sec_cu5pho_qa/ssec_cu5pho_excessflux.html '''
+        
+        RAD = RADIUS / 60
         query = "SELECT ra, dec, bp_rp, \
-			phot_g_mean_flux, phot_g_mean_flux_error,  \
-                        phot_bp_mean_flux, phot_bp_mean_flux_error, \
-                        phot_rp_mean_flux, phot_rp_mean_flux_error \
-                        FROM gaiadr2.gaia_source \
-                        WHERE 1=CONTAINS( POINT('ICRS',ra,dec), BOX('ICRS'," + str(RA) + "," + str(DEC) + "," + str(RAD) + ", " + str(RAD) + ")) \
-                        AND phot_g_mean_mag<=19 AND phot_bp_mean_mag>=5 AND phot_rp_mean_mag>=5 \
-                        AND phot_bp_rp_excess_factor > (1.0 + 0.015*bp_rp*bp_rp) AND phot_bp_rp_excess_factor < (1.3 + 0.06*bp_rp*bp_rp) "
-                        ## AND bp_rp >  0.6 AND bp_rp < 1.6 "
+                phot_g_mean_flux, phot_g_mean_flux_error,  \
+                            phot_bp_mean_flux, phot_bp_mean_flux_error, \
+                            phot_rp_mean_flux, phot_rp_mean_flux_error \
+                            FROM gaiadr2.gaia_source \
+                            WHERE 1=CONTAINS( POINT('ICRS',ra,dec), BOX('ICRS'," + str(RA) + "," + str(DEC) + "," + str(RAD) + ", " + str(RAD) + ")) \
+                            AND phot_g_mean_mag<=19 AND phot_bp_mean_mag>=5 AND phot_rp_mean_mag>=5 \
+                            AND phot_bp_rp_excess_factor > (1.0 + 0.015*bp_rp*bp_rp) AND phot_bp_rp_excess_factor < (1.3 + 0.06*bp_rp*bp_rp) "
+                            ## AND bp_rp >  0.6 AND bp_rp < 1.6 "
         print(query)
-
-	EBV, gallong, gallat = galactic_extinction_and_coordinates(RA,DEC)
-	#sqlcl.gaia_query(file, query, EBV)	
+        
+        EBV, gallong, gallat = galactic_extinction_and_coordinates(RA,DEC)
+        #sqlcl.gaia_query(file, query, EBV)	
 
         with open(file + '.cut.csv') as ref_cat:
             lines = ref_cat.readlines()
         print(len(lines) - 1, 'STAR(S) FOUND')
         print(lines[0])
-
         returned_keys = re.split('\,',lines[0][:-1])
         saveKeys = returned_keys[2:]
 
