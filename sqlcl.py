@@ -210,7 +210,7 @@ def pan_catalog_cut(file, cat_raw_name, RA, DEC):
 def pan_query(file, cmd, RA, DEC):
 
     import os, glob
-
+    print(file + '.pan_raw.csv')
     if not os.path.exists(file +'.pan_raw.csv'):
     	os.system(cmd)
 
