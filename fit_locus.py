@@ -153,7 +153,7 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
             cmd += "&n" + c + ">0"
         cmd += "\' > " + file + ".pan_raw.csv"
         print(cmd)
-        print("END")
+        
         pan_bands = ''
         for c in colors:
             pan_bands += c
@@ -161,8 +161,10 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
         print(cmd)
         
         import sqlcl
-        ref_cat_name = sqlcl.pan_query(file, cmd, RA, DEC)
+        cmd = "curl \'https://catalogs.mast.stsci.edu/api/v0.1/panstarrs/dr2/mean.csv?ra=296.24059&dec=-14.80343&radius=0.5&pagesize=500000&nDetections.gte=2\' > ngc6822.csv"
 
+        ref_cat_name = sqlcl.pan_query(file, cmd, RA, DEC)
+        sys.exit()
         with open(ref_cat_name) as ref_cat:
             lines = ref_cat.readlines()
         print(len(lines) - 1, 'STAR(S) FOUND')
