@@ -97,12 +97,8 @@ def gaia_query(file, query, EBV):
 	gaia_data.write(file + '.csv', format='ascii.csv', overwrite=True)
 
 
-def panstarrs_ebv(lon, lat, coordsys='equ', mode='full'): #holden# problem here
+def panstarrs_ebv(lon, lat, coordsys='equ', mode='full'): #holden# problem here, code is directly from api, but errors
     import json, requests
-    lon = 90
-    lat = 10
-    coordsys='gal'
-    mode='full'
     '''
     Send a line-of-sight reddening query to the Argonaut web server.
     
