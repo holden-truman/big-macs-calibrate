@@ -361,7 +361,7 @@ def galactic_extinction_and_coordinates(RA,DEC):
         print('RETRIEVING DUST EXTINCTION AT RA=' + str(RA) + ' DEC=' + str(DEC) + ' FROM NED')
         import urllib, os, re, string, dbm, time #anydbm 
         from urllib.request import urlopen
-        
+
         form = [None] * 8  # Create a list of 8 elements
         form[0] = "in_csys=Equatorial"
         form[1] = "in_equinox=J2000.0" 
@@ -372,7 +372,7 @@ def galactic_extinction_and_coordinates(RA,DEC):
         form[6]= "out_csys=Galactic"
         form[7]= "out_equinox=J2000.0"
 
-        response = urllib.urlopen('http://nedwww.ipac.caltech.edu/cgi-bin/nph-calc?' + reduce(lambda x,y: str(x) + '&' + str(y),form) + '"')  
+        response = urlopen('http://nedwww.ipac.caltech.edu/cgi-bin/nph-calc?' + reduce(lambda x,y: str(x) + '&' + str(y),form) + '"')  
         text = response.read()
 
         ''' scan for Galactic coordinates '''
