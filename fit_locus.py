@@ -4,7 +4,7 @@
 if __name__ != '__main__':
     print('importing modules')
     import os, re, string
-    import random, scipy, commands, anydbm
+    import random, scipy, anydbm #commands
     import astropy.io.fits as pyfits
     import numpy as np
     import matplotlib as mpl
