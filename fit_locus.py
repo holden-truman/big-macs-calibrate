@@ -1437,7 +1437,7 @@ if __name__ == '__main__':
 
     print('importing libraries')
     import os, re, string
-    import random, scipy, commands, anydbm
+    import random, scipy, anydbm #commands
     import astropy.io.fits as pyfits
     import matplotlib as mpl
     mpl.use('Agg')
