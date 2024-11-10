@@ -361,6 +361,7 @@ def galactic_extinction_and_coordinates(RA,DEC):
         print('RETRIEVING DUST EXTINCTION AT RA=' + str(RA) + ' DEC=' + str(DEC) + ' FROM NED')
         import urllib, os, re, string, dbm, time #anydbm 
         from urllib.request import urlopen
+        from functools import reduce
 
         form = [None] * 8  # Create a list of 8 elements
         form[0] = "in_csys=Equatorial"
