@@ -387,7 +387,7 @@ def galactic_extinction_and_coordinates(RA,DEC):
                 gallong = float(res[0])
                 gallat = float(res[1])
                 break                    
-            if string.find(l,'Galactic') != -1 and string.find(l,'Output:') != -1:
+            if l.find('Galactic') != -1 and l.find('Output:') != -1:
                 found = True
             
         ''' find extinction in each band '''
