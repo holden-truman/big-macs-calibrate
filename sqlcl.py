@@ -100,30 +100,28 @@ def panstarrs_ebv(lon, lat, coordsys='equ', mode='full'): #holden# problem here,
     from astropy.coordinates import SkyCoord
     import astropy.units as units
     import numpy as np
-    #from dustmaps.sfd import SFDWebQuery
+    from dustmaps.sfd import SFDWebQuery
     # https://dustmaps.readthedocs.io/en/latest/examples.html#getting-started
-    from dustmaps.bayestar import BayestarWebQuery
+    #from dustmaps.bayestar import BayestarWebQuery
 
-    bayestar = BayestarWebQuery() # Uses Bayestar2017 by default.
-
-    l = np.array([30., 60., 90.])
-    b = np.array([-15., 10., 70.])
-    d = np.array([0.1, 3., 0.5])
-    coords = SkyCoord(l*units.deg, b*units.deg,
-        distance=d*units.kpc, frame='galactic')
-    reddening = bayestar(coords, mode='percentile', pct=90.)
-    print(reddening)
-    '''
+    #bayestar = BayestarWebQuery() # Uses Bayestar2017 by default.
     print("lat=",lon)
     print("lon=",lat)
     print("coordsys=",coordsys)
     print("mode=",mode)
-
+    """
     sfd = SFDWebQuery()
     coords = SkyCoord(45.*units.deg, 45.*units.deg, frame='icrs') # Equatorial
     ebv_sfd = sfd(coords)
-    print("ebv_sfd=",ebv_sfd)
-    return ebv_sfd
+    """
+    l = [180., 160.]
+    b = [30., 45.]
+    coords = SkyCoord(l, b, unit='deg', frame='galactic')
+    sfd = SFDWebQuery()
+    ebv = sfd(coords)
+
+    print("ebv_sfd=",ebv)
+    return ebv
     '''
     '''
     import json, requests
