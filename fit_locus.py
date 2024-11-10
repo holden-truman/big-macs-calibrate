@@ -4,7 +4,7 @@
 if __name__ != '__main__':
     print('importing modules')
     import os, re, string
-    import random, scipy, anydbm #commands
+    import random, scipy, dbm #commands, anydbm
     import astropy.io.fits as pyfits
     import numpy as np
     import matplotlib as mpl
@@ -359,7 +359,7 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
 def galactic_extinction_and_coordinates(RA,DEC): 
     
         print('RETRIEVING DUST EXTINCTION AT RA=' + str(RA) + ' DEC=' + str(DEC) + ' FROM NED')
-        import urllib, os, re, string, anydbm, time 
+        import urllib, os, re, string, dbm, time #anydbm 
         form = range(8) 
         form[0] = "in_csys=Equatorial"
         form[1] = "in_equinox=J2000.0" 
@@ -1437,7 +1437,7 @@ if __name__ == '__main__':
 
     print('importing libraries')
     import os, re, string
-    import random, scipy, anydbm #commands
+    import random, scipy, dbm #commands,anydm
     import astropy.io.fits as pyfits
     import matplotlib as mpl
     mpl.use('Agg')
