@@ -99,8 +99,21 @@ def gaia_query(file, query, EBV):
 def panstarrs_ebv(lon, lat, coordsys='equ', mode='full'): #holden# problem here, code is directly from api, but errors
     from astropy.coordinates import SkyCoord
     import astropy.units as units
-    from dustmaps.sfd import SFDWebQuery
+    import numpy as np
+    #from dustmaps.sfd import SFDWebQuery
     # https://dustmaps.readthedocs.io/en/latest/examples.html#getting-started
+    from dustmaps.bayestar import BayestarWebQuery
+
+    bayestar = BayestarWebQuery() # Uses Bayestar2017 by default.
+
+    l = np.array([30., 60., 90.])
+    b = np.array([-15., 10., 70.])
+    d = np.array([0.1, 3., 0.5])
+    coords = SkyCoord(l*units.deg, b*units.deg,
+        distance=d*units.kpc, frame='galactic')
+    reddening = bayestar(coords, mode='percentile', pct=90.)
+    print(reddening)
+    '''
     print("lat=",lon)
     print("lon=",lat)
     print("coordsys=",coordsys)
@@ -111,6 +124,7 @@ def panstarrs_ebv(lon, lat, coordsys='equ', mode='full'): #holden# problem here,
     ebv_sfd = sfd(coords)
     print("ebv_sfd=",ebv_sfd)
     return ebv_sfd
+    '''
     '''
     import json, requests
     Send a line-of-sight reddening query to the Argonaut web server.
