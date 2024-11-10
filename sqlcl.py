@@ -109,11 +109,11 @@ def panstarrs_ebv(lon, lat, coordsys='equ', mode='full'): #holden# problem here,
     print("lon=",lat)
     print("coordsys=",coordsys)
     print("mode=",mode)
-    """
+    '''
     sfd = SFDWebQuery()
     coords = SkyCoord(45.*units.deg, 45.*units.deg, frame='icrs') # Equatorial
     ebv_sfd = sfd(coords)
-    """
+    '''
     l = [180., 160.]
     b = [30., 45.]
     coords = SkyCoord(l, b, unit='deg', frame='galactic')
@@ -122,7 +122,6 @@ def panstarrs_ebv(lon, lat, coordsys='equ', mode='full'): #holden# problem here,
 
     print("ebv_sfd=",ebv)
     return ebv
-    '''
     '''
     import json, requests
     Send a line-of-sight reddening query to the Argonaut web server.
