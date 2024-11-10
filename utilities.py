@@ -33,7 +33,7 @@ def add_SeqNr(file,extension=1):
     outcat = file.replace('.fits','.seqnr.fits')
     os.system('rm ' + outcat)
     hdulist.writeto(outcat)
-    print 'WRITTEN TO ', outcat
+    print('WRITTEN TO ', outcat)
     
 
 def readtxtfile(file):
@@ -55,10 +55,10 @@ def old_synth():
         for coeff,specfull  in [[p[0],spectra[0]]]: #,[p[1],spectra[1]],[1.-p[0]-p[1],spectra[2]]]: 
             spec = specfull[0]
             specStep = spec[1:,0] - spec[0:-1,0] # wavelength increment                   
-            #print specStep[400:600], 'specStep'
+            #print(specStep[400:600], 'specStep')
             resampFilter = filt['spline'](spec[:,0]) # define an interpolating function
-            #print resampFilter
-            #print filt_name
+            #print(resampFilter
+            #print(filt_name)
 
             if False: #string.find(filt_name,'SDSS') != -1:
                 pylab.plot(spec[:,0],resampFilter) 
@@ -78,7 +78,7 @@ def synth(p,spectra,filters,show=False):
         specall = scipy.zeros(len(spectra[0][0][:,1]))
         val = 0 
         for coeff,specfull in [[p[0],spectra[0]]]: #,[p[1],spectra[1]],[1.-p[0]-p[1],spectra[2]]]: 
-            #print filt['name'], coeff
+            #print(filt['name'], coeff)
             spec = specfull[0]
             specStep = spec[1:,0] - spec[0:-1,0] # wavelength increment                   
             resampFilter = filt['spline'](spec[:,0]) # define an interpolating function
@@ -104,7 +104,7 @@ def cas_locus(fits=True):
         m = pickle.Unpickler(f)
         locus_list_mag = m.load()
 
-    #print locus_list_mag
+    #print(locus_list_mag)
 
 
     return locus_list_mag
@@ -124,12 +124,12 @@ def synthesize_expected_locus_for_observations(filters):
 
     locus = []
 
-    print 'STARTING SAMPLING LOCUS'
+    print('STARTING SAMPLING LOCUS')
 
     for i in range(len(loci[:])):
         locus_point = loci[i]
         locus_index = int(locus_point.replace('.dat',''))
-        print 'CONVOLVING RESPONSE FUNCTIONS WITH SPECTRUM ' + str(locus_point)
+        print('CONVOLVING RESPONSE FUNCTIONS WITH SPECTRUM ' + str(locus_point))
         stitchSpec = scipy.genfromtxt(os.environ['BIGMACS'] + '/LOCUS_SPECTRA/' + locus_point)
         #stitchSpec = scipy.genfromtxt(os.environ['BIGMACS'] + '/XSL_Pic/' + locus_point)
 
@@ -143,12 +143,12 @@ def synthesize_expected_locus_for_observations(filters):
                 mags[filt['mag']] = (mags['ZSDSS'] - c_locus.data.field('ZSDSS_JTMASS')[locus_index]) #+ (mags['ISDSS'] - c_locus['ZSDSS_JTMASS'][2*i]))/2.
 
 
-                #print mags[filt['mag']], mags['ZSDSS'], c_locus.data.field('ZSDSS_JTMASS')
+                #print(mags[filt['mag']], mags['ZSDSS'], c_locus.data.field('ZSDSS_JTMASS'))
                 #raw_input()
 
         locus.append(mags)
 
-    print 'FINISHED SAMPLING LOCUS'
+    print('FINISHED SAMPLING LOCUS')
     return locus
 
 
@@ -218,7 +218,7 @@ def odonnell(input,wavelength=True):
 ''' compute filter extinction coefficients from O'Donnell extinction law '''
 def compute_ext(filt, N=0.78):
 
-    print '''COMPUTING EXTINCTION COEFFICIENT USING FITZPATRICK99 EXTINCTION LAW'''
+    print('''COMPUTING EXTINCTION COEFFICIENT USING FITZPATRICK99 EXTINCTION LAW''')
     odonnell_ext_1_um = 1.32 # A(1 um) / E(B-V) where R_v = 3.1
     import scipy, math
     sed = scipy.loadtxt(os.environ['BIGMACS'] + '/munari.sed')
@@ -261,14 +261,14 @@ def compute_ext(filt, N=0.78):
     filt_wavelength = filt_wavelength[throw_out==0.] 
     filt_response = filt_response[throw_out==0.] 
 
-    #print scipy.array([(filt_wavelength[i]) for i in range(len(filt_wavelength[:-1]))])
-    #print scipy.array([fitzpatrick(filt_wavelength[i]) for i in range(len(filt_wavelength[:-1]))])
+    #print(scipy.array([(filt_wavelength[i]) for i in range(len(filt_wavelength[:-1]))]))
+    #print(scipy.array([fitzpatrick(filt_wavelength[i]) for i in range(len(filt_wavelength[:-1]))]))
     numerator = scipy.array([10.**(fitzpatrick(filt_wavelength[i])/-2.5)*sedSpline(filt_wavelength[i])*filt_wavelength[i]*(filt_response[i])*(filt_wavelength[i+1]-filt_wavelength[i]) for i in range(len(filt_wavelength[:-1]))])
     denom = scipy.array([sedSpline(filt_wavelength[i])*filt_wavelength[i]*(filt_response[i])*(filt_wavelength[i+1]-filt_wavelength[i]) for i in range(len(filt_wavelength[:-1]))])
 
     coeff = -2.5*math.log10(numerator.sum()/denom.sum()) 
 
-    print filt['name'], coeff, 'coeff'
+    print(filt['name'], coeff, 'coeff')
     return coeff
 
 

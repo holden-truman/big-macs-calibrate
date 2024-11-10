@@ -104,8 +104,7 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
         #query = 'select ra, dec FROM star'
         ''' cannot query SDSS database more than once per second '''
         print(query)
-        print(sqlcl.query(query).readlines())
-        sys.exit();
+        
         lines = sqlcl.query(query).readlines()
         print(len(lines) - 2, 'STAR(S) FOUND')
         #print(lines[1])
@@ -131,7 +130,6 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
                     catalogStars[returned_keys[i]].append(float(res[i]))  
 
     elif survey == 'PanSTARRS':
-        print("HERE2")
         #colors = ['g','r','i','z','y']   
         colors = ['r']   
 
@@ -161,11 +159,9 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
         print(cmd)
         
         import sqlcl
-        cmd = "curl \'https://catalogs.mast.stsci.edu/api/v0.1/panstarrs/dr2/mean.csv?ra=296.24059&dec=-14.80343&radius=0.5&pagesize=500000&nDetections.gte=2\' > ngc6822.csv"
-        print(cmd)
-        
+
         ref_cat_name = sqlcl.pan_query(file, cmd, RA, DEC)
-        sys.exit()
+        
         with open(ref_cat_name) as ref_cat:
             lines = ref_cat.readlines()
         print(len(lines) - 1, 'STAR(S) FOUND')
