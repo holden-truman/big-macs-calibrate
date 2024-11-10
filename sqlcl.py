@@ -97,8 +97,22 @@ def gaia_query(file, query, EBV):
 
 
 def panstarrs_ebv(lon, lat, coordsys='equ', mode='full'): #holden# problem here, code is directly from api, but errors
-    import json, requests
+    from astropy.coordinates import SkyCoord
+    import astropy.units as units
+    from dustmaps.sfd import SFDWebQuery
+    # https://dustmaps.readthedocs.io/en/latest/examples.html#getting-started
+    print("lat=",lon)
+    print("lon=",lat)
+    print("coordsys=",coordsys)
+    print("mode=",mode)
+
+    sfd = SFDWebQuery()
+    coords = SkyCoord(45.*units.deg, 45.*units.deg, frame='icrs') # Equatorial
+    ebv_sfd = sfd(coords)
+    print("ebv_sfd=",ebv_sfd)
+    return ebv_sfd
     '''
+    import json, requests
     Send a line-of-sight reddening query to the Argonaut web server.
     
     Inputs:
@@ -124,7 +138,6 @@ def panstarrs_ebv(lon, lat, coordsys='equ', mode='full'): #holden# problem here,
     
     Less information is returned in 'lite' mode, while in 'sfd' mode,
     the Schlegel, Finkbeiner & Davis (1998) E(B-V) is returned.
-    '''
     
     url = 'http://argonaut.skymaps.info/gal-lb-query-light'
     
@@ -152,6 +165,7 @@ def panstarrs_ebv(lon, lat, coordsys='equ', mode='full'): #holden# problem here,
     
     ebv = json.loads(r.text)
     return ebv['EBV_SFD']
+    '''
 
 def pan_catalog_cut(file, cat_raw_name, RA, DEC):
     "Apply several cuts and extinction correction to panstarrs catalog"
