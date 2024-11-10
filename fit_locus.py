@@ -431,6 +431,7 @@ def get_kit():
 
 def get_catalog_parameters(fulltable, racol, deccol):
     ''' calculate field center '''
+    import numpy as np
 
     import scipy
     #DEC = scipy.median(fulltable.data.field(deccol))
@@ -439,7 +440,7 @@ def get_catalog_parameters(fulltable, racol, deccol):
 
     #RA = scipy.median(fulltable.data.field(racol))
     RA = (fulltable.data.field(racol).min() + fulltable.data.field(racol).max())/2.
-    RA_DIFF_SQ = ((fulltable.data.field(racol) - RA) * 60. * scipy.cos(DEC))**2.
+    RA_DIFF_SQ = ((fulltable.data.field(racol) - RA) * 60. * np.cos(DEC))**2.
 
     RADII = (DEC_DIFF_SQ + RA_DIFF_SQ)**0.5
 
