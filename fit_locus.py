@@ -360,7 +360,7 @@ def galactic_extinction_and_coordinates(RA,DEC):
     
         print('RETRIEVING DUST EXTINCTION AT RA=' + str(RA) + ' DEC=' + str(DEC) + ' FROM NED')
         import urllib, os, re, string, dbm, time #anydbm 
-        form = range(8) 
+        form = [None] * 8  # Create a list of 8 elements
         form[0] = "in_csys=Equatorial"
         form[1] = "in_equinox=J2000.0" 
         form[2] = "obs_epoch=2000.0"    
