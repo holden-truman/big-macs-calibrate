@@ -363,21 +363,24 @@ def galactic_extinction_and_coordinates(RA,DEC):
         from urllib.request import urlopen
         from functools import reduce
 
-        form = [None] * 8  # Create a list of 8 elements
-        form[0] = "in_csys=Equatorial"
-        form[1] = "in_equinox=J2000.0" 
-        form[2] = "obs_epoch=2000.0"    
-        form[3] = "lon=%(ra).7fd" % {'ra':float(RA)}
-        form[4] = "lat=%(dec).7fd" % {'dec':float(DEC)}
-        form[5] = "pa=0.0" 
-        form[6]= "out_csys=Galactic"
-        form[7]= "out_equinox=J2000.0"
+        form = [
+            "in_csys=Equatorial",
+            "in_equinox=J2000.0",
+            "obs_epoch=2000.0",    
+            "lon=%(ra).7fd" % {'ra':float(RA)},
+            "lat=%(dec).7fd" % {'dec':float(DEC)},
+            "pa=0.0",
+            "out_csys=Galactic",
+            "out_equinox=J2000.0",
+        ]
 
         response = urlopen('http://nedwww.ipac.caltech.edu/cgi-bin/nph-calc?' + reduce(lambda x,y: str(x) + '&' + str(y),form) + '"')  
         text = response.read()
 
         ''' scan for Galactic coordinates '''
         found = False 
+
+        text = text.decode('utf-8') #holden# I think this is right
         for l in text.split('\n'): 
             if found:
                 res = re.split('\s+',l)
