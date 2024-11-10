@@ -14,7 +14,9 @@ if __name__ != '__main__':
     from scipy import optimize
     from glob import glob
     from copy import copy
+    from functools import reduce
     import utilities
+    
     print('finished importing modules')
     #import_lib()
 
@@ -361,7 +363,6 @@ def galactic_extinction_and_coordinates(RA,DEC):
         print('RETRIEVING DUST EXTINCTION AT RA=' + str(RA) + ' DEC=' + str(DEC) + ' FROM NED')
         import urllib, os, re, string, dbm, time #anydbm 
         from urllib.request import urlopen
-        from functools import reduce
 
         form = [
             "in_csys=Equatorial",

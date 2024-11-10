@@ -47,54 +47,53 @@ def query(sql,url=default_url,fmt=default_fmt):
     return urllib.urlopen(url+params)    
 
 def gaia_query(file, query, EBV):
-	from astroquery.gaia import Gaia
-	from astropy.table import Table
-	import numpy as np
+    from astroquery.gaia import Gaia
+    from astropy.table import Table
+    import numpy as np
+    ''' Que Gaia SQL server '''
+    job = Gaia.launch_job_async(query)
+    gaia_data = job.get_results()
+    print("obtained gaia data")
 
-	''' Que Gaia SQL server '''
-	job = Gaia.launch_job_async(query)
-	gaia_data = job.get_results()
-	print("obtained gaia data")
 
-
-	''' calculate the extinction (Gaia Data Release 2:Observational Hertzsprung-Russell diagrams) '''
-        colors = ['g','bp','rp']   
-	coeffs = {'kg':[0.9761, -0.1704, 0.0086, 0.0011, -0.0438, 0.0013, 0.0099], \
+	# calculate the extinction (Gaia Data Release 2:Observational Hertzsprung-Russell diagrams)
+    colors = ['g','bp','rp']
+    coeffs = {'kg':[0.9761, -0.1704, 0.0086, 0.0011, -0.0438, 0.0013, 0.0099], \
 	         'kbp':[1.1517, -0.0871, -0.0333, 0.0173, -0.0230, 0.0006, 0.0043], \
 		 'krp':[0.6104, -0.0170, -0.0026, -0.0017, -0.0078, 0.00005, 0.0006] }
+    
+    Av = 3.1 * EBV
+    bp_rp = gaia_data['bp_rp']
+    c_terms = [np.ones(bp_rp.shape), bp_rp, bp_rp**2, bp_rp**3, Av, Av**2, bp_rp*Av]
+    
+    k_g, k_bp, k_rp = 0.0, 0.0, 0.0
+    for i in range(len(c_terms)):
+        k_g += coeffs['kg'][i] * c_terms[i]
+        k_bp += coeffs['kbp'][i] * c_terms[i]
+        k_rp += coeffs['krp'][i] * c_terms[i]
+    
+    a_g = Table.Column( name = 'a_g', data = k_g * Av)
+    a_bp = Table.Column( name = 'a_bp', data = k_bp * Av)
+    a_rp = Table.Column( name = 'a_rp', data = k_rp * Av)
+    
+    gaia_data.add_column(a_g)
+    gaia_data.add_column(a_bp)
+    gaia_data.add_column(a_rp)
 
-	Av = 3.1 * EBV
-	bp_rp = gaia_data['bp_rp']
-	c_terms = [np.ones(bp_rp.shape), bp_rp, bp_rp**2, bp_rp**3, Av, Av**2, bp_rp*Av]
-
-	k_g, k_bp, k_rp = 0.0, 0.0, 0.0
-	for i in range(len(c_terms)):
-		k_g += coeffs['kg'][i] * c_terms[i]
-		k_bp += coeffs['kbp'][i] * c_terms[i]
-		k_rp += coeffs['krp'][i] * c_terms[i]
-
-	a_g = Table.Column( name = 'a_g', data = k_g * Av)
-	a_bp = Table.Column( name = 'a_bp', data = k_bp * Av)
-	a_rp = Table.Column( name = 'a_rp', data = k_rp * Av)
-
-	gaia_data.add_column(a_g)
-	gaia_data.add_column(a_bp)
-	gaia_data.add_column(a_rp)
-
-	''' calculate magnitude  and err '''
-	zps_ab = { 'g':25.7934, 'bp':25.3806, 'rp':25.1161}
-	for c in colors:
-		ab_mag = Table.Column( name='ab_' + c, data = -2.5*np.log10( gaia_data['phot_' + c + '_mean_flux'] ) + zps_ab[c]  - gaia_data['a_' + c]) ## zp and ext
-		#ab_mag = Table.Column( name='ab_' + c, data = -2.5*np.log10( gaia_data['phot_' + c + '_mean_flux'] ) + zps_ab[c] ) ## zp but no ext
-		mag_err = Table.Column( name = 'phot_'+ c + '_mean_mag_error', data = 2.5 * gaia_data['phot_'+ c +'_mean_flux_error'] / gaia_data['phot_' + c +'_mean_flux'] )
-
-		gaia_data.add_column(ab_mag)
-		gaia_data.add_column(mag_err)
-
-		gaia_data.remove_column('phot_' + c +'_mean_flux')
-		gaia_data.remove_column('phot_' + c +'_mean_flux_error')
-
-	gaia_data.write(file + '.csv', format='ascii.csv', overwrite=True)
+	# calculate magnitude  and err
+    zps_ab = { 'g':25.7934, 'bp':25.3806, 'rp':25.1161}
+    for c in colors:
+        ab_mag = Table.Column( name='ab_' + c, data = -2.5*np.log10( gaia_data['phot_' + c + '_mean_flux'] ) + zps_ab[c]  - gaia_data['a_' + c]) ## zp and ext
+        ab_mag = Table.Column( name='ab_' + c, data = -2.5*np.log10( gaia_data['phot_' + c + '_mean_flux'] ) + zps_ab[c] ) ## zp but no ext
+        mag_err = Table.Column( name = 'phot_'+ c + '_mean_mag_error', data = 2.5 * gaia_data['phot_'+ c +'_mean_flux_error'] / gaia_data['phot_' + c +'_mean_flux'] )
+        
+        gaia_data.add_column(ab_mag)
+        gaia_data.add_column(mag_err)
+        
+        gaia_data.remove_column('phot_' + c +'_mean_flux')
+        gaia_data.remove_column('phot_' + c +'_mean_flux_error')
+        
+    gaia_data.write(file + '.csv', format='ascii.csv', overwrite=True)
 
 
 def panstarrs_ebv(lon, lat, coordsys='equ', mode='full'): #holden# problem here, code is directly from api, but errors
@@ -241,7 +240,7 @@ def main(argv):
     # Parse command line
     try:
         optlist, args = getopt.getopt(argv[1:],'s:f:q:vlh?')
-    except getopt.error, e:
+    except getopt.error as e:
         usage(1,e)
         
     for o,a in optlist:
@@ -259,7 +258,7 @@ def main(argv):
     for fname in args:
         try:
             queries.append(open(fname).read())
-        except IOError, e:
+        except IOError as e:
             usage(1,e)
 
     # Run all queries sequentially
