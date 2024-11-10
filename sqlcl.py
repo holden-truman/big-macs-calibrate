@@ -97,7 +97,7 @@ def gaia_query(file, query, EBV):
 	gaia_data.write(file + '.csv', format='ascii.csv', overwrite=True)
 
 
-def panstarrs_ebv(lon, lat, coordsys='equ', mode='full'):
+def panstarrs_ebv(lon, lat, coordsys='equ', mode='full'): #holden# problem here
     import json, requests
     '''
     Send a line-of-sight reddening query to the Argonaut web server.
@@ -132,6 +132,24 @@ def panstarrs_ebv(lon, lat, coordsys='equ', mode='full'):
     payload = {'mode': mode}
     
     if coordsys.lower() in ['gal', 'g']:
+        print("l,b")
+        payload = {
+            "mode": mode,
+            "l": lon,
+            "b": lat
+        }
+    elif coordsys.lower() in ['equ', 'e']:
+        print("RA,DEC")
+        payload = {
+            "mode": mode,
+            "ra": lon,
+            "dec": lat
+        }
+    else:
+        raise ValueError("coordsys '{0}' not understood.".format(coordsys))
+
+    """
+    if coordsys.lower() in ['gal', 'g']:
         payload['l'] = lon
         payload['b'] = lat
     elif coordsys.lower() in ['equ', 'e']:
@@ -139,6 +157,7 @@ def panstarrs_ebv(lon, lat, coordsys='equ', mode='full'):
         payload['dec'] = lat
     else:
         raise ValueError("coordsys '{0}' not understood.".format(coordsys))
+    """
     
     headers = {'content-type': 'application/json'}
     
