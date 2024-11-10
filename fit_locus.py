@@ -111,7 +111,7 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
         print(len(lines) - 2, 'STAR(S) FOUND')
         #print(lines[1])
 
-        returned_keys = re.split('\,',lines[1][:-1])
+        returned_keys = re.split(r'\,',lines[1][:-1])
         saveKeys = returned_keys[2:]
         print(returned_keys)
 
@@ -169,7 +169,7 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
         print(len(lines) - 1, 'STAR(S) FOUND')
         print(lines[0])
 
-        returned_keys = re.split('\,',lines[0][:-1])
+        returned_keys = re.split(r'\,',lines[0][:-1])
         saveKeys = returned_keys[2:]
 
         ''' make a array with empty list with an entry for each key '''
@@ -212,7 +212,7 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
             lines = ref_cat.readlines()
         print(len(lines) - 1, 'STAR(S) FOUND')
         print(lines[0])
-        returned_keys = re.split('\,',lines[0][:-1])
+        returned_keys = re.split(r'\,',lines[0][:-1])
         saveKeys = returned_keys[2:]
 
         ''' make a array with empty list with an entry for each key '''
@@ -254,7 +254,7 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
             saveKeys = ['ra','dec','j_m','j_cmsig']
             for line in lines:
                 if line[0] == '|' and keyDict == {}:
-                    returned_keys_full = re.split('\|',line)[1:]
+                    returned_keys_full = re.split(r'\|',line)[1:]
                     returned_keys = [r.replace(' ','') for r in returned_keys_full]
                     index = 1
                     for key_full in returned_keys_full:
@@ -385,7 +385,7 @@ def galactic_extinction_and_coordinates(RA,DEC):
         text = text.decode('utf-8') #holden# I think this is right
         for l in text.split('\n'): 
             if found:
-                res = re.split('\s+',l)
+                res = re.split(r'\s+',l)
                 gallong = float(res[0])
                 gallat = float(res[1])
                 break                    
@@ -397,7 +397,7 @@ def galactic_extinction_and_coordinates(RA,DEC):
         for q in ['U','B','V','R','J','H','K']:
             for m in text.split('\n'):
                 if m[0:11] == 'Landolt ' + q + ' (' :
-                    line = re.split('\s+', m)       
+                    line = re.split(r'\s+', m)       
                     dict[q] = line[3]         
 
         ebv = float(dict['B']) - float(dict['V'])
@@ -1007,7 +1007,7 @@ def fit(table, input_info_unsorted, mag_locus,
                 print('red chi^2', '%.5f' % redchi)
                 print('iteration', itr)
 
-                if iteration is 'full' and (itr % plot_iteration_increment == 0 or savefig is not None):
+                if iteration == 'full' and (itr % plot_iteration_increment == 0 or savefig is not None):
                     plot_progress(pars,stat_tot,savefig)
                 itr += 1
 
@@ -1256,7 +1256,7 @@ def fit(table, input_info_unsorted, mag_locus,
             print(pinit)
 
             out = scipy.optimize.fmin(errfunc,pinit,maxiter=10000,maxfun=100000,ftol=0.00001,xtol=0.00001,args=()) 
-            if iteration is 'full':
+            if iteration == 'full':
                 errfunc(out,savefig=(iteration+'_'+outliers+'.png').replace('$',''))
             #print(out)
 
