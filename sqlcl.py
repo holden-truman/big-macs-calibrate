@@ -175,8 +175,8 @@ def pan_catalog_cut(file, cat_raw_name, RA, DEC):
     ## delete none-detections
     flag = np.ones(N, dtype=bool)
     for psfMag in psfMags:
-	    flag *= (catalog_raw[psfMag] > 0)
-	    flag *= (catalog_raw[psfMag] < 30)
+        flag *= (catalog_raw[psfMag] > 0)
+        flag *= (catalog_raw[psfMag] < 30)
 
     index = np.where(flag==False)
     catalog_raw.remove_rows(index[0])
@@ -187,15 +187,15 @@ def pan_catalog_cut(file, cat_raw_name, RA, DEC):
     N = len(catalog_raw) 
     flag = np.ones(N, dtype=bool)
     for psfMag, KronMag in zip(psfMags, KronMags):
-        	flag *= (catalog_raw[psfMag] - catalog_raw[KronMag] < 0.05)
-        	flag *= (catalog_raw[psfMag] - catalog_raw[KronMag] > -0.2)
+        flag *= (catalog_raw[psfMag] - catalog_raw[KronMag] < 0.05)
+        flag *= (catalog_raw[psfMag] - catalog_raw[KronMag] > -0.2)
     
     index = np.where(flag==False)
     catalog_raw.remove_rows(index[0])    ## remove galaxies
     
     for KronMag in KronMags:
-    	catalog_raw.remove_column(KronMag)  ## remove KronMags
-
+        catalog_raw.remove_column(KronMag)  ## remove KronMags
+    
     ## dust extinction correction: http://argonaut.skymaps.info/
     ## coefficients: Schlafly & Finkbeiner, 2011
     EBV = panstarrs_ebv(RA,DEC,mode='sfd')
