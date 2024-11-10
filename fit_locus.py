@@ -456,11 +456,11 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
     RA, DEC, RADIUS = get_catalog_parameters(fulltable, racol, deccol) 
 
     if RA is not None and DEC is not None:
-	    EBV, gallong, gallat = galactic_extinction_and_coordinates(RA,DEC)
+        EBV, gallong, gallat = galactic_extinction_and_coordinates(RA,DEC)
 
     #add in projection
     #inputcat.data.field(racol) - RA)**2. + (inputcat.data.field(deccol) - DEC)**2.)**0.5
-
+    
     fitSDSS = False
     foundSDSS = 0 
     if addSDSS:
@@ -881,7 +881,7 @@ def fit(table, input_info_unsorted, mag_locus,
         
 
         ''' figure out the cut-off '''
-	index = np.where(good_bands_per_star>=min_bands_per_star)
+        index = np.where(good_bands_per_star>=min_bands_per_star)
         SeqNr = SeqNr[index]
         A_band = A_band[index]
         A_err = A_err[index]
@@ -1030,30 +1030,30 @@ def fit(table, input_info_unsorted, mag_locus,
                                                                                                                                                                                                       
                 oa = copy(input_info)
                 oa.sort(sort_wavelength)
-
-		oa_no_ref = filter(lambda x: string.find(x['mag'],'psfMag') == -1 and string.find(x['mag'], 'phot_g_mean_mag') == -1 and string.find(x['mag'], 'PSFMag') == -1, oa)
+                
+                oa_no_ref = filter(lambda x: string.find(x['mag'],'psfMag') == -1 and string.find(x['mag'], 'phot_g_mean_mag') == -1 and string.find(x['mag'], 'PSFMag') == -1, oa)
 
 
                 def plot_combinations(input):
-			list = []
-			index = []
-			N = len(input)
-			for a in range(N):
-				for b in range(a+1,N):
-					for c in range(N):
-						for d in range(c+1,N): 
-							if (len(index)==0) and ( [a,b] != [c,d] ):
-								index.append( [[a,b], [c,d]] )
-							else:
-								flag = True
-								flag *= not ([a,b] == [c,d])
-								for [a0,b0], [c0,d0] in index:
-									flag *= not ([a0,b0,c0,d0] == [c,d,a,b])
-								if flag:
-									index.append( [[a,b], [c,d]] )
-			for [a,b], [c,d] in index:
-				list.append([[input[c],input[d]],[input[a],input[b]]])
-			return list
+                    list = []
+                    index = []
+                    N = len(input)
+                    for a in range(N):
+                        for b in range(a+1,N):
+                            for c in range(N):
+                                for d in range(c+1,N): 
+                                    if (len(index)==0) and ( [a,b] != [c,d] ):
+                                        index.append( [[a,b], [c,d]] )
+                                    else:
+                                        flag = True
+                                        flag *= not ([a,b] == [c,d])
+                                        for [a0,b0], [c0,d0] in index:
+                                            flag *= not ([a0,b0,c0,d0] == [c,d,a,b])
+                                        if flag:
+                                            index.append( [[a,b], [c,d]] )
+                    for [a,b], [c,d] in index:
+                        list.append([[input[c],input[d]],[input[a],input[b]]])
+                    return list
 
 
                 if savefig is not None:
@@ -1180,12 +1180,13 @@ def fit(table, input_info_unsorted, mag_locus,
 
                 def order_plots(a,b):
                     if string.find(a,'psfMag') != -1 and string.find(b,'psfMag') == -1:
-			    return 1 
-		    elif string.find(a,'PSFMag') != -1 and string.find(b,'PSFMag') == -1:
-			    return 1
-		    elif string.find(a,'phot_g_mean_mag') != -1 and string.find(b,'phot_g_mean_mag') == -1:
-			    return 1
-		    else: return -1 
+                        return 1 
+                    elif string.find(a,'PSFMag') != -1 and string.find(b,'PSFMag') == -1:
+                        return 1
+                    elif string.find(a,'phot_g_mean_mag') != -1 and string.find(b,'phot_g_mean_mag') == -1:
+                        return 1
+                    else: 
+                        return -1 
 
                 if savefig is not None:
                                                             
@@ -1221,7 +1222,7 @@ def fit(table, input_info_unsorted, mag_locus,
                         good_diff = good[:,0,i] + good[:,0,0]
                         print(scipy.sum(good[:,0,i]), 'number of good measurements in band')
                         #diff = diff[good_diff == 2]
-			ind = np.where(good_diff == 2)
+                        ind = np.where(good_diff == 2)
                         diff = diff[ind[0]]
 
                         print(key, len(diff))
@@ -1282,8 +1283,7 @@ def fit(table, input_info_unsorted, mag_locus,
                 ref_mags = ref_mags[residuals < resid_thresh]
 
             else: 
-
-		resid_thresh = 6
+                resid_thresh = 6
                 bands = bands[residuals < resid_thresh]
                 bands_err = bands_err[residuals < resid_thresh]
                 locus_matrix = locus_matrix[residuals < resid_thresh]
@@ -1295,7 +1295,7 @@ def fit(table, input_info_unsorted, mag_locus,
                 ref_mags = ref_mags[residuals < resid_thresh]
 
                 ''' first filter on distance '''
-		ind = np.where(dist<3)
+                ind = np.where(dist<3)
                 bands = bands[ind]
                 bands_err = bands_err[ind]
                 locus_matrix = locus_matrix[ind]
