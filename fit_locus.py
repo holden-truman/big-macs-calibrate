@@ -502,8 +502,8 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
             ''' include only SDSS magnitudes in unit test '''
             input_info = [] 
 
-	#sdss_info = [{'mag':'psfPogCorr_' + c, 'plotName':'SDSS ' + c, 'filter': 'SDSS-' + c + '.res', 'mag_err': 'psfPogErr_' + c, 'HOLD_VARY':'HOLD', 'ZP':0.} for c in ['g','r','i','z'] ]
-	sdss_info = [{'mag':'psfPogCorr_' + c, 'plotName':'SDSS ' + c, 'filter': 'SDSS-' + c + '.res', 'mag_err': 'psfPogErr_' + c, 'HOLD_VARY':'HOLD', 'ZP':0.} for c in ['r'] ]
+	    #sdss_info = [{'mag':'psfPogCorr_' + c, 'plotName':'SDSS ' + c, 'filter': 'SDSS-' + c + '.res', 'mag_err': 'psfPogErr_' + c, 'HOLD_VARY':'HOLD', 'ZP':0.} for c in ['g','r','i','z'] ]
+	    sdss_info = [{'mag':'psfPogCorr_' + c, 'plotName':'SDSS ' + c, 'filter': 'SDSS-' + c + '.res', 'mag_err': 'psfPogErr_' + c, 'HOLD_VARY':'HOLD', 'ZP':0.} for c in ['r'] ]
 
         for filt_dict in sdss_info:
             ''' avoid duplicate filters -- will override '''
@@ -522,7 +522,7 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
 
         #panstarrs_info = [{'mag':c + 'PSFMag', 'plotName':'PanSTARRS ' + c, 'filter': 'PAN-STARRS.PS1.' + c + '.res', 'mag_err': c + 'PSFMagErr', 'HOLD_VARY':'HOLD', 'ZP':0.} for c in ['r','i','z','y'] ]
         panstarrs_info = [{'mag':c + 'PSFMag', 'plotName':'PanSTARRS ' + c, 'filter': 'PAN-STARRS.PS1.' + c + '.res', 'mag_err': c + 'PSFMagErr', 'HOLD_VARY':'HOLD', 'ZP':0.} for c in ['r'] ]
-	#panstarrs_info += [{'mag':c + 'PSFMag', 'plotName':'PanSTARRS ' + c, 'filter': 'PAN-STARRS.PS1.' + c + '.res', 'mag_err': c + 'PSFMagErr', 'HOLD_VARY':'VARY', 'ZP':0.} for c in ['z'] ]
+	    #panstarrs_info += [{'mag':c + 'PSFMag', 'plotName':'PanSTARRS ' + c, 'filter': 'PAN-STARRS.PS1.' + c + '.res', 'mag_err': c + 'PSFMagErr', 'HOLD_VARY':'VARY', 'ZP':0.} for c in ['z'] ]
 
         for filt_dict in panstarrs_info:
             ''' avoid duplicate filters -- will override '''
@@ -530,21 +530,21 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
                 input_info += [filt_dict]
 
     if addGaia and foundGaia:
-	for i in range(len(input_info)):
-	   input_info[i]['HOLD_VARY'] = 'VARY'
+        for i in range(len(input_info)):
+            input_info[i]['HOLD_VARY'] = 'VARY'
 
-	#gaia_info = [{'mag':'ab_g', 'plotName':'Gaia G' , 'filter': 'Gaia_dr2_revised.g.res', 'mag_err': 'phot_g_mean_mag_error', 'HOLD_VARY':'HOLD', 'ZP':0.}]
-	#gaia_info = [ {'mag':'ab_bp', 'plotName':'Gaia Gbp' , 'filter': 'Gaia_dr2_revised.bp.res', 'mag_err': 'phot_bp_mean_mag_error', 'HOLD_VARY':'HOLD', 'ZP':0.}]
-	#gaia_info = {'mag':'ab_rp', 'plotName':'Gaia Grp' , 'filter': 'Gaia_dr2_revised.rp.res', 'mag_err': 'phot_rp_mean_mag_error', 'HOLD_VARY':'HOLD', 'ZP':0.}]
-	gaia_info = [{'mag':'ab_g', 'plotName':'Gaia G' , 'filter': 'Gaia_dr2_revised.g.res', 'mag_err': 'phot_g_mean_mag_error', 'HOLD_VARY':'HOLD', 'ZP':0.},\
-			{'mag':'ab_bp', 'plotName':'Gaia Gbp' , 'filter': 'Gaia_dr2_revised.bp.res', 'mag_err': 'phot_bp_mean_mag_error', 'HOLD_VARY':'HOLD', 'ZP':0.},\
-			{'mag':'ab_rp', 'plotName':'Gaia Grp' , 'filter': 'Gaia_dr2_revised.rp.res', 'mag_err': 'phot_rp_mean_mag_error', 'HOLD_VARY':'HOLD', 'ZP':0.} ]
-
+        #gaia_info = [{'mag':'ab_g', 'plotName':'Gaia G' , 'filter': 'Gaia_dr2_revised.g.res', 'mag_err': 'phot_g_mean_mag_error', 'HOLD_VARY':'HOLD', 'ZP':0.}]
+        #gaia_info = [ {'mag':'ab_bp', 'plotName':'Gaia Gbp' , 'filter': 'Gaia_dr2_revised.bp.res', 'mag_err': 'phot_bp_mean_mag_error', 'HOLD_VARY':'HOLD', 'ZP':0.}]
+        #gaia_info = {'mag':'ab_rp', 'plotName':'Gaia Grp' , 'filter': 'Gaia_dr2_revised.rp.res', 'mag_err': 'phot_rp_mean_mag_error', 'HOLD_VARY':'HOLD', 'ZP':0.}]
+        gaia_info = [{'mag':'ab_g', 'plotName':'Gaia G' , 'filter': 'Gaia_dr2_revised.g.res', 'mag_err': 'phot_g_mean_mag_error', 'HOLD_VARY':'HOLD', 'ZP':0.},\
+                {'mag':'ab_bp', 'plotName':'Gaia Gbp' , 'filter': 'Gaia_dr2_revised.bp.res', 'mag_err': 'phot_bp_mean_mag_error', 'HOLD_VARY':'HOLD', 'ZP':0.},\
+                {'mag':'ab_rp', 'plotName':'Gaia Grp' , 'filter': 'Gaia_dr2_revised.rp.res', 'mag_err': 'phot_rp_mean_mag_error', 'HOLD_VARY':'HOLD', 'ZP':0.} ]
+        
         for filt_dict in gaia_info:
             ''' avoid duplicate filters -- will override '''
             if filt_dict['mag'] not in [f['mag'] for f in input_info]:
-                input_info += [filt_dict]
-                
+                    input_info += [filt_dict]
+                    
     if add2MASS and found2MASS:
         ''' if no SDSS, see if there are 2MASS matches '''
         #input_info = utilities.parse_columns(columns_description,fitSDSS=False,noHoldExcept2MASS=True)
@@ -563,8 +563,8 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
     ''' check to see if at least one but not all filter is held constant '''
     if not filter(lambda x: x['HOLD_VARY'] == 'HOLD', input_info): 
         raise Exception('None of your magnitudes is held fixed (i.e., HOLD_VARY HOLD)')
-#if not filter(lambda x: x['HOLD_VARY'] == 'VARY', input_info): 
-	#raise Exception('All of your magnitudes are held fixed (i.e., HOLD_VARY VARY)')
+    #if not filter(lambda x: x['HOLD_VARY'] == 'VARY', input_info): 
+	    #raise Exception('All of your magnitudes are held fixed (i.e., HOLD_VARY VARY)')
 
     filters = utilities.get_filters([[a['mag'], a['filter']] for a in input_info])
 
