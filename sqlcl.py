@@ -99,6 +99,10 @@ def gaia_query(file, query, EBV):
 
 def panstarrs_ebv(lon, lat, coordsys='equ', mode='full'): #holden# problem here
     import json, requests
+    lon = 90
+    lat = 10
+    coordsys='gal'
+    mode='full'
     '''
     Send a line-of-sight reddening query to the Argonaut web server.
     
@@ -130,25 +134,7 @@ def panstarrs_ebv(lon, lat, coordsys='equ', mode='full'): #holden# problem here
     url = 'http://argonaut.skymaps.info/gal-lb-query-light'
     
     payload = {'mode': mode}
-    
-    if coordsys.lower() in ['gal', 'g']:
-        print("l,b")
-        payload = {
-            "mode": mode,
-            "l": lon,
-            "b": lat
-        }
-    elif coordsys.lower() in ['equ', 'e']:
-        print("RA,DEC")
-        payload = {
-            "mode": mode,
-            "ra": lon,
-            "dec": lat
-        }
-    else:
-        raise ValueError("coordsys '{0}' not understood.".format(coordsys))
 
-    """
     if coordsys.lower() in ['gal', 'g']:
         payload['l'] = lon
         payload['b'] = lat
@@ -157,7 +143,6 @@ def panstarrs_ebv(lon, lat, coordsys='equ', mode='full'): #holden# problem here
         payload['dec'] = lat
     else:
         raise ValueError("coordsys '{0}' not understood.".format(coordsys))
-    """
     
     headers = {'content-type': 'application/json'}
     
