@@ -152,7 +152,7 @@ def panstarrs_ebv(lon, lat, coordsys='equ', mode='full'): #holden# problem here,
     ebv = json.loads(r.text)
     return ebv['EBV_SFD']
     '''
-    return [0.025999999999999995]
+    return 0.025999999999999995
 
 def pan_catalog_cut(file, cat_raw_name, RA, DEC):
     "Apply several cuts and extinction correction to panstarrs catalog"
@@ -206,7 +206,7 @@ def pan_catalog_cut(file, cat_raw_name, RA, DEC):
         print(coeffs[color])
         catalog_raw[psfMag] -= EBV * coeffs[color]
         print('dust extinction for PanSTARRS band ' + color + ':', EBV*coeffs[color])
-
+    print("Done")
     catalog_raw.write(file + ".csv", format='ascii.csv', overwrite=True)
     return file + ".csv"
 
