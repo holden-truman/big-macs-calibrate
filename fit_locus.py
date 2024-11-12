@@ -307,7 +307,7 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
             kdtree_catalog = spatial.KDTree(data_catalog)
             kdtree_inputcat = spatial.KDTree(data_inputcat)
             match = kdtree_catalog.query_ball_tree(kdtree_inputcat,2./3600.)
-
+            print("Done1")
             print(match)
 
             ''' make catalog with same number of row as inputcat and columns for catalog mags  '''
