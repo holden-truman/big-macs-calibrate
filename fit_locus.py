@@ -285,9 +285,6 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
         print('making KDTrees')                                                                                                                                                                                                                                
         if survey == 'SDSS' and sdssUnit:
             ''' make a catalog of all SDSS stars (i.e., not just those matched against catalog stars) '''                                                         
-            for column_name in returned_keys[2:]: 
-                print(column_name)
-            print("Done2")
             cols = []
             for column_name in returned_keys[2:]: 
                 cols.append(fits.Column(name=column_name,format='1E',array=scipy.array(catalogStars[column_name])))
@@ -314,7 +311,9 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
 
             ''' make catalog with same number of row as inputcat and columns for catalog mags  '''
             rows = len(inputcat.data)
-
+            for column_name in returned_keys[2:]: 
+                print(column_name)
+            
             cols = []
             for column_name in necessary_columns: #inputcat.columns:
                 #cols.append(column)
