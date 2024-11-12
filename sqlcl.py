@@ -222,7 +222,8 @@ def pan_catalog_cut(file, cat_raw_name, RA, DEC):
     
     ## dust extinction correction: http://argonaut.skymaps.info/
     ## coefficients: Schlafly & Finkbeiner, 2011
-    EBV = panstarrs_ebv(RA,DEC,mode='sfd')
+    #EBV = panstarrs_ebv(RA,DEC,mode='sfd') #holden# problem here, can I just pass in EBV from earlier method call? API doesn't work
+    EBV = 0.025999999999999995
     coeffs = {'g':3.172, 'r':2.271, 'i':1.682, 'z':1.322, 'y':1.087}
     for psfMag, color in zip(psfMags, colors):
         catalog_raw[psfMag] -= EBV * coeffs[color]
