@@ -300,9 +300,9 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
 
         else:
             from scipy import spatial 
-            data_catalog = zip(catalogStars['ra'],catalogStars['dec'])
+            data_catalog = list(zip(catalogStars['ra'],catalogStars['dec']))
 
-            data_inputcat = zip(inputcat.data.field(racol),inputcat.data.field(deccol))
+            data_inputcat = list(zip(inputcat.data.field(racol),inputcat.data.field(deccol)))
 
             kdtree_catalog = spatial.KDTree(data_catalog)
             kdtree_inputcat = spatial.KDTree(data_inputcat)
