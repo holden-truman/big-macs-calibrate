@@ -5,7 +5,7 @@ if __name__ != '__main__':
     print('importing modules')
     import os, re, string
     import random, scipy, dbm #commands, anydbm
-    import astropy.io.fits as pyfits
+    from astropy.io import fits
     import numpy as np
     import matplotlib as mpl
     mpl.use('Agg')
@@ -25,7 +25,7 @@ itr = 0
 
 def fix_kpno():
     
-    p = pyfits.open('./EXAMPLES/kpno.fits')
+    p = fits.open('./EXAMPLES/kpno.fits')
 
     for color in ['g','r','i','z']: 
         mask = p[1].data['FLAGS_reg1_' + color] != 0  
@@ -39,7 +39,7 @@ def fix_kpno():
         
 
 def join_cats(cs,outputfile):
-    import astropy.io.fits as pyfits
+    from astropy.io import fits
     tables = {}
     i = 0
     cols = []
@@ -51,7 +51,7 @@ def join_cats(cs,outputfile):
         else: TAB = 'STDTAB'
         i += 1
         print(c)
-        tables[str(i)] = pyfits.open(c)
+        tables[str(i)] = fits.open(c)
         for column in  tables[str(i)][TAB].columns:           
             if column.name == 'SeqNr':
                 if not seqnr:
@@ -64,10 +64,10 @@ def join_cats(cs,outputfile):
 
     print(cols)
     print(len(cols))
-    hdu = pyfits.PrimaryHDU()
-    #hduSTDTAB = pyfits.new_table(cols) 
-    hduSTDTAB = pyfits.BinTableHDU.from_columns(cols) 
-    hdulist = pyfits.HDUList([hdu])
+    hdu = fits.PrimaryHDU()
+    #hduSTDTAB = fits.new_table(cols) 
+    hduSTDTAB = fits.BinTableHDU.from_columns(cols) 
+    hdulist = fits.HDUList([hdu])
     hdulist.append(hduSTDTAB)
     hdulist[1].header.update('EXTNAME','STDTAB')
     import os
@@ -78,7 +78,7 @@ def join_cats(cs,outputfile):
 def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, survey='SDSS', sdssUnit=False): 
 
     import scipy, math
-    import astropy.io.fits as pyfits
+    from astropy.io import fits
 
     RA, DEC, RADIUS = get_catalog_parameters(inputcat, racol, deccol)
     #print("Radius: " + RADIUS)
@@ -288,11 +288,11 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
 
             cols = []
             for column_name in returned_keys[2:]: 
-                cols.append(pyfits.Column(name=column_name,format='1E',array=scipy.array(catalogStars[column_name])))
+                cols.append(fits.Column(name=column_name,format='1E',array=scipy.array(catalogStars[column_name])))
 
-            coldefs = pyfits.ColDefs(cols)
-	    #hdu_new = pyfits.new_table(coldefs)
-            hdu_new = pyfits.BinTableHDU.from_columns(coldefs)
+            coldefs = fits.ColDefs(cols)
+	    #hdu_new = fits.new_table(coldefs)
+            hdu_new = fits.BinTableHDU.from_columns(coldefs)
 
             returnCat = hdu_new
 
@@ -316,17 +316,17 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
             cols = []
             for column_name in necessary_columns: #inputcat.columns:
                 #cols.append(column)
-                cols.append(pyfits.Column(name=column_name,format='1E',array=inputcat.data.field(column_name)))
+                cols.append(fits.Column(name=column_name,format='1E',array=inputcat.data.field(column_name)))
 
 
             necessary_columns += saveKeys
 
             for column_name in saveKeys: 
                 array = scipy.ones(rows) * -99
-                cols.append(pyfits.Column(name=column_name,format='1E',array=array))
+                cols.append(fits.Column(name=column_name,format='1E',array=array))
 
-            coldefs = pyfits.ColDefs(cols)
-            hdu_new = pyfits.TableHDU.from_columns(coldefs)
+            coldefs = fits.ColDefs(cols)
+            hdu_new = fits.TableHDU.from_columns(coldefs)
 
             matchedStars = 0
 
@@ -339,8 +339,8 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
             ''' require at least five matched stars '''
             if matchedStars > 3:
                 matched = matchedStars 
-                hdu = pyfits.PrimaryHDU()               
-                hdulist = pyfits.HDUList([hdu,hdu_new])
+                hdu = fits.PrimaryHDU()               
+                hdulist = fits.HDUList([hdu,hdu_new])
                 print(len(match))
                 import os
                 os.system('rm merge.fits')
@@ -455,7 +455,7 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
     except: pass
 
     print('trying to open file', file)
-    fulltable = pyfits.open(file)[extension]
+    fulltable = fits.open(file)[extension]
 
     input_info = utilities.parse_columns(columns_description)
     necessary_columns = [racol, deccol] + [x['mag'] for x in input_info] + [x['mag_err'] for x in input_info]
@@ -618,7 +618,7 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
     offset_list_file = open(offset_list,'w')
 
     print(file)
-    #fulltable = pyfits.open(file)[extension]
+    #fulltable = fits.open(file)[extension]
 
     #mask = ((fulltable.data.field('Xpos-SUBARU-W-J-V')- 5000)**2. +  (fulltable.data.field('Ypos-SUBARU-W-J-V') - 5000.)**2.)**0.5 < 2000
     #fulltable.data = fulltable.data[mask]
@@ -632,10 +632,10 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
         cols = []
         for col in fulltable.columns:
             cols.append(col)
-        cols.append(pyfits.Column(name='SeqNr',format='J',array=scipy.arange(len(fulltable.data))))
-        hdu = pyfits.PrimaryHDU()
-        hdulist = pyfits.HDUList([hdu])
-        fulltable = pyfits.BinTableHDU.from_columns(cols)
+        cols.append(fits.Column(name='SeqNr',format='J',array=scipy.arange(len(fulltable.data))))
+        hdu = fits.PrimaryHDU()
+        hdulist = fits.HDUList([hdu])
+        fulltable = fits.BinTableHDU.from_columns(cols)
 
     table = fulltable.data 
 
@@ -1448,7 +1448,7 @@ if __name__ == '__main__':
     print('importing libraries')
     import os, re, string
     import random, scipy, dbm #commands,anydm
-    import astropy.io.fits as pyfits
+    from astropy.io import fits
     import matplotlib as mpl
     mpl.use('Agg')
     from matplotlib import pyplot as plt
