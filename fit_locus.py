@@ -287,7 +287,7 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
             ''' make a catalog of all SDSS stars (i.e., not just those matched against catalog stars) '''                                                         
             for column_name in returned_keys[2:]: 
                 print(column_name)
-            print("ahhhh")
+            print("Done2")
             cols = []
             for column_name in returned_keys[2:]: 
                 cols.append(fits.Column(name=column_name,format='1E',array=scipy.array(catalogStars[column_name])))
