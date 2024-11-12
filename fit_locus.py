@@ -168,7 +168,7 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
             lines = ref_cat.readlines()
         print(len(lines) - 1, 'STAR(S) FOUND')
         print(lines[0])
-        print("Returned Keys=", returned_keys)
+        print("Re=", lines[0][:-1])
         returned_keys = re.split(r'\,',lines[0][:-1])
         saveKeys = returned_keys[2:]
 
