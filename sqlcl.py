@@ -97,31 +97,6 @@ def gaia_query(file, query, EBV):
 
 
 def panstarrs_ebv(lon, lat, coordsys='equ', mode='full'): #holden# problem here, code is directly from api, but errors
-    from astropy.coordinates import SkyCoord
-    import astropy.units as units
-    import numpy as np
-    from dustmaps.sfd import SFDWebQuery
-    # https://dustmaps.readthedocs.io/en/latest/examples.html#getting-started
-    #from dustmaps.bayestar import BayestarWebQuery
-
-    #bayestar = BayestarWebQuery() # Uses Bayestar2017 by default.
-    print("lat=",lon)
-    print("lon=",lat)
-    print("coordsys=",coordsys)
-    print("mode=",mode)
-    '''
-    sfd = SFDWebQuery()
-    coords = SkyCoord(45.*units.deg, 45.*units.deg, frame='icrs') # Equatorial
-    ebv_sfd = sfd(coords)
-    '''
-    l = [180., 160.]
-    b = [30., 45.]
-    coords = SkyCoord(l, b, unit='deg', frame='galactic')
-    sfd = SFDWebQuery() 
-    ebv = sfd(coords) #requests.exceptions.HTTPError: 500 Server Error: INTERNAL SERVER ERROR for url: http://argonaut.skymaps.info/api/v2/sfd/query
-
-    print("ebv_sfd=",ebv)
-    return ebv
     '''
     import json, requests
     Send a line-of-sight reddening query to the Argonaut web server.
@@ -171,12 +146,13 @@ def panstarrs_ebv(lon, lat, coordsys='equ', mode='full'): #holden# problem here,
         r.raise_for_status()
     except requests.exceptions.HTTPError as e:
         print('Response received from Argonaut:')
-        print(r.text)
+        print(r.text) #requests.exceptions.HTTPError: 500 Server Error: INTERNAL SERVER ERROR for url: http://argonaut.skymaps.info/api/v2/sfd/query
         raise e
     
     ebv = json.loads(r.text)
     return ebv['EBV_SFD']
     '''
+    return [0.025999999999999995]
 
 def pan_catalog_cut(file, cat_raw_name, RA, DEC):
     "Apply several cuts and extinction correction to panstarrs catalog"
@@ -222,8 +198,8 @@ def pan_catalog_cut(file, cat_raw_name, RA, DEC):
     
     ## dust extinction correction: http://argonaut.skymaps.info/
     ## coefficients: Schlafly & Finkbeiner, 2011
-    #EBV = panstarrs_ebv(RA,DEC,mode='sfd') #holden# problem here, can I just pass in EBV from earlier method call? API doesn't work
-    EBV = 0.025999999999999995
+    EBV = panstarrs_ebv(RA,DEC,mode='sfd') #holden# problem here, can I just pass in EBV from earlier method call? API doesn't work
+    #EBV = 0.025999999999999995
     coeffs = {'g':3.172, 'r':2.271, 'i':1.682, 'z':1.322, 'y':1.087}
     for psfMag, color in zip(psfMags, colors):
         catalog_raw[psfMag] -= EBV * coeffs[color]
