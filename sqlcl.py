@@ -202,6 +202,8 @@ def pan_catalog_cut(file, cat_raw_name, RA, DEC):
     #EBV = 0.025999999999999995
     coeffs = {'g':3.172, 'r':2.271, 'i':1.682, 'z':1.322, 'y':1.087}
     for psfMag, color in zip(psfMags, colors):
+        print(EBV)
+        print(coeffs[color])
         catalog_raw[psfMag] -= EBV * coeffs[color]
         print('dust extinction for PanSTARRS band ' + color + ':', EBV*coeffs[color])
 
