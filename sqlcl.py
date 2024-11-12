@@ -117,8 +117,8 @@ def panstarrs_ebv(lon, lat, coordsys='equ', mode='full'): #holden# problem here,
     l = [180., 160.]
     b = [30., 45.]
     coords = SkyCoord(l, b, unit='deg', frame='galactic')
-    sfd = SFDWebQuery()
-    ebv = sfd(coords)
+    sfd = SFDWebQuery() 
+    ebv = sfd(coords) #requests.exceptions.HTTPError: 500 Server Error: INTERNAL SERVER ERROR for url: http://argonaut.skymaps.info/api/v2/sfd/query
 
     print("ebv_sfd=",ebv)
     return ebv
