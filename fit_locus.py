@@ -467,7 +467,7 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
     if RA is not None and DEC is not None:
         EBV, gallong, gallat = galactic_extinction_and_coordinates(RA,DEC)
 
-    print(EBV)
+    print('EBV=',EBV)
     #add in projection
     #inputcat.data.field(racol) - RA)**2. + (inputcat.data.field(deccol) - DEC)**2.)**0.5
     
