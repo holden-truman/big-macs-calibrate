@@ -362,7 +362,7 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
 def galactic_extinction_and_coordinates(RA,DEC): 
     
         print('RETRIEVING DUST EXTINCTION AT RA=' + str(RA) + ' DEC=' + str(DEC) + ' FROM NED')
-        import urllib, os, re, string, dbm, time #anydbm 
+        import urllib, os, re, string, time #anydbm dbm 
         from urllib.request import urlopen
         from functools import reduce
 
