@@ -152,6 +152,7 @@ def panstarrs_ebv(lon, lat, coordsys='equ', mode='full'): #holden# problem here,
     ebv = json.loads(r.text)
     return ebv['EBV_SFD']
     '''
+    '''
     from astropy.coordinates import SkyCoord
     import astropy.units as units
     from dustmaps.bayestar import BayestarQuery
@@ -165,6 +166,19 @@ def panstarrs_ebv(lon, lat, coordsys='equ', mode='full'): #holden# problem here,
     print(lon)
     print(lat)
     #print(reddening[best])
+    '''
+    from astropy.coordinates import SkyCoord
+    import astropy.units as units
+    from dustmaps.sfd import SFDQuery
+    sfd = SFDQuery(map_fname="/fs/ddn/sdf/group/kipac/u/awright/bayestar2019.h5")
+    coords = SkyCoord(ra=lon*units.deg, dec=lat*units.deg,
+                    frame='icrs')
+
+    reddening = sfd(coords, mode='median')
+    print("REDDENING")
+    print(reddening)
+    print(lon)
+    print(lat)
     return .02599999999
 
 
