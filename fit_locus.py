@@ -320,7 +320,7 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
             necessary_columns += saveKeys
 
             for column_name in saveKeys: 
-                array = scipy.ones(rows) * -99
+                array = np.ones(rows) * -99
                 cols.append(fits.Column(name=column_name,format='1E',array=array))
 
             coldefs = fits.ColDefs(cols)
