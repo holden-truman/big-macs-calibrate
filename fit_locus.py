@@ -780,6 +780,7 @@ def fit(table, input_info_unsorted, mag_locus,
 
     os.system('mkdir -p ' + plotdir)
     import numpy as np
+    from functools import reduce
 
 
     params = {'backend' : 'ps',
