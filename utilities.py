@@ -221,7 +221,8 @@ def compute_ext(filt, N=0.78):
     print('''COMPUTING EXTINCTION COEFFICIENT USING FITZPATRICK99 EXTINCTION LAW''')
     odonnell_ext_1_um = 1.32 # A(1 um) / E(B-V) where R_v = 3.1
     import scipy, math
-    sed = scipy.loadtxt(os.environ['BIGMACS'] + '/munari.sed')
+    import numpy as np
+    sed = np.loadtxt(os.environ['BIGMACS'] + '/munari.sed')
     ''' now stitch together with blackbody spectrum '''    
     longwave = sed[-1,0]    
     flux = sed[-1,1]

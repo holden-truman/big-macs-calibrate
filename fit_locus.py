@@ -408,6 +408,7 @@ def galactic_extinction_and_coordinates(RA,DEC):
 
 
 ''' sort each set by center wavelength '''
+#holden# NOT USED ANYMORE
 def sort_wavelength(x,y):
     if x['center wavelength']>y['center wavelength']:
         return 1
