@@ -170,6 +170,7 @@ def panstarrs_ebv(lon, lat, coordsys='equ', mode='full'): #holden# problem here,
     from astropy.coordinates import SkyCoord
     import astropy.units as units
     from dustmaps.sfd import SFDQuery
+    fetch() #get the sfd map
     sfd = SFDQuery()
     coords = SkyCoord(ra=lon*units.deg, dec=lat*units.deg,
                     frame='icrs')
