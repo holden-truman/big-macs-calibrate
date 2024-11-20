@@ -1041,7 +1041,8 @@ def fit(table, input_info_unsorted, mag_locus,
                         zp_bands[:,:,i] = assign_zp(a[0][0],pars,zps,zps_hold)-assign_zp(a[1][0],pars,zps,zps_hold)
                                                                                                                                                                                                       
                 oa = copy(input_info)
-                oa.sort(sort_wavelength)
+                #oa.sort(sort_wavelength)
+                oa.sort(key=lambda x: x['center wavelength'])
                 
                 oa_no_ref = filter(lambda x: string.find(x['mag'],'psfMag') == -1 and string.find(x['mag'], 'phot_g_mean_mag') == -1 and string.find(x['mag'], 'PSFMag') == -1, oa)
 
