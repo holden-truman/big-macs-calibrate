@@ -154,9 +154,10 @@ def panstarrs_ebv(lon, lat, coordsys='equ', mode='full'): #holden# problem here,
     '''
     from astropy.coordinates import SkyCoord
     import astropy.units as units
-    from dustmaps.bayestar import BayestarQuery
- 
-    bayestar = BayestarQuery(map_fname="/fs/ddn/sdf/group/kipac/u/awright/bayestar2019.h5") # 'bayestar2019' is the default
+    from dustmaps.sfd import SFDQuery
+    print(lon)
+    print(lat)
+    sfd = SFDQuery()
     coords = SkyCoord(ra=lon*units.deg, dec=lat*units.deg,
                     frame='icrs')
 
@@ -217,21 +218,16 @@ def pan_catalog_cut(file, cat_raw_name, RA, DEC):
     #EBV = 0.025999999999999995
     coeffs = {'g':3.172, 'r':2.271, 'i':1.682, 'z':1.322, 'y':1.087}
     for psfMag, color in zip(psfMags, colors):
-        print(EBV)
-        print(coeffs[color])
         catalog_raw[psfMag] -= EBV * coeffs[color]
         print('dust extinction for PanSTARRS band ' + color + ':', EBV*coeffs[color])
-    print("Done")
     catalog_raw.write(file + ".csv", format='ascii.csv', overwrite=True)
     return file + ".csv"
 
 def pan_query(file, cmd, RA, DEC):
 
     import os, glob
-    print('LOOK ',file)
     if not os.path.exists(file +'.pan_raw.csv'):
         os.system(cmd)
-        print('TEST', cmd)
 
     cat_raw_name = file + '.pan_raw.csv'
     cat_pan_name = pan_catalog_cut(file, cat_raw_name, RA, DEC)

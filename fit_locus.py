@@ -113,7 +113,6 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
 
         returned_keys = re.split(r'\,',lines[1][:-1])
         saveKeys = returned_keys[2:]
-        print(returned_keys)
 
         ''' make a array with empty list with an entry for each key '''
         catalogStars = dict(zip(returned_keys,list([[] for x in returned_keys])))
@@ -211,7 +210,7 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
         with open(file + '.cut.csv') as ref_cat:
             lines = ref_cat.readlines()
         print(len(lines) - 1, 'STAR(S) FOUND')
-        print(lines[0])
+        
         returned_keys = re.split(r'\,',lines[0][:-1])
         saveKeys = returned_keys[2:]
 
@@ -232,8 +231,6 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
                     catalogStars[returned_keys[i]].append(float(res[i]))
                
     elif survey == '2MASS':
-        print("HERE2")
-        print(RADIUS > 59)
         if True or RADIUS > 59:
             RADIUS = 59
             coordinate = str(RA) + '+' + str(DEC)
@@ -306,7 +303,6 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
             kdtree_catalog = spatial.KDTree(data_catalog)
             kdtree_inputcat = spatial.KDTree(data_inputcat)
             match = kdtree_catalog.query_ball_tree(kdtree_inputcat,2./3600.)
-            print("Done1")
             print(match)
 
             ''' make catalog with same number of row as inputcat and columns for catalog mags  '''
