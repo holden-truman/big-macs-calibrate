@@ -631,7 +631,8 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
     #fulltable.data = fulltable.data[:100]
 
     ''' if not SeqNr column, add one '''
-    if not filter(lambda x: x.name=='SeqNr', fulltable.columns): 
+    #if not filter(lambda x: x.name=='SeqNr', fulltable.columns): 
+    if not any(x.name == 'SeqNr' for x in fulltable.columns):
         cols = []
         for col in fulltable.columns:
             cols.append(col)
