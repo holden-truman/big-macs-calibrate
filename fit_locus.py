@@ -1383,13 +1383,13 @@ def fit(table, input_info_unsorted, mag_locus,
             if r != 'full' and r != 'redchi' and r != 'num' and r.find('ref_mags') == -1 and r.find('SeqNr') == -1:
                 print(r, key)
                 l.append(results[r][key])
-        #print(key+':', scipy.std(l), 'mag')
+        #print(key+':', np.std(l), 'mag')
        
         if len(l) > 1: 
-            errors[key] = '%.4f' % scipy.std(l)
+            errors[key] = '%.4f' % np.std(l)
         else: errors[key] = -99
 
-        #scipy.cov(np.array(l)
+        #scipy.cov(np.array(l))
 
 
         if bootstrap_num > 0 and len(l) > 0:
