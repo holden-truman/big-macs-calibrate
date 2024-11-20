@@ -32,7 +32,6 @@ def calc_mag(cat, mags, flux_cols, flux_errs):
 
 ##########################################
 file_list = glob('flux_files/*')
-print("running")
 for file in file_list:
     print(file)
     file_name = file[len('flux_files/'):]
