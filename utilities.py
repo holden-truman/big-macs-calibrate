@@ -111,6 +111,7 @@ def cas_locus(fits=True):
 
 
 def synthesize_expected_locus_for_observations(filters):
+    import numpy as np
     c_locus = cas_locus()    
 
     ''' add SDSS filters '''        
@@ -130,7 +131,7 @@ def synthesize_expected_locus_for_observations(filters):
         locus_point = loci[i]
         locus_index = int(locus_point.replace('.dat',''))
         print('CONVOLVING RESPONSE FUNCTIONS WITH SPECTRUM ' + str(locus_point))
-        stitchSpec = scipy.genfromtxt(os.environ['BIGMACS'] + '/LOCUS_SPECTRA/' + locus_point)
+        stitchSpec = np.genfromtxt(os.environ['BIGMACS'] + '/LOCUS_SPECTRA/' + locus_point)
         #stitchSpec = scipy.genfromtxt(os.environ['BIGMACS'] + '/XSL_Pic/' + locus_point)
 
         ''' do not synthesize 2MASS filters '''
