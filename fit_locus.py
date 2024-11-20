@@ -844,7 +844,7 @@ def fit(table, input_info_unsorted, mag_locus,
             zps_hold[hold_input_info[i]['mag']] =  hold_input_info[i]['ZP']
 
             ''' if bootstrap, sample uncertaintities of HOLD bands in bootstrap '''
-            if hold_input_info[i].has_key('ZPERR') and iteration.find('bootstrap') != -1:
+            if 'ZPERR' in hold_input_info[i] and iteration.find('bootstrap') != -1:
                     
                     import random as rd 
                     zp_err = float(hold_input_info[i]['ZPERR'])
