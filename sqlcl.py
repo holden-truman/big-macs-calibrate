@@ -152,7 +152,21 @@ def panstarrs_ebv(lon, lat, coordsys='equ', mode='full'): #holden# problem here,
     ebv = json.loads(r.text)
     return ebv['EBV_SFD']
     '''
-    return 0.025999999999999995
+    from astropy.coordinates import SkyCoord
+    import astropy.units as units
+    from dustmaps.bayestar import BayestarQuery
+ 
+    bayestar = BayestarQuery(map_fname="/fs/ddn/sdf/group/kipac/u/awright/bayestar2019.h5") # 'bayestar2019' is the default
+    coords = SkyCoord(ra=lon*units.deg, dec=lat*units.deg,
+                    frame='ircs')
+
+    reddening = bayestar(coords, mode='median')
+    print(reddening)
+    #print(reddening[best])
+    return .02599999999
+
+
+    #return 0.025999999999999995
 
 def pan_catalog_cut(file, cat_raw_name, RA, DEC):
     "Apply several cuts and extinction correction to panstarrs catalog"
