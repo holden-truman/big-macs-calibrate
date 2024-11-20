@@ -48,9 +48,9 @@ def readtxtfile(file):
     return file_out
 
 def old_synth():
-
+    import numpy as np
     for filt in filters:
-        specall = scipy.zeros(len(spectra[0][0][:,1]))
+        specall = np.zeros(len(spectra[0][0][:,1]))
         val = 0 
         for coeff,specfull  in [[p[0],spectra[0]]]: #,[p[1],spectra[1]],[1.-p[0]-p[1],spectra[2]]]: 
             spec = specfull[0]
@@ -71,11 +71,11 @@ def old_synth():
         mag = 2.5*(logNorm - logEff) # to calculate an AB magnitude
 
 def synth(p,spectra,filters,show=False):
-
+    import numpy as np
     mags = {} 
 
     for filt in filters:
-        specall = scipy.zeros(len(spectra[0][0][:,1]))
+        specall = np.zeros(len(spectra[0][0][:,1]))
         val = 0 
         for coeff,specfull in [[p[0],spectra[0]]]: #,[p[1],spectra[1]],[1.-p[0]-p[1],spectra[2]]]: 
             #print(filt['name'], coeff)
