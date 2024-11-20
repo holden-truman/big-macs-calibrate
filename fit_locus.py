@@ -285,7 +285,7 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
             ''' make a catalog of all SDSS stars (i.e., not just those matched against catalog stars) '''                                                         
             cols = []
             for column_name in returned_keys[2:]: 
-                cols.append(fits.Column(name=column_name,format='1E',array=scipy.array(catalogStars[column_name])))
+                cols.append(fits.Column(name=column_name,format='1E',array=np.array(catalogStars[column_name])))
 
             coldefs = fits.ColDefs(cols)
 	    #hdu_new = fits.new_table(coldefs)
@@ -699,7 +699,7 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
 
         for i in range(len(red_input_info)):
             red_input_info[i]['HOLD_VARY'] = 'HOLD'
-            if zps_dict_all.has_key(red_input_info[i]['mag']):
+            if red_input_info[i]['mag'] in zps_dict_all:
                 red_input_info[i]['ZP'] = zps_dict_all[red_input_info[i]['mag']]
                 red_input_info[i]['ZPERR'] = zps_dict_all_err[red_input_info[i]['mag']]
             else:
@@ -860,13 +860,13 @@ def fit(table, input_info_unsorted, mag_locus,
 
 
         ''' make matrix with a full set of locus points for each star '''    
-        locus_matrix = scipy.array(number_all_stars*[locus_list])
-        ref_locus_matrix = scipy.array(number_all_stars*[ref_locus_list])
+        locus_matrix = np.array(number_all_stars*[locus_list])
+        ref_locus_matrix = np.array(number_all_stars*[ref_locus_list])
 	#print(locus_matrix.shape)
 
         ''' assemble matricies to make instrumental measured bands '''
         SeqNr = table.field('SeqNr')
-        A_band = scipy.swapaxes(scipy.swapaxes(scipy.array(number_locus_points*[[table.field(a['mag']) for a in input_info]]),0,2),1,2)
+        A_band = scipy.swapaxes(scipy.swapaxes(np.array(number_locus_points*[[table.field(a['mag']) for a in input_info]]),0,2),1,2)
         n = len(table.field(input_info[0]['mag']))
         def isitJ(name):
             if name.find('JCAT') != -1:
@@ -886,7 +886,7 @@ def fit(table, input_info_unsorted, mag_locus,
 
         ''' make matrix specifying good values '''
 
-        good = scipy.ones(A_band.shape)
+        good = np.ones(A_band.shape)
         good[abs(A_band) == 99] = 0
         good[abs(A_band) == 0] = 0
         good = good[:,0,:]
@@ -915,11 +915,11 @@ def fit(table, input_info_unsorted, mag_locus,
 
             #print(random_indices, len(unique_indices.keys()))
 
-            SeqNr = scipy.array([SeqNr[i] for i in random_indices])             
-            A_band = scipy.array([A_band[i] for i in random_indices])             
-            A_err = scipy.array([A_err[i] for i in random_indices])
-            locus_matrix = scipy.array([locus_matrix[i] for i in random_indices])
-            ref_locus_matrix = scipy.array([ref_locus_matrix[i] for i in random_indices])
+            SeqNr = np.array([SeqNr[i] for i in random_indices])             
+            A_band = np.array([A_band[i] for i in random_indices])             
+            A_err = np.array([A_err[i] for i in random_indices])
+            locus_matrix = np.array([locus_matrix[i] for i in random_indices])
+            ref_locus_matrix = np.array([ref_locus_matrix[i] for i in random_indices])
         
         bands = A_band 
         bands_err = A_err
@@ -932,7 +932,7 @@ def fit(table, input_info_unsorted, mag_locus,
         number_good_stars = len(locus_matrix)
 
         ''' update good matrix after masking '''
-        good = scipy.ones(A_band.shape) 
+        good = np.ones(A_band.shape) 
         good[abs(A_band) == 99] = 0
         good[abs(A_band) == 0] = 0
 
@@ -948,7 +948,7 @@ def fit(table, input_info_unsorted, mag_locus,
             def errfunc(pars,residuals=False,savefig=None):    
                 global itr 
                 stat_tot = 0
-                zp_bands = scipy.zeros((number_good_stars,number_locus_points,len(input_info))) 
+                zp_bands = np.zeros((number_good_stars,number_locus_points,len(input_info))) 
                 for i in range(len(input_info)):
                     a = input_info[i]['mag']
                     zp_bands[:,:,i] = assign_zp(a,pars,zps,zps_hold)
@@ -996,7 +996,7 @@ def fit(table, input_info_unsorted, mag_locus,
                 redchi = chi_squared_total / float(degrees_of_freedom)
 
                 ''' compute reference apparent magnitudes of stars ''' 
-                norm = scipy.swapaxes(scipy.array([spectrum_normalization.tolist()]*5),0,1)
+                norm = scipy.swapaxes(np.array([spectrum_normalization.tolist()]*5),0,1)
                 ref_locus_mags = ref_locus_matrix[scipy.arange(len(match_locus_index)),match_locus_index,:]
                 ref_mags =  norm + ref_locus_mags 
 
@@ -1018,7 +1018,7 @@ def fit(table, input_info_unsorted, mag_locus,
 
                 if residuals:
                     #print(end_of_locus_reject)
-                    end_of_locus = scipy.array([reduce(lambda x,y: x*y, [match_locus_index[i] != x for x in range(end_of_locus_reject)]) for i in range(len(match_locus_index))])
+                    end_of_locus = np.array([reduce(lambda x,y: x*y, [match_locus_index[i] != x for x in range(end_of_locus_reject)]) for i in range(len(match_locus_index))])
                     print(select_diff.shape) 
                     print(dist.shape)
                     print(redchi.shape)
@@ -1029,14 +1029,14 @@ def fit(table, input_info_unsorted, mag_locus,
                 else: return stat_tot
 
             def plot_progress(pars,stat_tot=None,savefig=None):
-                zp_bands = scipy.zeros((number_good_stars,number_locus_points,len(input_info))) 
+                zp_bands = np.zeros((number_good_stars,number_locus_points,len(input_info))) 
                 for i in range(len(input_info)):
                     a = input_info[i]['mag']
                     zp_bands[:,:,i] = assign_zp(a,pars,zps,zps_hold)
 
                 if pre_zps:
-                    pre_zp_bands = scipy.swapaxes(scipy.swapaxes(scipy.array(number_locus_points*[number_good_stars*[[assign_zp(a[0],pars,pre_zps,zps_hold) for a in input_info]]]),0,1),0,0)
-                    pre_zp_bands = scipy.zeros((number_good_stars,number_locus_points,len(pre_zpz))) 
+                    pre_zp_bands = scipy.swapaxes(scipy.swapaxes(np.array(number_locus_points*[number_good_stars*[[assign_zp(a[0],pars,pre_zps,zps_hold) for a in input_info]]]),0,1),0,0)
+                    pre_zp_bands = np.zeros((number_good_stars,number_locus_points,len(pre_zpz))) 
                     for i in range(len(pre_zps)):
                         a = pre_zps[i]
                         zp_bands[:,:,i] = assign_zp(a[0][0],pars,zps,zps_hold)-assign_zp(a[1][0],pars,zps,zps_hold)
@@ -1101,15 +1101,15 @@ def fit(table, input_info_unsorted, mag_locus,
                     print(c1_band1, c1_band2, c2_band1, c2_band2)
 
                     if ind(c1_band1) is not None and ind(c1_band2) is not None and ind(c2_band1) is not None and ind(c2_band2) is not None:
-                        x_color = scipy.array(bands + zp_bands)[:,0,ind(c1_band1)] - scipy.array(bands + zp_bands)[:,0,ind(c1_band2)]
+                        x_color = np.array(bands + zp_bands)[:,0,ind(c1_band1)] - np.array(bands + zp_bands)[:,0,ind(c1_band2)]
 
-                        y_app_mag = scipy.array(bands + zp_bands)[:,0,ind(c2_band1)] 
+                        y_app_mag = np.array(bands + zp_bands)[:,0,ind(c2_band1)] 
                         #print(ind(c2_band1), ind(c2_band2))
 
                         y_color = (bands + zp_bands)[:,0,ind(c2_band1)] - (bands + zp_bands)[:,0,ind(c2_band2)]
 
                         if pre_zps:
-                            pre_x_color = scipy.array((bands + pre_zp_bands)[:,0,color1_index].tolist())
+                            pre_x_color = np.array((bands + pre_zp_bands)[:,0,color1_index].tolist())
                             pre_y_color = (bands + pre_zp_bands)[:,0,color2_index]
 
                         x_err_1 = (bands_err)[:,0,ind(c1_band1)]
@@ -1386,7 +1386,7 @@ def fit(table, input_info_unsorted, mag_locus,
             errors[key] = '%.4f' % scipy.std(l)
         else: errors[key] = -99
 
-        #scipy.cov(scipy.array(l)
+        #scipy.cov(np.array(l)
 
 
         if bootstrap_num > 0 and len(l) > 0:
