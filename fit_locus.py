@@ -558,7 +558,7 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
         ''' if no SDSS, see if there are 2MASS matches '''
         #input_info = utilities.parse_columns(columns_description,fitSDSS=False,noHoldExcept2MASS=True)
         for i in range(len(input_info)):
-            if string.find(input_info[i]['filter'] , 'SDSS') == -1:
+            if input_info[i]['filter'].find('SDSS') == -1:
                 input_info[i]['HOLD_VARY'] = 'VARY'
 
         sdss_info = [{'mag':'j_m', 'plotName':'2MASS J', 'filter': 'J2MASS.res', 'mag_err': 'j_cmsig', 'HOLD_VARY':'HOLD', 'ZP':0.} ]
@@ -844,7 +844,7 @@ def fit(table, input_info_unsorted, mag_locus,
             zps_hold[hold_input_info[i]['mag']] =  hold_input_info[i]['ZP']
 
             ''' if bootstrap, sample uncertaintities of HOLD bands in bootstrap '''
-            if hold_input_info[i].has_key('ZPERR') and string.find(iteration,'bootstrap') != -1:
+            if hold_input_info[i].has_key('ZPERR') and iteration.find('bootstrap') != -1:
                     
                     import random as rd 
                     zp_err = float(hold_input_info[i]['ZPERR'])
@@ -869,12 +869,12 @@ def fit(table, input_info_unsorted, mag_locus,
         A_band = scipy.swapaxes(scipy.swapaxes(scipy.array(number_locus_points*[[table.field(a['mag']) for a in input_info]]),0,2),1,2)
         n = len(table.field(input_info[0]['mag']))
         def isitJ(name):
-            if string.find(name,'JCAT') != -1:
-                return scipy.ones(n)
+            if name.find('JCAT') != -1:
+                return np.ones(n)
             else: 
-                return scipy.zeros(n)                
+                return np.zeros(n)                
 
-        A_err = scipy.swapaxes(scipy.swapaxes(scipy.array(number_locus_points*[[table.field(a['mag_err']) for a in input_info]]),0,2),1,2)
+        A_err = scipy.swapaxes(scipy.swapaxes(np.array(number_locus_points*[[table.field(a['mag_err']) for a in input_info]]),0,2),1,2)
         #print(A_err.shape)
         ''' only use stars with errors less than max_err '''            
 
@@ -904,7 +904,7 @@ def fit(table, input_info_unsorted, mag_locus,
         A_err[A_err<min_err] = min_err 
 
         ''' if a bootstrap iteration, bootstrap with replacement '''
-        if string.find(iteration,'bootstrap') != -1:
+        if iteration.find('bootstrap') != -1:
             length = len(A_band)
             random_indices = []
 	    #unique_indices = {}
@@ -1045,7 +1045,7 @@ def fit(table, input_info_unsorted, mag_locus,
                 #oa.sort(sort_wavelength)
                 oa.sort(key=lambda x: x['center wavelength'])
                 
-                oa_no_ref = filter(lambda x: string.find(x['mag'],'psfMag') == -1 and string.find(x['mag'], 'phot_g_mean_mag') == -1 and string.find(x['mag'], 'PSFMag') == -1, oa)
+                oa_no_ref = filter(lambda x: x['mag'].find('psfMag') == -1 and x['mag'].find('phot_g_mean_mag') == -1 and x['mag'].find('PSFMag') == -1, oa)
 
 
                 def plot_combinations(input):
@@ -1182,7 +1182,7 @@ def fit(table, input_info_unsorted, mag_locus,
 
                             ''' only save figure if savefig is not None '''
                             if savefig is not None: 
-                                if (string.find(iteration,'bootstrap')==-1 or save_bootstrap_plots):
+                                if (iteration.find('bootstrap')==-1 or save_bootstrap_plots):
                                     file = plotdir + '/qc_' + fit_band_zps + '_' + x_color_name.replace(units,'').replace(' ','') + '_' + y_color_name.replace(units,'').replace(' ','') + '_' + savefig.replace(' ','_')
                                     file = file.replace('$','')
                                     print(file)
@@ -1193,11 +1193,11 @@ def fit(table, input_info_unsorted, mag_locus,
 
 
                 def order_plots(a,b):
-                    if string.find(a,'psfMag') != -1 and string.find(b,'psfMag') == -1:
+                    if a.find('psfMag') != -1 and b.find('psfMag') == -1:
                         return 1 
-                    elif string.find(a,'PSFMag') != -1 and string.find(b,'PSFMag') == -1:
+                    elif a.find('PSFMag') != -1 and b.find('PSFMag') == -1:
                         return 1
-                    elif string.find(a,'phot_g_mean_mag') != -1 and string.find(b,'phot_g_mean_mag') == -1:
+                    elif a.find('phot_g_mean_mag') != -1 and b.find('phot_g_mean_mag') == -1:
                         return 1
                     else: 
                         return -1 
@@ -1214,7 +1214,7 @@ def fit(table, input_info_unsorted, mag_locus,
                     for type in ['full_outliers_removed','full_egregious_outliers_removed','no_outlier_rejection']:
                         html.write('<h1>' + type + '</h1>\n')
                         for f in fs:                                                     
-                            if string.find(f.split('/')[-1],type) != -1:
+                            if f.split('/')[-1].find(type) != -1:
                                 html.write('<img src=' + f.split('/')[-1] + '></img><br>\n')
                     html.close()
 
@@ -1377,7 +1377,7 @@ def fit(table, input_info_unsorted, mag_locus,
         l = []
         print(results.keys())
         for r in results.keys():
-            if r != 'full' and r != 'redchi' and r != 'num' and string.find(r,'ref_mags') == -1 and string.find(r,'SeqNr') == -1:
+            if r != 'full' and r != 'redchi' and r != 'num' and r.find('ref_mags') == -1 and r.find('SeqNr') == -1:
                 print(r, key)
                 l.append(results[r][key])
         #print(key+':', scipy.std(l), 'mag')
