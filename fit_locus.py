@@ -867,7 +867,7 @@ def fit(table, input_info_unsorted, mag_locus,
 
         ''' assemble matricies to make instrumental measured bands '''
         SeqNr = table.field('SeqNr')
-        A_band = scipy.swapaxes(scipy.swapaxes(np.array(number_locus_points*[[table.field(a['mag']) for a in input_info]]),0,2),1,2)
+        A_band = np.swapaxes(np.swapaxes(np.array(number_locus_points*[[table.field(a['mag']) for a in input_info]]),0,2),1,2)
         n = len(table.field(input_info[0]['mag']))
         def isitJ(name):
             if name.find('JCAT') != -1:
@@ -875,7 +875,7 @@ def fit(table, input_info_unsorted, mag_locus,
             else: 
                 return np.zeros(n)                
 
-        A_err = scipy.swapaxes(scipy.swapaxes(np.array(number_locus_points*[[table.field(a['mag_err']) for a in input_info]]),0,2),1,2)
+        A_err = np.swapaxes(np.swapaxes(np.array(number_locus_points*[[table.field(a['mag_err']) for a in input_info]]),0,2),1,2)
         #print(A_err.shape)
         ''' only use stars with errors less than max_err '''            
 
@@ -997,7 +997,7 @@ def fit(table, input_info_unsorted, mag_locus,
                 redchi = chi_squared_total / float(degrees_of_freedom)
 
                 ''' compute reference apparent magnitudes of stars ''' 
-                norm = scipy.swapaxes(np.array([spectrum_normalization.tolist()]*5),0,1)
+                norm = np.swapaxes(np.array([spectrum_normalization.tolist()]*5),0,1)
                 ref_locus_mags = ref_locus_matrix[scipy.arange(len(match_locus_index)),match_locus_index,:]
                 ref_mags =  norm + ref_locus_mags 
 
@@ -1036,7 +1036,7 @@ def fit(table, input_info_unsorted, mag_locus,
                     zp_bands[:,:,i] = assign_zp(a,pars,zps,zps_hold)
 
                 if pre_zps:
-                    pre_zp_bands = scipy.swapaxes(scipy.swapaxes(np.array(number_locus_points*[number_good_stars*[[assign_zp(a[0],pars,pre_zps,zps_hold) for a in input_info]]]),0,1),0,0)
+                    pre_zp_bands = np.swapaxes(np.swapaxes(np.array(number_locus_points*[number_good_stars*[[assign_zp(a[0],pars,pre_zps,zps_hold) for a in input_info]]]),0,1),0,0)
                     pre_zp_bands = np.zeros((number_good_stars,number_locus_points,len(pre_zpz))) 
                     for i in range(len(pre_zps)):
                         a = pre_zps[i]
