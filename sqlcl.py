@@ -158,7 +158,7 @@ def panstarrs_ebv(lon, lat, coordsys='equ', mode='full'): #holden# problem here,
  
     bayestar = BayestarQuery(map_fname="/fs/ddn/sdf/group/kipac/u/awright/bayestar2019.h5") # 'bayestar2019' is the default
     coords = SkyCoord(ra=lon*units.deg, dec=lat*units.deg,
-                    frame='ircs')
+                    frame='icrs')
 
     reddening = bayestar(coords, mode='median')
     print(reddening)
