@@ -960,7 +960,7 @@ def fit(table, input_info_unsorted, mag_locus,
                 denom_prelim[good == 0] = 0.
                 denom = (denom_prelim.sum(axis=2))
                 mean = num / denom
-                mean_array = scipy.dstack(len(input_info)*[mean])
+                mean_array = np.dstack(len(input_info)*[mean])
 
                 ds_prelim = (bands - locus_matrix + zp_bands - mean_array)**2. #/ ds_err**2. 
                 ds_prelim[good == 0] = 0
