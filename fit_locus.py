@@ -585,8 +585,12 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
     info_hold = list(filter(lambda x: x['HOLD_VARY'] == 'HOLD',input_info))        
     info_vary = list(filter(lambda x: x['HOLD_VARY'] == 'VARY',input_info))        
 
-    info_hold.sort(sort_wavelength) 
-    info_vary.sort(sort_wavelength)
+    #info_hold.sort(sort_wavelength) 
+    #info_vary.sort(sort_wavelength)
+
+    info_hold.sort(key=lambda x: x['center wavelength'])
+    info_vary.sort(key=lambda x: x['center wavelength'])
+
 
     ''' recombine '''
     input_info = info_hold + info_vary
