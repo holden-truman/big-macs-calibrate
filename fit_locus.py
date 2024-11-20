@@ -975,13 +975,13 @@ def fit(table, input_info_unsorted, mag_locus,
 
                 ''' these two are not necessarily the same star '''
                 match_locus_index = resid.argmin(axis=1) ## closest locus to each star
-                select_diff = resid[scipy.arange(len(match_locus_index)),match_locus_index]
-                select_sum = resid_sum[scipy.arange(len(match_locus_index)),match_locus_index]
+                select_diff = resid[np.arange(len(match_locus_index)),match_locus_index]
+                select_sum = resid_sum[np.arange(len(match_locus_index)),match_locus_index]
 
-                select_good = good[scipy.arange(len(match_locus_index)),match_locus_index]
+                select_good = good[np.arange(len(match_locus_index)),match_locus_index]
 
-                dist = ds[scipy.arange(len(match_locus_index)),match_locus_index]
-                spectrum_normalization = mean[scipy.arange(len(match_locus_index)),match_locus_index]
+                dist = ds[np.arange(len(match_locus_index)),match_locus_index]
+                spectrum_normalization = mean[np.arange(len(match_locus_index)),match_locus_index]
 
                 print('good', good.sum())
                                                                                    
@@ -998,7 +998,7 @@ def fit(table, input_info_unsorted, mag_locus,
 
                 ''' compute reference apparent magnitudes of stars ''' 
                 norm = np.swapaxes(np.array([spectrum_normalization.tolist()]*5),0,1)
-                ref_locus_mags = ref_locus_matrix[scipy.arange(len(match_locus_index)),match_locus_index,:]
+                ref_locus_mags = ref_locus_matrix[np.arange(len(match_locus_index)),match_locus_index,:]
                 ref_mags =  norm + ref_locus_mags 
 
                 stat_tot = chi_squared_total #select_diff.sum()
