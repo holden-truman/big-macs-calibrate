@@ -1194,7 +1194,6 @@ def fit(table, input_info_unsorted, mag_locus,
                                     plt.savefig(file)
 
 
-                #holden# NOT USED ANYMORE
                 def order_plots(a):
                     # Define a numerical value based on the type of string for sorting
                     if a.find('psfMag') != -1:
