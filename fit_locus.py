@@ -572,7 +572,7 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
     ''' check to see if at least one but not all filter is held constant '''
     if not list(filter(lambda x: x['HOLD_VARY'] == 'HOLD', input_info)): 
         raise Exception('None of your magnitudes is held fixed (i.e., HOLD_VARY HOLD)')
-    #if not filter(lambda x: x['HOLD_VARY'] == 'VARY', input_info): 
+    #if not list(filter(lambda x: x['HOLD_VARY'] == 'VARY', input_info)): 
 	    #raise Exception('All of your magnitudes are held fixed (i.e., HOLD_VARY VARY)')
 
     filters = utilities.get_filters([[a['mag'], a['filter']] for a in input_info])
@@ -631,7 +631,7 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
     #fulltable.data = fulltable.data[:100]
 
     ''' if not SeqNr column, add one '''
-    #if not filter(lambda x: x.name=='SeqNr', fulltable.columns): 
+    #if not list(filter(lambda x: x.name=='SeqNr', fulltable.columns)): 
     if not any(x.name == 'SeqNr' for x in fulltable.columns):
         cols = []
         for col in fulltable.columns:
@@ -665,7 +665,7 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
     def update_zps(zps_dict_all,zps_dict_all_err, cal_type, results, red_or_blue):
         #if not combo['hold'] in zps_dict_all:
         #    zps_dict_all[combo['hold']] = 0.
-        for key in results['full'].keys(): #filter(lambda x: x['HOLD_VARY']=='VARY', input_info): 
+        for key in results['full'].keys(): #list(filter(lambda x: x['HOLD_VARY']=='VARY', input_info)): 
             if results['hold_vary'][key] == 'VARY':
                 zps_dict_all[key] = results['full'][key]
                 zps_dict_all_err[key] = results['errors'][key]
