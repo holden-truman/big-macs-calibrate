@@ -797,8 +797,8 @@ def fit(table, input_info_unsorted, mag_locus,
 	      'figure.figsize' : fig_size}
     mpl.rcParams.update(params)
 
-    vary_input_info = filter(lambda x: x['HOLD_VARY'] == 'VARY', input_info_unsorted)
-    hold_input_info = filter(lambda x: x['HOLD_VARY'] == 'HOLD', input_info_unsorted)
+    vary_input_info = list(filter(lambda x: x['HOLD_VARY'] == 'VARY', input_info_unsorted))
+    hold_input_info = list(filter(lambda x: x['HOLD_VARY'] == 'HOLD', input_info_unsorted))
 
     print([a['filter'] for a in vary_input_info])
     print([a['filter'] for a in hold_input_info])
