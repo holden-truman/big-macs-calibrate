@@ -245,7 +245,7 @@ def compute_ext(filt, N=0.78):
     ''' source flux is ergs / s / Ang '''
     filt_wavelength = filt['wavelength']
     filt_response = filt['response']
-    throw_out = scipy.zeros(len(filt_wavelength))
+    throw_out = np.zeros(len(filt_wavelength))
 
     ''' trim off zero-valued tails of response function'''
     for i in range(len(filt_wavelength)):
@@ -263,8 +263,8 @@ def compute_ext(filt, N=0.78):
 
     #print(scipy.array([(filt_wavelength[i]) for i in range(len(filt_wavelength[:-1]))]))
     #print(scipy.array([fitzpatrick(filt_wavelength[i]) for i in range(len(filt_wavelength[:-1]))]))
-    numerator = scipy.array([10.**(fitzpatrick(filt_wavelength[i])/-2.5)*sedSpline(filt_wavelength[i])*filt_wavelength[i]*(filt_response[i])*(filt_wavelength[i+1]-filt_wavelength[i]) for i in range(len(filt_wavelength[:-1]))])
-    denom = scipy.array([sedSpline(filt_wavelength[i])*filt_wavelength[i]*(filt_response[i])*(filt_wavelength[i+1]-filt_wavelength[i]) for i in range(len(filt_wavelength[:-1]))])
+    numerator = np.array([10.**(fitzpatrick(filt_wavelength[i])/-2.5)*sedSpline(filt_wavelength[i])*filt_wavelength[i]*(filt_response[i])*(filt_wavelength[i+1]-filt_wavelength[i]) for i in range(len(filt_wavelength[:-1]))])
+    denom = np.array([sedSpline(filt_wavelength[i])*filt_wavelength[i]*(filt_response[i])*(filt_wavelength[i+1]-filt_wavelength[i]) for i in range(len(filt_wavelength[:-1]))])
 
     coeff = -2.5*math.log10(numerator.sum()/denom.sum()) 
 
