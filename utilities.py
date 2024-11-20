@@ -180,7 +180,7 @@ def parse_columns(columns_description, fitSDSS=False, noHoldExceptSDSS=False, no
     
 
 def get_filters(flist = [['USDSS','SDSS-u.res'],['GSDSS','SDSS-g.res'],['RSDSS','SDSS-r.res'],['ISDSS','SDSS-i.res'],['ZSDSS','SDSS-z.res']]):
-
+    import numpy as np
     filt_dir = os.environ['BIGMACS'] + '/FILTERS/'
 
     #flist = [{'mag':'USDSS','filter':'SDSS-u.res'},{'mag':'GSDSS','filter':'SDSS-g.res'},{'mag':'RSDSS','filter':'SDSS-r.res'},{'mag':'ISDSS','filter':'SDSS-i.res'},{'mag':'ZSDSS','filter':'SDSS-z.res'}]
@@ -188,12 +188,12 @@ def get_filters(flist = [['USDSS','SDSS-u.res'],['GSDSS','SDSS-g.res'],['RSDSS',
     filters = []
     for filt_name, filt_file in flist:
         file = filt_dir + filt_file
-        filt = scipy.loadtxt(file)
+        filt = np.loadtxt(file)
         step = filt[1,0] - filt[0,0]
         if filt[0,0] > filt[-1,0]:
             filt_list = filt.tolist()
             filt_list.reverse()
-            filt = scipy.array(filt_list)
+            filt = np.array(filt_list)
 
         filterSpline = scipy.interpolate.interp1d(filt[:,0], filt[:,1], 
                                        bounds_error = False, 
