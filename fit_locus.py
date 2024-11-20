@@ -1230,7 +1230,7 @@ def fit(table, input_info_unsorted, mag_locus,
                     pinit = []                                                                                                               
                     for i in range(len(hold_input_info),len(input_info)):
                         key = input_info[i]['mag'] ## varying magnitudes
-                        info_hold = filter(lambda x: x['HOLD_VARY'] == 'HOLD', input_info) #[0]['mag']
+                        info_hold = list(filter(lambda x: x['HOLD_VARY'] == 'HOLD', input_info)) #[0]['mag']
                         ''' calculate average color for actual and model locus '''
                         diff = A_band[:,0,i] - A_band[:,0,0]
                         print(A_band.shape, good.shape)
