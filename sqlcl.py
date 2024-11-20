@@ -176,12 +176,13 @@ def panstarrs_ebv(lon, lat, coordsys='equ', mode='full'): #holden# problem here,
     coords = SkyCoord(ra=lon*units.deg, dec=lat*units.deg,
                     frame='icrs')
 
-    reddening = sfd(coords)
+    ebv = sfd(coords)
+    return ebv
+
     print("REDDENING")
     print(reddening)
     print(lon)
     print(lat)
-    return .02599999999
 
 
     #return 0.025999999999999995
