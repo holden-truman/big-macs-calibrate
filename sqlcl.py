@@ -157,7 +157,7 @@ def panstarrs_ebv(lon, lat, coordsys='equ', mode='full'): #holden# problem here,
     from dustmaps.bayestar import BayestarQuery
     print(lon)
     print(lat)
-    bayestar = SFDQuery()
+    bayestar = BayestarQuery(map_fname="/fs/ddn/sdf/group/kipac/u/awright/bayestar2019.h5")
     coords = SkyCoord(ra=lon*units.deg, dec=lat*units.deg,
                     frame='icrs')
 
