@@ -135,7 +135,7 @@ def synthesize_expected_locus_for_observations(filters):
         #stitchSpec = scipy.genfromtxt(os.environ['BIGMACS'] + '/XSL_Pic/' + locus_point)
 
         ''' do not synthesize 2MASS filters '''
-        mags = synth([1.,0,0,0],[[stitchSpec]],filter(lambda x: string.find(x['filter'],'2MASS') == -1, filters + SDSS_filters)) 
+        mags = synth([1.,0,0,0],[[stitchSpec]],filter(lambda x: x['filter'].find('2MASS') == -1, filters + SDSS_filters)) 
 
         ''' not synthesizing the 2MASS magnitudes '''
         for filt in filters:
