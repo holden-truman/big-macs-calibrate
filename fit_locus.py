@@ -635,7 +635,7 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
         cols = []
         for col in fulltable.columns:
             cols.append(col)
-        cols.append(fits.Column(name='SeqNr',format='J',array=scipy.arange(len(fulltable.data))))
+        cols.append(fits.Column(name='SeqNr',format='J',array=np.arange(len(fulltable.data))))
         hdu = fits.PrimaryHDU()
         hdulist = fits.HDUList([hdu])
         fulltable = fits.BinTableHDU.from_columns(cols)
