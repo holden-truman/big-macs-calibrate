@@ -1194,6 +1194,7 @@ def fit(table, input_info_unsorted, mag_locus,
                                     plt.savefig(file)
 
 
+                #holden# NOT USED ANYMORE
                 def order_plots(a,b):
                     if a.find('psfMag') != -1 and b.find('psfMag') == -1:
                         return 1 
@@ -1209,7 +1210,7 @@ def fit(table, input_info_unsorted, mag_locus,
                     fs = glob(plotdir + '/qc_*png')                                                                 
                     print(fs)
                     ''' put non-reference plots first '''
-                    fs.sort(order_plots)
+                    fs.sort(key=order_plots)
                     print(fs)
                     html = open(plotdir + '/all.html','w')
                     html.write('<html>\n')
