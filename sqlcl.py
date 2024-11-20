@@ -161,6 +161,7 @@ def panstarrs_ebv(lon, lat, coordsys='equ', mode='full'): #holden# problem here,
                     frame='icrs')
 
     reddening = bayestar(coords, mode='median')
+    print("REDDENING")
     print(reddening)
     #print(reddening[best])
     return .02599999999
