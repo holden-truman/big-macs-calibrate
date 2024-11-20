@@ -85,8 +85,8 @@ def synth(p,spectra,filters,show=False):
 
             val += abs(coeff)*sum(specStep * resampFilter[:-1] * spec[:-1,0] * spec[:-1,1]) # photon counting!!
 
-        logEff = scipy.log10(val)                                        
-        logNorm = scipy.log10(3631*sum(resampFilter[:-1]*c*specStep/spec[:-1,0]))
+        logEff = np.log10(val)                                        
+        logNorm = np.log10(3631*sum(resampFilter[:-1]*c*specStep/spec[:-1,0]))
         mag = 2.5*(logNorm - logEff - 23) # to calculate an AB magnitude
     
         mags[filt['name']]=mag
