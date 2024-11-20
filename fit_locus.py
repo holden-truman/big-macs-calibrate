@@ -433,11 +433,11 @@ def get_catalog_parameters(fulltable, racol, deccol):
     import numpy as np
 
     import scipy
-    #DEC = scipy.median(fulltable.data.field(deccol))
+    #DEC = np.median(fulltable.data.field(deccol))
     DEC = (fulltable.data.field(deccol).min() + fulltable.data.field(deccol).max())/2.
     DEC_DIFF_SQ = ((fulltable.data.field(deccol) - DEC) * 60.)**2.
 
-    #RA = scipy.median(fulltable.data.field(racol))
+    #RA = np.median(fulltable.data.field(racol))
     RA = (fulltable.data.field(racol).min() + fulltable.data.field(racol).max())/2.
     RA_DIFF_SQ = ((fulltable.data.field(racol) - RA) * 60. * np.cos(DEC))**2.
 
@@ -1245,9 +1245,9 @@ def fit(table, input_info_unsorted, mag_locus,
                         if len(diff) == 0:
                             print('no stars have good measurements in relevant bands')
                             raise Exception 
-                        median_instrumental = scipy.median(diff)
+                        median_instrumental = np.median(diff)
                         locus_here = [mag_locus[x][input_info[i]['mag']] - mag_locus[x][info_hold[0]['mag']] for x in range(len(mag_locus))]
-                        median_locus = scipy.median(locus_here)
+                        median_locus = np.median(locus_here)
                         pinit.append(median_locus - median_instrumental)
 
 
