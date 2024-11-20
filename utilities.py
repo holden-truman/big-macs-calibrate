@@ -232,11 +232,10 @@ def compute_ext(filt, N=0.78):
 
     a = flux / longwave**-3.
 
-    for wave in scipy.arange(11500,20000,25):
+    for wave in np.arange(11500,20000,25):
         wavelength.append(wave)
         source.append(a*wave**-3.)
 
-    import scipy
     from scipy import interpolate
     sedSpline = interpolate.interp1d(wavelength, source, 
                                    bounds_error = True, 
