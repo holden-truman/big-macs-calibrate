@@ -1195,15 +1195,16 @@ def fit(table, input_info_unsorted, mag_locus,
 
 
                 #holden# NOT USED ANYMORE
-                def order_plots(a,b):
-                    if a.find('psfMag') != -1 and b.find('psfMag') == -1:
-                        return 1 
-                    elif a.find('PSFMag') != -1 and b.find('PSFMag') == -1:
-                        return 1
-                    elif a.find('phot_g_mean_mag') != -1 and b.find('phot_g_mean_mag') == -1:
-                        return 1
-                    else: 
-                        return -1 
+                def order_plots(a):
+                    # Define a numerical value based on the type of string for sorting
+                    if a.find('psfMag') != -1:
+                        return 1  # Prioritize 'psfMag' entries
+                    elif a.find('PSFMag') != -1:
+                        return 2  # Prioritize 'PSFMag' entries
+                    elif a.find('phot_g_mean_mag') != -1:
+                        return 3  # Prioritize 'phot_g_mean_mag' entries
+                    else:
+                        return 4  # For other entries, the least priority
 
                 if savefig is not None:
                                                             
