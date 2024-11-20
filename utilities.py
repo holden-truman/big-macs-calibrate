@@ -198,7 +198,7 @@ def get_filters(flist = [['USDSS','SDSS-u.res'],['GSDSS','SDSS-g.res'],['RSDSS',
         filterSpline = scipy.interpolate.interp1d(filt[:,0], filt[:,1], 
                                        bounds_error = False, 
                                        fill_value = 0.)
-        filters.append({'wavelength':filt[:,0],'response':filt[:,1],'spline':copy(filterSpline),'step':copy(step),'name':copy(filt_name),'center wavelength': scipy.average(filt[:,0],weights=filt[:,1])})
+        filters.append({'wavelength':filt[:,0],'response':filt[:,1],'spline':copy(filterSpline),'step':copy(step),'name':copy(filt_name),'center wavelength': numpy.average(filt[:,0],weights=filt[:,1])})
 
     return filters
 
