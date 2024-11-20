@@ -155,8 +155,6 @@ def panstarrs_ebv(lon, lat, coordsys='equ', mode='full'): #holden# problem here,
     from astropy.coordinates import SkyCoord
     import astropy.units as units
     from dustmaps.bayestar import BayestarQuery
-    print(lon)
-    print(lat)
     bayestar = BayestarQuery(map_fname="/fs/ddn/sdf/group/kipac/u/awright/bayestar2019.h5")
     coords = SkyCoord(ra=lon*units.deg, dec=lat*units.deg,
                     frame='icrs')
@@ -164,6 +162,8 @@ def panstarrs_ebv(lon, lat, coordsys='equ', mode='full'): #holden# problem here,
     reddening = bayestar(coords, mode='median')
     print("REDDENING")
     print(reddening)
+    print(lon)
+    print(lat)
     #print(reddening[best])
     return .02599999999
 
