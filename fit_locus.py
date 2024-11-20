@@ -1235,7 +1235,7 @@ def fit(table, input_info_unsorted, mag_locus,
                         diff = A_band[:,0,i] - A_band[:,0,0]
                         print(A_band.shape, good.shape)
                         good_diff = good[:,0,i] + good[:,0,0]
-                        print(scipy.sum(good[:,0,i]), 'number of good measurements in band')
+                        print(np.sum(good[:,0,i]), 'number of good measurements in band')
                         #diff = diff[good_diff == 2]
                         ind = np.where(good_diff == 2)
                         diff = diff[ind[0]]
