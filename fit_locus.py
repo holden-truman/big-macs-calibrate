@@ -570,7 +570,7 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
 
     
     ''' check to see if at least one but not all filter is held constant '''
-    if not filter(lambda x: x['HOLD_VARY'] == 'HOLD', input_info): 
+    if not list(filter(lambda x: x['HOLD_VARY'] == 'HOLD', input_info)): 
         raise Exception('None of your magnitudes is held fixed (i.e., HOLD_VARY HOLD)')
     #if not filter(lambda x: x['HOLD_VARY'] == 'VARY', input_info): 
 	    #raise Exception('All of your magnitudes are held fixed (i.e., HOLD_VARY VARY)')
@@ -1047,7 +1047,7 @@ def fit(table, input_info_unsorted, mag_locus,
                 #oa.sort(sort_wavelength)
                 oa.sort(key=lambda x: x['center wavelength'])
                 
-                oa_no_ref = filter(lambda x: x['mag'].find('psfMag') == -1 and x['mag'].find('phot_g_mean_mag') == -1 and x['mag'].find('PSFMag') == -1, oa)
+                oa_no_ref = list(filter(lambda x: x['mag'].find('psfMag') == -1 and x['mag'].find('phot_g_mean_mag') == -1 and x['mag'].find('PSFMag') == -1, oa))
 
 
                 def plot_combinations(input):
