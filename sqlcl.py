@@ -93,7 +93,7 @@ def gaia_query(file, query, EBV):
         gaia_data.remove_column('phot_' + c +'_mean_flux')
         gaia_data.remove_column('phot_' + c +'_mean_flux_error')
         
-    gaia_data.write(file + '.csv', format='ascii.csv', overwrite=True)
+    gaia_data.write(file + '.cuts.csv', format='ascii.csv', overwrite=True)
 
 
 def panstarrs_ebv(lon, lat, coordsys='equ', mode='full'): #holden# problem here, code is directly from api, but errors
