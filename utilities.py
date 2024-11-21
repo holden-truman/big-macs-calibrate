@@ -189,10 +189,6 @@ def get_filters(flist = [['USDSS','SDSS-u.res'],['GSDSS','SDSS-g.res'],['RSDSS',
     filters = []
     for filt_name, filt_file in flist:
         file = filt_dir + filt_file
-        print("filt_file=",file)
-        
-    for filt_name, filt_file in flist:
-        file = filt_dir + filt_file
         filt = np.loadtxt(file)
         step = filt[1,0] - filt[0,0]
         if filt[0,0] > filt[-1,0]:
