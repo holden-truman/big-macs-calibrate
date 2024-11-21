@@ -189,6 +189,13 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
                     catalogStars[returned_keys[i]].append(float(res[i]))
 
     elif survey == 'Gaia':
+        """
+        Change to ra, dec, psf mag, psf mag err, and kron mag
+        SELECT ra, dec, bp_rp, \
+                phot_g_mean_flux, phot_g_mean_flux_error,  \
+                            phot_bp_mean_flux, phot_bp_mean_flux_error, \
+                            phot_rp_mean_flux, phot_rp_mean_flux_error \
+        """
         import sqlcl
         ''' Gaia ADQL, Radius in degrees. Color excess cut:
         https://gea.esac.esa.int/archive/documentation/GDR2/Data_processing/chap_cu5pho/sec_cu5pho_qa/ssec_cu5pho_excessflux.html '''
