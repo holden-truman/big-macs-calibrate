@@ -206,6 +206,7 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
         print(query)
         
         EBV, gallong, gallat = galactic_extinction_and_coordinates(RA,DEC)
+        print("FILE=",file)
         sqlcl.gaia_query(file, query, EBV)	
 
         with open(file + '.cut.csv') as ref_cat:
