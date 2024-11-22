@@ -212,7 +212,7 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
                             AND phot_bp_rp_excess_factor > (1.0 + 0.015*bp_rp*bp_rp) AND phot_bp_rp_excess_factor < (1.3 + 0.06*bp_rp*bp_rp) "
                             ## AND bp_rp >  0.6 AND bp_rp < 1.6 "
         '''
-        query = "SELECT ra, dec, \
+        query = "SELECT ra, dec, bp_rp, \
                 phot_g_mean_flux, phot_g_mean_flux_error  \
                             FROM gaiadr2.gaia_source \
                             WHERE 1=CONTAINS( POINT('ICRS',ra,dec), BOX('ICRS'," + str(RA) + "," + str(DEC) + "," + str(RAD) + ", " + str(RAD) + ")) \
