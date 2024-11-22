@@ -1257,9 +1257,9 @@ def fit(table, input_info_unsorted, mag_locus,
 
                         print(key, len(diff))
                   
-                        if len(diff) == 0:
+                        if len(diff) == 0: #holden# this is always zero for gaia, need to figure out why (am I not anchoring to a band? or am I anchoring to all?)
                             print('no stars have good measurements in relevant bands')
-                            #holden# raise Exception 
+                            raise Exception 
                         median_instrumental = np.median(diff)
                         locus_here = [mag_locus[x][input_info[i]['mag']] - mag_locus[x][info_hold[0]['mag']] for x in range(len(mag_locus))]
                         median_locus = np.median(locus_here)
