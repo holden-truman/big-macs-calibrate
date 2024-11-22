@@ -1259,7 +1259,7 @@ def fit(table, input_info_unsorted, mag_locus,
                   
                         if len(diff) == 0:
                             print('no stars have good measurements in relevant bands')
-                            raise Exception 
+                            #holden# raise Exception 
                         median_instrumental = np.median(diff)
                         locus_here = [mag_locus[x][input_info[i]['mag']] - mag_locus[x][info_hold[0]['mag']] for x in range(len(mag_locus))]
                         median_locus = np.median(locus_here)
