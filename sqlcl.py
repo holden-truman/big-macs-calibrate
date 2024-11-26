@@ -49,7 +49,7 @@ def query(sql,url=default_url,fmt=default_fmt):
 def gaia_query(file, query, EBV):
     from astroquery.gaia import Gaia
     from astropy.table import Table
-    Gaia.MAIN_GAIA_TABLE = "gaiadr2.gaia_source"  # Reselect Data Release 3, default
+    Gaia.MAIN_GAIA_TABLE = "gaiadr3.gaia_source"  # Reselect Data Release 3, default
     import numpy as np
     ''' Que Gaia SQL server '''
     job = Gaia.launch_job_async(query)
