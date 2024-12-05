@@ -552,11 +552,11 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
 
         #gaia_info = [{'mag':'ab_g', 'plotName':'Gaia G' , 'filter': 'Gaia_dr2_revised.g.res', 'mag_err': 'phot_g_mean_mag_error', 'HOLD_VARY':'HOLD', 'ZP':0.}]
         #gaia_info = [ {'mag':'ab_bp', 'plotName':'Gaia Gbp' , 'filter': 'Gaia_dr2_revised.bp.res', 'mag_err': 'phot_bp_mean_mag_error', 'HOLD_VARY':'HOLD', 'ZP':0.}]
-        gaia_info = [{'mag':'ab_rp', 'plotName':'Gaia Grp' , 'filter': 'Gaia_dr2_revised.rp.res', 'mag_err': 'phot_rp_mean_mag_error', 'HOLD_VARY':'HOLD', 'ZP':0.}]
+        #gaia_info = [{'mag':'ab_rp', 'plotName':'Gaia Grp' , 'filter': 'Gaia_dr2_revised.rp.res', 'mag_err': 'phot_rp_mean_mag_error', 'HOLD_VARY':'HOLD', 'ZP':0.}]
         
-        #gaia_info = [{'mag':'ab_g', 'plotName':'Gaia G' , 'filter': 'Gaia_dr2_revised.g.res', 'mag_err': 'phot_g_mean_mag_error', 'HOLD_VARY':'HOLD', 'ZP':0.},\
-                #{'mag':'ab_bp', 'plotName':'Gaia Gbp' , 'filter': 'Gaia_dr2_revised.bp.res', 'mag_err': 'phot_bp_mean_mag_error', 'HOLD_VARY':'HOLD', 'ZP':0.},\
-                #{'mag':'ab_rp', 'plotName':'Gaia Grp' , 'filter': 'Gaia_dr2_revised.rp.res', 'mag_err': 'phot_rp_mean_mag_error', 'HOLD_VARY':'HOLD', 'ZP':0.} ]
+        gaia_info = [{'mag':'ab_g', 'plotName':'Gaia G' , 'filter': 'Gaia_dr2_revised.g.res', 'mag_err': 'phot_g_mean_mag_error', 'HOLD_VARY':'HOLD', 'ZP':0.},\
+                {'mag':'ab_bp', 'plotName':'Gaia Gbp' , 'filter': 'Gaia_dr2_revised.bp.res', 'mag_err': 'phot_bp_mean_mag_error', 'HOLD_VARY':'HOLD', 'ZP':0.},\
+                {'mag':'ab_rp', 'plotName':'Gaia Grp' , 'filter': 'Gaia_dr2_revised.rp.res', 'mag_err': 'phot_rp_mean_mag_error', 'HOLD_VARY':'HOLD', 'ZP':0.} ]
         '''
         gaia_info = [{'mag':'ab_g', 'plotName':'Gaia G' , 'filter': 'Gaia_dr3.g.res', 'mag_err': 'phot_g_mean_mag_error', 'HOLD_VARY':'HOLD', 'ZP':0.},\
                 {'mag':'ab_bp', 'plotName':'Gaia Gbp' , 'filter': 'Gaia_dr3.bp.res', 'mag_err': 'phot_bp_mean_mag_error', 'HOLD_VARY':'HOLD', 'ZP':0.},\
