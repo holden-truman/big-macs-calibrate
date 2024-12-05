@@ -49,7 +49,7 @@ def query(sql,url=default_url,fmt=default_fmt):
 def gaia_query(file, query, EBV):
     from astroquery.gaia import Gaia
     from astropy.table import Table
-    Gaia.MAIN_GAIA_TABLE = "gaiadr3.gaia_source"  # Reselect Data Release 3, default
+    Gaia.MAIN_GAIA_TABLE = "gaiadr2.gaia_source"  # Reselect Data Release 3, default
     import numpy as np
     ''' Que Gaia SQL server '''
     job = Gaia.launch_job_async(query)
@@ -62,7 +62,8 @@ def gaia_query(file, query, EBV):
     coeffs = {'kg':[0.9761, -0.1704, 0.0086, 0.0011, -0.0438, 0.0013, 0.0099], \
 	         'kbp':[1.1517, -0.0871, -0.0333, 0.0173, -0.0230, 0.0006, 0.0043], \
 		 'krp':[0.6104, -0.0170, -0.0026, -0.0017, -0.0078, 0.00005, 0.0006] }
-    
+    #holden# change this stuff for DR3?
+
     Av = 3.1 * EBV
     bp_rp = gaia_data['bp_rp']
     c_terms = [np.ones(bp_rp.shape), bp_rp, bp_rp**2, bp_rp**3, Av, Av**2, bp_rp*Av]
