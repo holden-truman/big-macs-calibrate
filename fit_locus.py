@@ -599,7 +599,7 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
 
 
     ''' separate into mag ZPs to be held fixed and varied '''
-    info_hold = list(filter(lambda x: x['HOLD_VARY'] == 'HOLD',input_info))        
+    info_hold = list(filter(lambda x: x['HOLD_VARY'] == 'HOLD',input_info)) #make sure r and g show up here        
     info_vary = list(filter(lambda x: x['HOLD_VARY'] == 'VARY',input_info))        
 
     #info_hold.sort(sort_wavelength) 
