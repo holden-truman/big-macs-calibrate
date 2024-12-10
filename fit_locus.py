@@ -205,7 +205,7 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
                 phot_g_mean_flux, phot_g_mean_flux_error,  \
                             phot_bp_mean_flux, phot_bp_mean_flux_error, \
                             phot_rp_mean_flux, phot_rp_mean_flux_error \
-                            FROM gaiadr2.gaia_source \
+                            FROM gaiadr3.gaia_source \
                             WHERE 1=CONTAINS( POINT('ICRS',ra,dec), BOX('ICRS'," + str(RA) + "," + str(DEC) + "," + str(RAD) + ", " + str(RAD) + ")) \
                             AND phot_g_mean_mag<=19 AND phot_bp_mean_mag>=5 AND phot_rp_mean_mag>=5 \
                             AND phot_bp_rp_excess_factor > (1.0 + 0.015*bp_rp*bp_rp) AND phot_bp_rp_excess_factor < (1.3 + 0.06*bp_rp*bp_rp) "
@@ -550,7 +550,7 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
         for i in range(len(input_info)):
             input_info[i]['HOLD_VARY'] = 'VARY'
 
-        gaia_info = [{'mag':'ab_g', 'plotName':'Gaia G' , 'filter': 'Gaia_dr2_revised.g.res', 'mag_err': 'phot_g_mean_mag_error', 'HOLD_VARY':'HOLD', 'ZP':0.}]
+        #gaia_info = [{'mag':'ab_g', 'plotName':'Gaia G' , 'filter': 'Gaia_dr2_revised.g.res', 'mag_err': 'phot_g_mean_mag_error', 'HOLD_VARY':'HOLD', 'ZP':0.}]
         #gaia_info = [ {'mag':'ab_bp', 'plotName':'Gaia Gbp' , 'filter': 'Gaia_dr2_revised.bp.res', 'mag_err': 'phot_bp_mean_mag_error', 'HOLD_VARY':'HOLD', 'ZP':0.}]
         #gaia_info = [{'mag':'ab_rp', 'plotName':'Gaia Grp' , 'filter': 'Gaia_dr2_revised.rp.res', 'mag_err': 'phot_rp_mean_mag_error', 'HOLD_VARY':'HOLD', 'ZP':0.}]
         
@@ -563,6 +563,8 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
                 {'mag':'ab_rp', 'plotName':'Gaia Grp' , 'filter': 'Gaia_dr3.rp.res', 'mag_err': 'phot_rp_mean_mag_error', 'HOLD_VARY':'HOLD', 'ZP':0.} ]
         '''
         #holden# confirm the data in these files are correct
+        gaia_info = [{'mag':'ab_g', 'plotName':'Gaia G' , 'filter': 'Gaia_dr3.g.res', 'mag_err': 'phot_g_mean_mag_error', 'HOLD_VARY':'HOLD', 'ZP':0.}]
+
         for filt_dict in gaia_info:
             ''' avoid duplicate filters -- will override '''
             if filt_dict['mag'] not in [f['mag'] for f in input_info]:
@@ -740,7 +742,7 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
     output_string = '' 
 
     if foundSDSS: 
-        output_string += '#  USED ' + str(foundSDSS) + ' MATCHED SDSS STARS \n'
+        output_string += '#  USED ' + str(foundpa) + ' MATCHED SDSS STARS \n'
     if found2MASS:
         output_string += '#  USED ' + str(found2MASS) + ' MATCHED 2MASS STARS \n'
     if foundPanSTARRS:
