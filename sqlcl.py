@@ -69,14 +69,15 @@ def gaia_query(file, query, EBV, DR = 3):
                     'kbp':[1.1517, -0.0871, -0.0333, 0.0173, -0.0230, 0.0006, 0.0043], \
                     'krp':[0.6104, -0.0170, -0.0026, -0.0017, -0.0078, 0.00005, 0.0006] }
         c_terms = [np.ones(bp_rp.shape), bp_rp, bp_rp**2, bp_rp**3, Av, Av**2, bp_rp*Av] 
-        zps_ab = { 'g':25.7934, 'bp':25.3806, 'rp':25.1161} #DR2
+        #zps_ab = { 'g':25.7934, 'bp':25.3806, 'rp':25.1161} #DR2
+        zps_ab = { 'g':25.7916, 'bp':25.3862, 'rp':25.1162} #DR2 Revised
     elif (DR == 3):
         #DR3 Coeffs https://www.cosmos.esa.int/web/gaia/edr3-extinction-law - Main Sequence - BPRP XName 
         coeffs = {  'kg':[0.99596972154, -0.15972646030, 0.01223807382, 0.00090726555, -0.03771602639, 0.00151347495, -0.00002523645, 0.01145226581, -0.00093691499, -0.00026029677], \
                     'kbp':[1.15363197483, -0.08140129917, -0.03601302398, 0.01921435856, -0.02239754824, 0.00084056268, -0.00001310180, 0.00660124080, -0.00088224750, -0.00011121576], \
                     'krp':[0.66320787941, -0.01798471649, 0.00049376945, -0.00267994406, -0.00651422147, 0.00003301799, 0.00000157894, -0.00007980090, 0.00025567981, 0.00001104766] }
         c_terms = [np.ones(bp_rp.shape), bp_rp, bp_rp**2, bp_rp**3, Av, Av**2, Av**3, Av*bp_rp, Av*(bp_rp**2), (Av**2)*bp_rp] #DR3 https://www.cosmos.esa.int/web/gaia/edr3-extinction-law
-        zps_ab = { 'g':25.8010 , 'bp':25.3539, 'rp':25.1039} #DR3 https://www.cosmos.esa.int/web/gaia/edr3-passbands AB ZPs
+        zps_ab = { 'g':25.8010 , 'bp':25.3540, 'rp':25.1040} #DR3 https://www.cosmos.esa.int/web/gaia/edr3-passbands AB ZPs
 
 
 
