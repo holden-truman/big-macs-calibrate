@@ -199,7 +199,7 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
         import sqlcl
         ''' Gaia ADQL, Radius in degrees. Color excess cut:
         https://gea.esac.esa.int/archive/documentation/GDR2/Data_processing/chap_cu5pho/sec_cu5pho_qa/ssec_cu5pho_excessflux.html '''
-        DR = 2 #Release of Gaia to be Used, make sure to change res file too
+        DR = 3 #Release of Gaia to be Used, make sure to change res file too
 
         RAD = RADIUS / 60
         query = "SELECT ra, dec, bp_rp, \
@@ -551,7 +551,7 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
         for i in range(len(input_info)):
             input_info[i]['HOLD_VARY'] = 'VARY'
 
-        gaia_info = [{'mag':'ab_g', 'plotName':'Gaia G' , 'filter': 'Gaia_dr2_revised.g.res', 'mag_err': 'phot_g_mean_mag_error', 'HOLD_VARY':'HOLD', 'ZP':0.}]
+        #gaia_info = [{'mag':'ab_g', 'plotName':'Gaia G' , 'filter': 'Gaia_dr2_revised.g.res', 'mag_err': 'phot_g_mean_mag_error', 'HOLD_VARY':'HOLD', 'ZP':0.}]
         #gaia_info = [ {'mag':'ab_bp', 'plotName':'Gaia Gbp' , 'filter': 'Gaia_dr2_revised.bp.res', 'mag_err': 'phot_bp_mean_mag_error', 'HOLD_VARY':'HOLD', 'ZP':0.}]
         #gaia_info = [{'mag':'ab_rp', 'plotName':'Gaia Grp' , 'filter': 'Gaia_dr2_revised.rp.res', 'mag_err': 'phot_rp_mean_mag_error', 'HOLD_VARY':'HOLD', 'ZP':0.}]
         
@@ -565,7 +565,7 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
                 {'mag':'ab_rp', 'plotName':'Gaia Grp' , 'filter': 'Gaia_dr3.rp.res', 'mag_err': 'phot_rp_mean_mag_error', 'HOLD_VARY':'HOLD', 'ZP':0.} ]
         '''
         #holden# confirm the data in these files are correct
-        #gaia_info = [{'mag':'ab_g', 'plotName':'Gaia G' , 'filter': 'Gaia_dr3.g.res', 'mag_err': 'phot_g_mean_mag_error', 'HOLD_VARY':'HOLD', 'ZP':0.}]
+        gaia_info = [{'mag':'ab_g', 'plotName':'Gaia G' , 'filter': 'Gaia_dr3.g.res', 'mag_err': 'phot_g_mean_mag_error', 'HOLD_VARY':'HOLD', 'ZP':0.}]
 
         for filt_dict in gaia_info:
             ''' avoid duplicate filters -- will override '''

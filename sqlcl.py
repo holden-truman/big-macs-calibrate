@@ -70,7 +70,7 @@ def gaia_query(file, query, EBV, DR):
                     'krp':[0.6104, -0.0170, -0.0026, -0.0017, -0.0078, 0.00005, 0.0006] }
         c_terms = [np.ones(bp_rp.shape), bp_rp, bp_rp**2, bp_rp**3, Av, Av**2, bp_rp*Av] 
         #zps_ab = { 'g':25.7934, 'bp':25.3806, 'rp':25.1161} #DR2 - Don't Use
-        zps_ab = { 'g':25.7916, 'bp':25.3862, 'rp':25.1162} #DR2 Revised
+        zps_ab = { 'g':25.7916, 'bp':25.3862, 'rp':25.1162} #DR2 Revised https://www.cosmos.esa.int/web/gaia/iow_20180316
     elif (DR == 3):
         #DR3 Coeffs https://www.cosmos.esa.int/web/gaia/edr3-extinction-law - Main Sequence - BPRP XName 
         coeffs = {  'kg':[0.99596972154, -0.15972646030, 0.01223807382, 0.00090726555, -0.03771602639, 0.00151347495, -0.00002523645, 0.01145226581, -0.00093691499, -0.00026029677], \
