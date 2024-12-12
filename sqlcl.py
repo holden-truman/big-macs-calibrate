@@ -46,11 +46,11 @@ def query(sql,url=default_url,fmt=default_fmt):
     print(url+params)
     return urllib.urlopen(url+params)    
 
-def gaia_query(file, query, EBV, DR = 3):
+def gaia_query(file, query, EBV, DR):
     from astroquery.gaia import Gaia
     from astropy.table import Table
     if (DR == 2):
-        Gaia.MAIN_GAIA_TABLE = "gaiadr2.gaia_source"  # Reselect Data Release 3, default
+        Gaia.MAIN_GAIA_TABLE = "gaiadr2.gaia_source"  # Reselect Data Release 2
     elif (DR == 3):
         Gaia.MAIN_GAIA_TABLE = "gaiadr3.gaia_source"  # Reselect Data Release 3, default
     import numpy as np
