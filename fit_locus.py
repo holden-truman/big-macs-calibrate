@@ -199,7 +199,8 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
         import sqlcl
         ''' Gaia ADQL, Radius in degrees. Color excess cut:
         https://gea.esac.esa.int/archive/documentation/GDR2/Data_processing/chap_cu5pho/sec_cu5pho_qa/ssec_cu5pho_excessflux.html '''
-        DR = 3
+        DR = 2 #Release of Gaia to be Used
+
         RAD = RADIUS / 60
         query = "SELECT ra, dec, bp_rp, \
                 phot_g_mean_flux, phot_g_mean_flux_error,  \
