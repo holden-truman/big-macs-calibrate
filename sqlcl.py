@@ -56,7 +56,7 @@ def gaia_query(file, query, EBV, DR):
     import numpy as np
     ''' Que Gaia SQL server '''
     job = Gaia.launch_job_async(query)
-    gaia_data = job.get_results()
+    gaia_data = job.get_results() #Accessing data from query might be different for DR3 (different units??)
     print("obtained gaia data")
 
     colors = ['g','bp','rp']
