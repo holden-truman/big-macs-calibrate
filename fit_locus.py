@@ -199,7 +199,7 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
         import sqlcl
         ''' Gaia ADQL, Radius in degrees. Color excess cut:
         https://gea.esac.esa.int/archive/documentation/GDR2/Data_processing/chap_cu5pho/sec_cu5pho_qa/ssec_cu5pho_excessflux.html '''
-        DR = 3 #Release of Gaia to be Used, make sure to change res file too
+        DR = 3 #Release of Gaia to be Used, make sure to change res file too #cDR
         if DR == 3:
             color_range = "AND bp_rp >  -0.06 AND bp_rp < 2.5"
         else:
@@ -212,7 +212,7 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
                             phot_rp_mean_flux, phot_rp_mean_flux_error \
                             FROM gaiadr" + str(DR) + ".gaia_source \
                             WHERE 1=CONTAINS( POINT('ICRS',ra,dec), BOX('ICRS'," + str(RA) + "," + str(DEC) + "," + str(RAD) + ", " + str(RAD) + ")) \
-                            AND phot_g_mean_mag<=20 AND phot_bp_mean_mag>=5 AND phot_rp_mean_mag>=5 \
+                            AND phot_g_mean_mag<=19 AND phot_bp_mean_mag>=5 AND phot_rp_mean_mag>=5 \
                             AND phot_bp_rp_excess_factor > (1.0 + 0.015*bp_rp*bp_rp) AND phot_bp_rp_excess_factor < (1.3 + 0.06*bp_rp*bp_rp) " \
                             + str(color_range)
                             ## AND bp_rp >  0.6 AND bp_rp < 1.6 "
@@ -571,7 +571,7 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
                 {'mag':'ab_rp', 'plotName':'Gaia Grp' , 'filter': 'Gaia_dr3.rp.res', 'mag_err': 'phot_rp_mean_mag_error', 'HOLD_VARY':'HOLD', 'ZP':0.} ]
         '''
         #holden# confirm the data in these files are correct
-        DR = 3
+        DR = 3 #cDR
         if DR == 3:
             gaia_info = [{'mag':'ab_g', 'plotName':'Gaia G' , 'filter': 'Gaia_dr3.g.res', 'mag_err': 'phot_g_mean_mag_error', 'HOLD_VARY':'HOLD', 'ZP':0.}]
         elif DR == 2:
