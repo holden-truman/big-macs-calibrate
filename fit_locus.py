@@ -200,7 +200,11 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
         ''' Gaia ADQL, Radius in degrees. Color excess cut:
         https://gea.esac.esa.int/archive/documentation/GDR2/Data_processing/chap_cu5pho/sec_cu5pho_qa/ssec_cu5pho_excessflux.html '''
         DR = 2 #Release of Gaia to be Used, make sure to change res file too
-
+        if DR == 3:
+            color_range = "AND bp_rp >  -0.06 AND bp_rp < 2.5"
+        else:
+            color_range = ""
+        
         RAD = RADIUS / 60
         query = "SELECT ra, dec, bp_rp, \
                 phot_g_mean_flux, phot_g_mean_flux_error,  \
@@ -209,7 +213,8 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
                             FROM gaiadr" + str(DR) + ".gaia_source \
                             WHERE 1=CONTAINS( POINT('ICRS',ra,dec), BOX('ICRS'," + str(RA) + "," + str(DEC) + "," + str(RAD) + ", " + str(RAD) + ")) \
                             AND phot_g_mean_mag<=20 AND phot_bp_mean_mag>=5 AND phot_rp_mean_mag>=5 \
-                            AND phot_bp_rp_excess_factor > (1.0 + 0.015*bp_rp*bp_rp) AND phot_bp_rp_excess_factor < (1.3 + 0.06*bp_rp*bp_rp) "
+                            AND phot_bp_rp_excess_factor > (1.0 + 0.015*bp_rp*bp_rp) AND phot_bp_rp_excess_factor < (1.3 + 0.06*bp_rp*bp_rp) " \
+                            + str(color_range)
                             ## AND bp_rp >  0.6 AND bp_rp < 1.6 "
         #AND phot_g_mean_mag<=19
         print(query)
