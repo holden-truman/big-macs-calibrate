@@ -207,17 +207,30 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
             color_range = ""
         
         RAD = RADIUS / 60
-        query = "SELECT ra, dec, bp_rp, \
+        if DR == 2:
+            query = "SELECT ra, dec, bp_rp, \
                 phot_g_mean_flux, phot_g_mean_flux_error,  \
                             phot_bp_mean_flux, phot_bp_mean_flux_error, \
                             phot_rp_mean_flux, phot_rp_mean_flux_error \
                             FROM gaiadr" + str(DR) + ".gaia_source \
                             WHERE 1=CONTAINS( POINT('ICRS',ra,dec), BOX('ICRS'," + str(RA) + "," + str(DEC) + "," + str(RAD) + ", " + str(RAD) + ")) \
-                            AND phot_g_mean_mag<=22 AND phot_bp_mean_mag>=5 AND phot_rp_mean_mag>=5 \
+                            AND phot_g_mean_mag<=21 AND phot_bp_mean_mag>=5 AND phot_rp_mean_mag>=5 \
                             AND phot_bp_rp_excess_factor > (1.0 + 0.015*bp_rp*bp_rp) AND phot_bp_rp_excess_factor < (1.3 + 0.06*bp_rp*bp_rp) " \
                             + str(color_range)
                             ## AND bp_rp >  0.6 AND bp_rp < 1.6 "
-        #AND phot_g_mean_mag<=19
+            #AND phot_g_mean_mag<=19
+        elif DR==3: 
+            #holden# maybe need to do something wit C*, bp_rp_excess_factor https://www.aanda.org/articles/aa/full_html/2023/06/aa43680-22/aa43680-22.html#R27
+            query = "SELECT ra, dec, bp_rp, \
+                phot_g_mean_flux, phot_g_mean_flux_error,  \
+                            phot_bp_mean_flux, phot_bp_mean_flux_error, \
+                            phot_rp_mean_flux, phot_rp_mean_flux_error \
+                            FROM gaiadr" + str(DR) + ".gaia_source \
+                            WHERE 1=CONTAINS( POINT('ICRS',ra,dec), BOX('ICRS'," + str(RA) + "," + str(DEC) + "," + str(RAD) + ", " + str(RAD) + ")) \
+                            AND phot_g_mean_mag<=21 AND phot_bp_mean_mag>=5 AND phot_rp_mean_mag>=5 \
+                            AND phot_bp_rp_excess_factor > (1.0 + 0.015*bp_rp*bp_rp) AND phot_bp_rp_excess_factor < (1.3 + 0.06*bp_rp*bp_rp) " \
+                            + str(color_range)
+                            ## AND bp_rp >  0.6 AND bp_rp < 1.6 "
         print(query)
         
         EBV, gallong, gallat = galactic_extinction_and_coordinates(RA,DEC)

@@ -111,7 +111,7 @@ def gaia_query(file, query, EBV, DR):
     #gaia_data.write(file + '.csv', format='ascii.csv', overwrite=True)
 
 
-def panstarrs_ebv(lon, lat, coordsys='equ', mode='full'): #holden# problem here, code is directly from api, but errors
+def panstarrs_ebv(lon, lat, coordsys='equ', mode='full'):
     '''
     import json, requests
     Send a line-of-sight reddening query to the Argonaut web server.
@@ -197,14 +197,6 @@ def panstarrs_ebv(lon, lat, coordsys='equ', mode='full'): #holden# problem here,
 
     ebv = sfd(coords)
     return ebv
-
-    print("REDDENING")
-    print(reddening)
-    print(lon)
-    print(lat)
-
-
-    #return 0.025999999999999995
 
 def pan_catalog_cut(file, cat_raw_name, RA, DEC):
     "Apply several cuts and extinction correction to panstarrs catalog"
