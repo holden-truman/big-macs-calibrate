@@ -1030,7 +1030,8 @@ def fit(table, input_info_unsorted, mag_locus,
 
                 print('good', good.sum())
                                                                                    
-                chi_squared_total = select_sum.sum()
+                #chi_squared_total = select_sum.sum()
+                chi_squared_total = np.sum(select_sum)
                 data_points = select_good.sum()
                 print('data points', data_points)
                 print('stars', len(select_good))
