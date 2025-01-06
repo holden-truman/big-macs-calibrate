@@ -1054,7 +1054,7 @@ def fit(table, input_info_unsorted, mag_locus,
                 print('CURRENT TASK:', iteration)
                 print('STARS:', len(bands))
 
-                print('select sum:', select_sum)
+                print('select sum:', len(select_sum))
 
                 print('chi^2', '%.5f' % stat_tot, )
                 print('degrees of freedom', '%d' % degrees_of_freedom, )
