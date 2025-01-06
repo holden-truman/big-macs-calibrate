@@ -1307,6 +1307,7 @@ def fit(table, input_info_unsorted, mag_locus,
                         median_instrumental = np.median(diff)
                         locus_here = [mag_locus[x][input_info[i]['mag']] - mag_locus[x][info_hold[0]['mag']] for x in range(len(mag_locus))]
                         median_locus = np.median(locus_here)
+                        print('median indtrumental', median_instrumental)
                         print('median locus', median_locus)
                         pinit.append(median_locus - median_instrumental)
 
