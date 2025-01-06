@@ -1031,7 +1031,7 @@ def fit(table, input_info_unsorted, mag_locus,
                 print('good', good.sum())
                                                                                    
                 #chi_squared_total = select_sum.sum()
-                chi_squared_total = np.nansum(select_sum)
+                chi_squared_total = np.nansum(select_sum) #holden# verify that it's okay to skip over nan values
                 data_points = select_good.sum()
                 print('data points', data_points)
                 print('stars', len(select_good))
@@ -1055,8 +1055,8 @@ def fit(table, input_info_unsorted, mag_locus,
                 print('CURRENT TASK:', iteration)
                 print('STARS:', len(bands))
 
-                print('select sum len:', len(select_sum))
-                print('select sum:', select_sum)
+                #print('select sum len:', len(select_sum))
+                #print('select sum:', select_sum)
 
                 print('chi^2', '%.5f' % stat_tot, )
                 print('degrees of freedom', '%d' % degrees_of_freedom, )
