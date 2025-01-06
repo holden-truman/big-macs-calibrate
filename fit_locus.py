@@ -1328,8 +1328,8 @@ def fit(table, input_info_unsorted, mag_locus,
             global testindex
             print("testindex", testindex)
             time.sleep(10)
-            if (testindex == 1):
-                exit()
+            #if (testindex == 1):
+                #exit()
             testindex = testindex + 1
 
             out = scipy.optimize.fmin(errfunc,pinit,maxiter=10000,maxfun=100000,ftol=0.00001,xtol=0.00001,args=()) 
