@@ -1,5 +1,6 @@
 
 #def import_lib():
+testindex = 0
 
 if __name__ != '__main__':
     print('importing modules')
@@ -22,8 +23,7 @@ if __name__ != '__main__':
 
 global itr
 itr = 0
-global testindex
-testindex = 0
+
 
 def fix_kpno():
     
