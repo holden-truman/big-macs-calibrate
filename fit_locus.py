@@ -1307,6 +1307,7 @@ def fit(table, input_info_unsorted, mag_locus,
                         median_instrumental = np.median(diff)
                         locus_here = [mag_locus[x][input_info[i]['mag']] - mag_locus[x][info_hold[0]['mag']] for x in range(len(mag_locus))]
                         median_locus = np.median(locus_here)
+                        print('median locus', median_locus)
                         pinit.append(median_locus - median_instrumental)
 
 
@@ -1319,7 +1320,7 @@ def fit(table, input_info_unsorted, mag_locus,
                 else: 
                     pinit = [results['full'][key] for key in [a['mag'] for a in vary_input_info]]
 
-            print(pinit)
+            print(pinit) #problem on second itr
 
             import time
             global testindex
