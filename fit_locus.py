@@ -22,6 +22,8 @@ if __name__ != '__main__':
 
 global itr
 itr = 0
+global testindex
+testindex = 0
 
 def fix_kpno():
     
@@ -1321,6 +1323,9 @@ def fit(table, input_info_unsorted, mag_locus,
 
             out = scipy.optimize.fmin(errfunc,pinit,maxiter=10000,maxfun=100000,ftol=0.00001,xtol=0.00001,args=()) 
             print('STARTINGOUT:', out)
+            if (testindex == 1):
+                exit()
+            testindex++;
             if iteration == 'full':
                 errfunc(out,savefig=(iteration+'_'+outliers+'.png').replace('$',''))
             #print(out)
@@ -1333,7 +1338,6 @@ def fit(table, input_info_unsorted, mag_locus,
             #[zps_hold[a['mag']] for a in hold_input_info] + 
             print('ENDINGOUT:', list(out))
             residuals,dist,redchi,end_of_locus, num, ref_mags = errfunc(pars=list(out),residuals=True)
-            exit()
             #print(dist)
             #print('finished')
             #print('bands' , len(bands))
