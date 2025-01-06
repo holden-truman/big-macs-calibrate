@@ -1050,6 +1050,12 @@ def fit(table, input_info_unsorted, mag_locus,
                 stat_tot = chi_squared_total #select_diff.sum()
 
                 print('ZPs', dict(zip([a['mag'] for a in input_info] ,([zps_hold[a['mag']] for a in hold_input_info] + ['%.6f' % a for a in list(pars)]))))
+                print("zps_hold values:", [zps_hold[a['mag']] for a in hold_input_info])
+                print("pars:", list(pars))
+                print("Number of keys:", len([a['mag'] for a in input_info]))
+                print("Number of values:", len([zps_hold[a['mag']] for a in hold_input_info] + ['%.6f' % a for a in list(pars)]))
+
+
                 
 
                 print('CURRENT TASK:', iteration)
