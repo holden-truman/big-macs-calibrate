@@ -1326,6 +1326,7 @@ def fit(table, input_info_unsorted, mag_locus,
             import time
             time.sleep(5)
             global testindex
+            print("testindex", testindex)
             if (testindex == 1):
                 exit()
             testindex = testindex + 1
