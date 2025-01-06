@@ -1325,7 +1325,7 @@ def fit(table, input_info_unsorted, mag_locus,
             print('STARTINGOUT:', out)
             if (testindex == 1):
                 exit()
-            testindex++;
+            testindex = testindex + 1
             if iteration == 'full':
                 errfunc(out,savefig=(iteration+'_'+outliers+'.png').replace('$',''))
             #print(out)
