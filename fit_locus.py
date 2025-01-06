@@ -1321,6 +1321,7 @@ def fit(table, input_info_unsorted, mag_locus,
 
             out = scipy.optimize.fmin(errfunc,pinit,maxiter=10000,maxfun=100000,ftol=0.00001,xtol=0.00001,args=()) 
             print('STARTINGOUT:', out)
+            exit()
             if iteration == 'full':
                 errfunc(out,savefig=(iteration+'_'+outliers+'.png').replace('$',''))
             #print(out)
