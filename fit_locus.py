@@ -1324,7 +1324,7 @@ def fit(table, input_info_unsorted, mag_locus,
             out = scipy.optimize.fmin(errfunc,pinit,maxiter=10000,maxfun=100000,ftol=0.00001,xtol=0.00001,args=()) 
             print('STARTINGOUT:', out)
             import time
-            time.sleep(2)
+            time.sleep(5)
             global testindex
             if (testindex == 1):
                 exit()
