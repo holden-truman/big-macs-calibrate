@@ -1324,9 +1324,9 @@ def fit(table, input_info_unsorted, mag_locus,
             out = scipy.optimize.fmin(errfunc,pinit,maxiter=10000,maxfun=100000,ftol=0.00001,xtol=0.00001,args=()) 
             print('STARTINGOUT:', out)
             import time
-            time.sleep(5)
             global testindex
             print("testindex", testindex)
+            time.sleep(10)
             if (testindex == 1):
                 exit()
             testindex = testindex + 1
@@ -1342,7 +1342,6 @@ def fit(table, input_info_unsorted, mag_locus,
             #[zps_hold[a['mag']] for a in hold_input_info] + 
             print('ENDINGOUT:', list(out))
             residuals,dist,redchi,end_of_locus, num, ref_mags = errfunc(pars=list(out),residuals=True)
-            exit()
             #print(dist)
             #print('finished')
             #print('bands' , len(bands))
