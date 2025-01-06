@@ -1342,6 +1342,7 @@ def fit(table, input_info_unsorted, mag_locus,
             #[zps_hold[a['mag']] for a in hold_input_info] + 
             print('ENDINGOUT:', list(out))
             residuals,dist,redchi,end_of_locus, num, ref_mags = errfunc(pars=list(out),residuals=True)
+            exit()
             #print(dist)
             #print('finished')
             #print('bands' , len(bands))
