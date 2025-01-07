@@ -242,6 +242,10 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
                 dr3.phot_bp_mean_flux, dr3.phot_bp_mean_flux_error,
                 dr3.phot_rp_mean_flux, dr3.phot_rp_mean_flux_error,
                 dr3.source_id
+                ESDC_CASE_CONDITION(    1.162004+.011464*bp_rp+0.049255*bp_rp*bp_rp-0.005879*bp_rp*bp_rp*bp_rp,
+                    bp_rp >= 4,           1.057572+0.1405537*bp_rp, 
+                    bp_rp < 0.5,        1.154360+0.033772*bp_rp+0.32277*bp_rp*bp_rp) 
+                AS c_star,
             FROM gaiadr{DR}.gaia_source AS dr3
             WHERE 1 = CONTAINS(
                     POINT('ICRS', ra, dec),
