@@ -252,7 +252,7 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
                 AND phot_bp_mean_mag >= 5
                 AND phot_rp_mean_mag >= 5
                 AND (
-                    bp_rp >= 4.0 AND ABS(1.057572+0.1405537*bp_rp)<3*(0.0059898 + 8.817481e-12 * POWER(dr3.phot_g_mean_mag,7.618399))
+                    bp_rp >= 4.0 AND ABS(photo_bp_rp_excess_factor-(1.057572+0.1405537*bp_rp))<3*(0.0059898 + 8.817481e-12 * POWER(dr3.phot_g_mean_mag,7.618399))
                 )
                 {color_range}
             """
