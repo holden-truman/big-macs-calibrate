@@ -249,7 +249,6 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
                 FROM gaiadr3.gaia_source
             )
             SELECT AVG(c_star) FROM all_c_star
-
             """
             stats_job = Gaia.launch_job_async(stats_query)
             stats_data = stats_job.get_results() #Accessing data from query might be different for DR3 (different units??)
