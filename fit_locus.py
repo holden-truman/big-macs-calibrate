@@ -249,15 +249,19 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
                         bp_rp < 0.5, phot_bp_rp_excess_factor - (1.154360 + 0.033772 * bp_rp + 0.32277 * bp_rp * bp_rp)
                     ) AS c_star
                 FROM gaiadr3.gaia_source AS dr3
+            ),
+            stats AS (
+                SELECT AVG(c_star) AS mean, ESDC_STDDEV(c_star) AS stddev
+                FROM c_star_values
             )
             SELECT c_star_values.ra, c_star_values.dec, c_star_values.bp_rp,
                 c_star_values.phot_g_mean_flux, c_star_values.phot_g_mean_flux_error,
                 c_star_values.phot_bp_mean_flux, c_star_values.phot_bp_mean_flux_error,
                 c_star_values.phot_rp_mean_flux, c_star_values.phot_rp_mean_flux_error,
                 c_star_values.c_star
-            FROM c_star_values
-            WHERE c_star_values.c_star BETWEEN AVG(c_star) - 3 * ESDC_STDDEV(c_star)
-                                        AND AVG(c_star) + 3 * ESDC_STDDEV(c_star)
+            FROM c_star_values, stats
+            WHERE c_star_values.c_star BETWEEN stats.mean - 3 * stats.stddev
+                                        AND stats.mean + 3 * stats.stddev
             AND 1 = CONTAINS(
                     POINT('ICRS', c_star_values.ra, c_star_values.dec),
                     BOX('ICRS', {RA}, {DEC}, {RAD}, {RAD})
@@ -267,6 +271,7 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
             AND phot_rp_mean_mag >= 5
             {color_range}
             """
+
 
 
 
