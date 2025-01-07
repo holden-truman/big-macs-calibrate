@@ -224,16 +224,13 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
             #holden# maybe need to do something wit C*, bp_rp_excess_factor https://www.aanda.org/articles/aa/full_html/2023/06/aa43680-22/aa43680-22.html#R27
             #Looks like that is the way to filter of off BP/RP flux excess, rather than equations similar to DR2("do not take in consideration the uncertainties on the flux excess factor")
             #https://gea.esac.esa.int/archive/documentation/GEDR3/Data_processing/chap_cu5pho/cu5pho_sec_photProc/cu5pho_ssec_photVal.html
-            query = "SELECT ra, dec, bp_rp, \
-                phot_g_mean_flux, phot_g_mean_flux_error,  \
-                            phot_bp_mean_flux, phot_bp_mean_flux_error, \
-                            phot_rp_mean_flux, phot_rp_mean_flux_error, \
-                            CASE \
-                                WHEN bp_rp >= 4  THEN   1.057572+0.1405537*bp_rp \
-                                WHEN bp_rp < 0.5 THEN   1.154360+0.033772*bp_rp+0.32277*bp_rp*bp_rp \
-                                ELSE                    1.162004+.011464*bp_rp+0.049255*bp_rp*bp_rp-0.005879*bp_rp*bp_rp*bp_rp \
-                            END AS c_star \
-                            FROM gaiadr" + str(DR) + ".gaia_source \
+            query = "SELECT dr3.source_id, dr3.ra, dr3.dec, dr3.bp_rp, \
+                    dr3.phot_g_mean_flux, dr3.phot_g_mean_flux_error,  \
+                            dr3.phot_bp_mean_flux, dr3.phot_bp_mean_flux_error, \
+                            dr3.phot_rp_mean_flux, dr3.phot_rp_mean_flux_error, \
+                            gspc.c_star \
+                            FROM gaiadr" + str(DR) + ".gaia_source as dr3 \
+                            JOIN gaiadr3.synthetic_photometry_gspc AS gspc USING (source_id) \
                             WHERE 1=CONTAINS( POINT('ICRS',ra,dec), BOX('ICRS'," + str(RA) + "," + str(DEC) + "," + str(RAD) + ", " + str(RAD) + ")) \
                             AND phot_g_mean_mag<=22 AND phot_bp_mean_mag>=5 AND phot_rp_mean_mag>=5 " \
                             + str(color_range)
