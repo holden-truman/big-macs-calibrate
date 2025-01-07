@@ -1,6 +1,5 @@
 
 #def import_lib():
-testindex = 0
 
 if __name__ != '__main__':
     print('importing modules')
@@ -1320,15 +1319,7 @@ def fit(table, input_info_unsorted, mag_locus,
                 else: 
                     pinit = [results['full'][key] for key in [a['mag'] for a in vary_input_info]]
 
-            print(pinit) #problem on second itr
-
-            import time
-            global testindex
-            print("testindex", testindex)
-            #time.sleep(10)
-            #if (testindex == 1):
-                #exit()
-            testindex = testindex + 1
+            print(pinit)
 
             out = scipy.optimize.fmin(errfunc,pinit,maxiter=10000,maxfun=100000,ftol=0.00001,xtol=0.00001,args=()) 
             print('STARTINGOUT:', out)
