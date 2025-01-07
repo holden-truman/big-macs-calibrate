@@ -252,7 +252,7 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
                 FROM gaiadr3.gaia_source AS dr3
             ),
             stats AS (
-                SELECT AVG(c_star) AS mean, ESDC_STDDEV(c_star) AS stddev
+                SELECT AVG(c_star) AS mean, STDDEV(c_star) AS stddev
                 FROM c_star_values
             )
             SELECT c_star_values.ra, c_star_values.dec, c_star_values.bp_rp,
