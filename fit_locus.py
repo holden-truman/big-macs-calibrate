@@ -244,7 +244,7 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
                 dr3.phot_rp_mean_flux, dr3.phot_rp_mean_flux_error,
                 gspc.c_star
             FROM gaiadr3.gaia_source AS dr3
-            INNER JOIN gaiadr3.synthetic_photometry_gspc AS gspc USING (source_id)
+            LEFT JOIN gaiadr3.synthetic_photometry_gspc AS gspc USING (source_id)
             WHERE 1 = CONTAINS(
                     POINT('ICRS', ra, dec),
                     BOX('ICRS', {RA}, {DEC}, {RAD}, {RAD})
