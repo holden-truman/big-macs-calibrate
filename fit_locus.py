@@ -243,7 +243,6 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
                     dr3.phot_g_mean_flux, dr3.phot_g_mean_flux_error,
                     dr3.phot_bp_mean_flux, dr3.phot_bp_mean_flux_error,
                     dr3.phot_rp_mean_flux, dr3.phot_rp_mean_flux_error,
-                    dr3.source_id,
                     ESDC_CASE_CONDITION(
                         phot_bp_rp_excess_factor - (1.162004 + 0.011464 * bp_rp + 0.049255 * bp_rp * bp_rp - 0.005879 * bp_rp * bp_rp * bp_rp),
                         bp_rp >= 4, phot_bp_rp_excess_factor - (1.057572 + 0.1405537 * bp_rp), 
