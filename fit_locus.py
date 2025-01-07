@@ -236,34 +236,20 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
                             + str(color_range)
                             ## AND bp_rp >  0.6 AND bp_rp < 1.6 "
             """
+            mean_c_star = 0
+            stddev_c_star = 0
             query = f"""
-            WITH c_star_values AS 
-            (
-                SELECT dr3.ra, dr3.dec, dr3.bp_rp,
-                    dr3.phot_g_mean_flux, dr3.phot_g_mean_flux_error,
-                    dr3.phot_bp_mean_flux, dr3.phot_bp_mean_flux_error,
-                    dr3.phot_rp_mean_flux, dr3.phot_rp_mean_flux_error,
-                    ESDC_CASE_CONDITION(
-                        phot_bp_rp_excess_factor - (1.162004 + 0.011464 * bp_rp + 0.049255 * bp_rp * bp_rp - 0.005879 * bp_rp * bp_rp * bp_rp),
-                        bp_rp >= 4., phot_bp_rp_excess_factor - (1.057572 + 0.1405537 * bp_rp), 
-                        bp_rp < 0.5, phot_bp_rp_excess_factor - (1.154360 + 0.033772 * bp_rp + 0.32277 * bp_rp * bp_rp)
-                    ) AS c_star
-                FROM gaiadr3.gaia_source AS dr3
-            ),
-            stats AS (
-                SELECT AVG(c_star) AS mean, ESDC_STDDEV(c_star) AS stddev
-                FROM c_star_values
-            )
-            SELECT c_star_values.ra, c_star_values.dec, c_star_values.bp_rp,
-                c_star_values.phot_g_mean_flux, c_star_values.phot_g_mean_flux_error,
-                c_star_values.phot_bp_mean_flux, c_star_values.phot_bp_mean_flux_error,
-                c_star_values.phot_rp_mean_flux, c_star_values.phot_rp_mean_flux_error,
-                c_star_values.c_star
-            FROM c_star_values, stats
-            WHERE c_star_values.c_star BETWEEN stats.mean - 3 * stats.stddev
-                                        AND stats.mean + 3 * stats.stddev
-            AND 1 = CONTAINS(
-                    POINT('ICRS', c_star_values.ra, c_star_values.dec),
+            SELECT dr3.ra, dr3.dec, dr3.bp_rp,
+                dr3.phot_g_mean_flux, dr3.phot_g_mean_flux_error,
+                dr3.phot_bp_mean_flux, dr3.phot_bp_mean_flux_error,
+                dr3.phot_rp_mean_flux, dr3.phot_rp_mean_flux_error,
+                ESDC_CASE_CONDITION(    1.162004+.011464*bp_rp+0.049255*bp_rp*bp_rp-0.005879*bp_rp*bp_rp*bp_rp,
+                    bp_rp >= 4,         1.057572+0.1405537*bp_rp, 
+                    bp_rp < 0.5,        1.154360+0.033772*bp_rp+0.32277*bp_rp*bp_rp) 
+                AS c_star
+            FROM gaiadr3.gaia_source AS dr3
+            WHERE 1 = CONTAINS(
+                    POINT('ICRS', ra, dec),
                     BOX('ICRS', {RA}, {DEC}, {RAD}, {RAD})
                 )
             AND phot_g_mean_mag <= 22
