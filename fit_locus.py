@@ -236,9 +236,7 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
                             + str(color_range)
                             ## AND bp_rp >  0.6 AND bp_rp < 1.6 "
             """
-            mean_c_star = 0
-            stddev_c_star = 0
-
+            #c_star mean is 0
             query = f"""
             SELECT dr3.ra, dr3.dec, dr3.bp_rp,
                 dr3.phot_g_mean_flux, dr3.phot_g_mean_flux_error,
@@ -256,8 +254,12 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
             AND phot_g_mean_mag <= 22
             AND phot_bp_mean_mag >= 5
             AND phot_rp_mean_mag >= 5
+            AND c_star < 0 + (0.0059898 + 8.817481*10^-12*POW(photo_g_mean_flux,7.618399))
+            AND c_star > 0 - (0.0059898 + 8.817481*10^-12*POW(photo_g_mean_flux,7.618399))
             {color_range}
             """
+            #see https://scholar.google.com/scholar_lookup?title=Gaia+Early+Data+Release+3+-+Photometric+content+and+validation&author=Riello+M.+De+Angeli+F.+Evans+D.+W.&journal=A%26A&volume=649&pages=A3&publication_year=2021&issn=0004-6361%2C1432-0746&doi=10.1051%2F0004-6361%2F202039587
+            #sction 9.4 for information about filtering with c_star, stddev is estimated using a power-law
 
 
 
