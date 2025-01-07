@@ -224,10 +224,11 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
             #holden# maybe need to do something wit C*, bp_rp_excess_factor https://www.aanda.org/articles/aa/full_html/2023/06/aa43680-22/aa43680-22.html#R27
             #Looks like that is the way to filter of off BP/RP flux excess, rather than equations similar to DR2("do not take in consideration the uncertainties on the flux excess factor")
             #https://gea.esac.esa.int/archive/documentation/GEDR3/Data_processing/chap_cu5pho/cu5pho_sec_photProc/cu5pho_ssec_photVal.html
-            query = "SELECT dr3.source_id, dr3.ra, dr3.dec, dr3.bp_rp, \
+            query = "SELECT dr3.ra, dr3.dec, dr3.bp_rp, \
                     dr3.phot_g_mean_flux, dr3.phot_g_mean_flux_error,  \
                             dr3.phot_bp_mean_flux, dr3.phot_bp_mean_flux_error, \
                             dr3.phot_rp_mean_flux, dr3.phot_rp_mean_flux_error, \
+                            dr3.source_id, gspc.c_star, \
                             FROM gaiadr" + str(DR) + ".gaia_source as dr3 \
                             JOIN gaiadr3.synthetic_photometry_gspc AS gspc USING (source_id) \
                             WHERE 1=CONTAINS( POINT('ICRS',ra,dec), BOX('ICRS'," + str(RA) + "," + str(DEC) + "," + str(RAD) + ", " + str(RAD) + ")) \
