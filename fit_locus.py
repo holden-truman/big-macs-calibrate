@@ -252,9 +252,7 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
                 AND phot_bp_mean_mag >= 5
                 AND phot_rp_mean_mag >= 5
                 AND (
-                    ( bp_rp >= 4.0 AND ABS(1.057572+0.1405537*bp_rp)<3*(0.0059898 + 8.817481e-12 * POWER(dr3.phot_g_mean_mag,7.618399)) ) OR
-                    ( bp_rp < 0.5 AND ABS(1.154360+0.033772*bp_rp+0.32277*bp_rp*bp_rp)<3*(0.0059898 + 8.817481e-12 * POWER(dr3.phot_g_mean_mag,7.618399)) ) OR
-                    ( bp_rp >= 0.5 AND bp_rp < 4.0 AND ABS(1.162004+.011464*bp_rp+0.049255*bp_rp*bp_rp-0.005879*bp_rp*bp_rp*bp_rp)<3*(0.0059898 + 8.817481e-12 * POWER(dr3.phot_g_mean_mag,7.618399))  )
+                    bp_rp >= 4.0 AND ABS(1.057572+0.1405537*bp_rp)<3*(0.0059898 + 8.817481e-12 * POWER(dr3.phot_g_mean_mag,7.618399))
                 )
                 {color_range}
             """
@@ -269,6 +267,11 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
                 #ABS(c_star)<(0.0059898 + 8.817481e-12 * POWER(dr3.phot_g_mean_mag,7.618399))
 
 
+            #AND (
+            #       ( bp_rp >= 4.0 AND ABS(1.057572+0.1405537*bp_rp)<3*(0.0059898 + 8.817481e-12 * POWER(dr3.phot_g_mean_mag,7.618399)) ) OR
+            #       ( bp_rp < 0.5 AND ABS(1.154360+0.033772*bp_rp+0.32277*bp_rp*bp_rp)<3*(0.0059898 + 8.817481e-12 * POWER(dr3.phot_g_mean_mag,7.618399)) ) OR
+            #       ( bp_rp >= 0.5 AND bp_rp < 4.0 AND ABS(1.162004+.011464*bp_rp+0.049255*bp_rp*bp_rp-0.005879*bp_rp*bp_rp*bp_rp)<3*(0.0059898 + 8.817481e-12 * POWER(dr3.phot_g_mean_mag,7.618399))  )
+            #   )
 
             #465 stars with no c_star filter at mag 22 cut
 
