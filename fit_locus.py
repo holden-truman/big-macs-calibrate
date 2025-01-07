@@ -237,7 +237,8 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
                             ## AND bp_rp >  0.6 AND bp_rp < 1.6 "
             """
             query = f"""
-            WITH c_star_values AS (
+            WITH c_star_values AS 
+            (
                 SELECT dr3.ra, dr3.dec, dr3.bp_rp,
                     dr3.phot_g_mean_flux, dr3.phot_g_mean_flux_error,
                     dr3.phot_bp_mean_flux, dr3.phot_bp_mean_flux_error,
@@ -251,7 +252,7 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
                 FROM gaiadr3.gaia_source AS dr3
             ),
             stats AS (
-                SELECT AVG(c_star) AS mean, STDDEV(c_star) AS stddev
+                SELECT AVG(c_star) AS mean, ESDC_STDDEV(c_star) AS stddev
                 FROM c_star_values
             )
             SELECT c_star_values.ra, c_star_values.dec, c_star_values.bp_rp,
