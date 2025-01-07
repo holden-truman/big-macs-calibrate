@@ -236,18 +236,25 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
                             + str(color_range)
                             ## AND bp_rp >  0.6 AND bp_rp < 1.6 "
             """
-            query = "SELECT dr3.ra, dr3.dec, dr3.bp_rp, \
-                    dr3.phot_g_mean_flux, dr3.phot_g_mean_flux_error,  \
-                            dr3.phot_bp_mean_flux, dr3.phot_bp_mean_flux_error, \
-                            dr3.phot_rp_mean_flux, dr3.phot_rp_mean_flux_error, \
-                            dr3.source_id, gspc.c_star \
-                            FROM gaiadr" + str(DR) + ".gaia_source as dr3 \
-                            JOIN gaiadr3.synthetic_photometry_gspc AS gspc USING (source_id) \
-                            WHERE 1=CONTAINS( POINT('ICRS',ra,dec), BOX('ICRS'," + str(RA) + "," + str(DEC) + "," + str(RAD) + ", " + str(RAD) + ")) \
-                            AND phot_g_mean_mag<=22 AND phot_bp_mean_mag>=5 AND phot_rp_mean_mag>=5 " \
-                            + str(color_range)
-                            ##AND c_star<20000
-                            ## AND bp_rp >  0.6 AND bp_rp < 1.6 "
+            query = f"""
+            SELECT dr3.ra, dr3.dec, dr3.bp_rp,
+                dr3.phot_g_mean_flux, dr3.phot_g_mean_flux_error,
+                dr3.phot_bp_mean_flux, dr3.phot_bp_mean_flux_error,
+                dr3.phot_rp_mean_flux, dr3.phot_rp_mean_flux_error,
+                dr3.source_id, gspc.c_star
+            FROM gaiadr{DR}.gaia_source AS dr3
+            JOIN gaiadr3.synthetic_photometry_gspc AS gspc USING (source_id)
+            WHERE 1 = CONTAINS(
+                    POINT('ICRS', ra, dec),
+                    BOX('ICRS', {RA}, {DEC}, {RAD}, {RAD})
+                )
+            AND phot_g_mean_mag <= 22
+            AND phot_bp_mean_mag >= 5
+            AND phot_rp_mean_mag >= 5
+            {color_range}
+            """
+# Uncomment the following line if additional filters are needed
+# query += "AND c_star < 20000 AND bp_rp > 0.6 AND bp_rp < 1.6"
         print(query)
         
         EBV, gallong, gallat = galactic_extinction_and_coordinates(RA,DEC)
