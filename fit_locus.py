@@ -224,6 +224,7 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
             #holden# maybe need to do something wit C*, bp_rp_excess_factor https://www.aanda.org/articles/aa/full_html/2023/06/aa43680-22/aa43680-22.html#R27
             #Looks like that is the way to filter of off BP/RP flux excess, rather than equations similar to DR2("do not take in consideration the uncertainties on the flux excess factor")
             #https://gea.esac.esa.int/archive/documentation/GEDR3/Data_processing/chap_cu5pho/cu5pho_sec_photProc/cu5pho_ssec_photVal.html
+            """
             query = "SELECT ra, dec, bp_rp, \
                 phot_g_mean_flux, phot_g_mean_flux_error,  \
                             phot_bp_mean_flux, phot_bp_mean_flux_error, \
@@ -247,7 +248,6 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
                             + str(color_range)
                             ##AND c_star<20000
                             ## AND bp_rp >  0.6 AND bp_rp < 1.6 "
-            """
         print(query)
         
         EBV, gallong, gallat = galactic_extinction_and_coordinates(RA,DEC)
