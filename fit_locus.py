@@ -227,7 +227,12 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
             query = "SELECT ra, dec, bp_rp, \
                 phot_g_mean_flux, phot_g_mean_flux_error,  \
                             phot_bp_mean_flux, phot_bp_mean_flux_error, \
-                            phot_rp_mean_flux, phot_rp_mean_flux_error \
+                            phot_rp_mean_flux, phot_rp_mean_flux_error, \
+                            CASE \
+                                WHEN bp_rp >= 4  THEN   1.057572+0.1405537*bp_rp \
+                                WHEN bp_rp < 0.5 THEN   1.154360+0.033772*bp_rp+0.32277*bp_rp*bp_rp \
+                                ELSE                    1.162004+.011464*bp_rp+0.049255*bp_rp*bp_rp-0.005879*bp_rp*bp_rp*bp_rp \
+                            END AS c_star \
                             FROM gaiadr" + str(DR) + ".gaia_source \
                             WHERE 1=CONTAINS( POINT('ICRS',ra,dec), BOX('ICRS'," + str(RA) + "," + str(DEC) + "," + str(RAD) + ", " + str(RAD) + ")) \
                             AND phot_g_mean_mag<=22 AND phot_bp_mean_mag>=5 AND phot_rp_mean_mag>=5 " \
