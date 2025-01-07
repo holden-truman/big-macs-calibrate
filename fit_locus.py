@@ -260,7 +260,8 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
                 c_star_values.phot_bp_mean_flux, c_star_values.phot_bp_mean_flux_error,
                 c_star_values.phot_rp_mean_flux, c_star_values.phot_rp_mean_flux_error,
                 c_star_values.c_star
-            FROM c_star_values, stats
+            FROM c_star_values
+            CROSS JOIN stats
             WHERE c_star_values.c_star BETWEEN stats.mean - 3 * stats.stddev
                                         AND stats.mean + 3 * stats.stddev
             AND 1 = CONTAINS(
