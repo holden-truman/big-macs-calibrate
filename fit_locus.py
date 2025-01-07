@@ -230,9 +230,9 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
                             phot_rp_mean_flux, phot_rp_mean_flux_error \
                             FROM gaiadr" + str(DR) + ".gaia_source \
                             WHERE 1=CONTAINS( POINT('ICRS',ra,dec), BOX('ICRS'," + str(RA) + "," + str(DEC) + "," + str(RAD) + ", " + str(RAD) + ")) \
-                            AND phot_g_mean_mag<=22 AND phot_bp_mean_mag>=5 AND phot_rp_mean_mag>=5 \
-                            AND c_star<20000 " \
+                            AND phot_g_mean_mag<=22 AND phot_bp_mean_mag>=5 AND phot_rp_mean_mag>=5 " \
                             + str(color_range)
+                            ##AND c_star<20000
                             ## AND bp_rp >  0.6 AND bp_rp < 1.6 "
         print(query)
         
