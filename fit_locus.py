@@ -241,9 +241,8 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
                 dr3.phot_g_mean_flux, dr3.phot_g_mean_flux_error,
                 dr3.phot_bp_mean_flux, dr3.phot_bp_mean_flux_error,
                 dr3.phot_rp_mean_flux, dr3.phot_rp_mean_flux_error,
-                dr3.source_id, gspc.c_star
+                dr3.source_id
             FROM gaiadr{DR}.gaia_source AS dr3
-            JOIN gaiadr3.synthetic_photometry_gspc AS gspc USING (source_id)
             WHERE 1 = CONTAINS(
                     POINT('ICRS', ra, dec),
                     BOX('ICRS', {RA}, {DEC}, {RAD}, {RAD})
