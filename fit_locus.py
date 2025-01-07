@@ -239,16 +239,12 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
             mean_c_star = 0
             stddev_c_star = 0
             stats_query = f"""
-            WITH all_c_star AS 
-            (
-                SELECT 
-                    ESDC_CASE_CONDITION(    1.162004+.011464*bp_rp+0.049255*bp_rp*bp_rp-0.005879*bp_rp*bp_rp*bp_rp,
-                        bp_rp >= 4,         1.057572+0.1405537*bp_rp, 
-                        bp_rp < 0.5,        1.154360+0.033772*bp_rp+0.32277*bp_rp*bp_rp) 
-                    AS c_star
-                FROM gaiadr3.gaia_source
-            )
-            SELECT AVG(c_star) FROM all_c_star
+            SELECT 
+                ESDC_CASE_CONDITION(    1.162004+.011464*bp_rp+0.049255*bp_rp*bp_rp-0.005879*bp_rp*bp_rp*bp_rp,
+                    bp_rp >= 4,         1.057572+0.1405537*bp_rp, 
+                    bp_rp < 0.5,        1.154360+0.033772*bp_rp+0.32277*bp_rp*bp_rp) 
+                AS c_star
+            FROM gaiadr3.gaia_source
             """
             stats_job = Gaia.launch_job_async(stats_query)
             stats_data = stats_job.get_results() #Accessing data from query might be different for DR3 (different units??)
