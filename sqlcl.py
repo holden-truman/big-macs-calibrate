@@ -45,7 +45,7 @@ def query(sql,url=default_url,fmt=default_fmt):
     
     params = urllib.parse.urlencode({'cmd': sql, 'format': fmt})
     print(url+params)
-    return urllib.request.urlopen(url+params).decode('utf-8')  
+    return urllib.request.urlopen(url+params)  
 
 def gaia_query(file, query, EBV, DR):
     from astroquery.gaia import Gaia
