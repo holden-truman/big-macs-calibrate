@@ -42,7 +42,7 @@ def query(sql,url=default_url,fmt=default_fmt):
     "Run query and return file object"
     import urllib
     
-    params = urllib.parse.urlencode({'cmd': fsql, 'format': fmt})
+    params = urllib.parse.urlencode({'cmd': sql, 'format': fmt})
     print(url+params)
     return urllib.urlopen(url+params)    
 
