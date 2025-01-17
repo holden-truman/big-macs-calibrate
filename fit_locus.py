@@ -129,7 +129,8 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
         else:
             matched = True
             for line in lines[2:]:
-                line = line.replace('\n','')
+                line = line.decode('utf-8').replace('\n', '')
+                #line = line.replace('\n','')
                 res = re.split(',',line)
                 for i in range(len(res)): 
                     catalogStars[returned_keys[i]].append(float(res[i]))  
