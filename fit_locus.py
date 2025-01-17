@@ -80,6 +80,7 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
 
     import scipy, math
     from astropy.io import fits
+    from functools import reduce
 
     RA, DEC, RADIUS = get_catalog_parameters(inputcat, racol, deccol)
     #print("Radius: " + RADIUS)
