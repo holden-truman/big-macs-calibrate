@@ -40,12 +40,11 @@ def filtercomment(sql):
 
 def query(sql,url=default_url,fmt=default_fmt):
     "Run query and return file object"
-    from urllib import parse
-    from urllib import urlopen
-    fsql = filtercomment(sql)
-    params = parse.urlencode({'cmd': fsql, 'format': fmt})
+    import urllib
+    
+    params = urllib.parse.urlencode({'cmd': fsql, 'format': fmt})
     print(url+params)
-    return urlopen(url+params)    
+    return urllib.urlopen(url+params)    
 
 def gaia_query(file, query, EBV, DR):
     from astroquery.gaia import Gaia
