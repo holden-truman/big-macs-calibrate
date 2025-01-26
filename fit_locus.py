@@ -1602,25 +1602,19 @@ if __name__ == '__main__':
                     lines = infile.readlines()
 
                 # find the filter being held, should only be one
-                new_line = []
+                new_lines = []
 
                 for line in lines:
                     if "HOLD" in line:
                         # make the HELD filter variable for the absolute ZP calibration
                         hold_pos = line.find("HOLD")
                         modified_line = line[:hold_pos] + "VARY\n" # Replace everything after and including HOLD with VARY
-                        new_line.append(modified_line)
+                        new_lines.append(modified_line)
+                    else:
+                        new_lines.append(line)
 
-                if len(new_line) == 1:
-                    # Write held filter to the new columns file
-                    with open(output_filename, 'w') as outfile:
-                        outfile.writelines(new_line)
-                elif len(new_line) == 0:
-                    print("No filters were held for the two step process, try again while holding one of the filters.")
-                    exit()
-                else:
-                    print("Multiple filters were held, only hold one filter.")
-                    exit()
+                with open(output_filename, 'w') as outfile:
+                    outfile.writelines(new_lines)
             except FileNotFoundError:
                 print(f"Error: The file '{input_filename}' was not found.")
             except Exception as e:
