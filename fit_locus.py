@@ -526,7 +526,7 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
     
     if twoStep:
         #run with no external catalog in this function
-        run(file,columns_description,output_directory,plots_directory,extension,racol,deccol,end_of_locus_reject,plot_iteration_increment, min_err, bootstrap_num, snpath, night, run, prefix,data_from_sdss=False, addSDSS=False, addPanSTARRS=False, addGaia=False, number_of_plots, add2MASS=False, sdssUnit=False, twoStep=False)
+        run(file,columns_description,output_directory,plots_directory,extension,racol,deccol,end_of_locus_reject,plot_iteration_increment, min_err, bootstrap_num, snpath, night, run, prefix, number_of_plots, data_from_sdss=False, addSDSS=False, addPanSTARRS=False, addGaia=False, add2MASS=False, sdssUnit=False, twoStep=False)
 
         def parse_file(file_path):
             bands = []
