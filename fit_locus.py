@@ -565,11 +565,7 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
 
         relative_zps = parse_file(offsets_file)
 
-        # Print the result
-        print("Bands:", relative_zps[0])
-        print("ZP Adjustments:", relative_zps[1])
-        print("Errors:", relative_zps[2])
-        exit()
+        columns_description = columns_description + ".ext_anchor" #use columns file for absolute ZP calibration
 
 
     fitSDSS = False
@@ -1601,6 +1597,35 @@ if __name__ == '__main__':
     if options.twoStep:
         #run with external catalog first for relative ZP's
         run(options.file,options.columns,output_directory=options.output,plots_directory=options.plots,extension=options.extension,racol=options.racol,deccol=options.deccol,bootstrap_num=options.bootstrap, add2MASS=False, addSDSS=False, addPanSTARRS=False, addGaia=False, number_of_plots=options.numberofplots, sdssUnit=False, twoStep=False)  
+        
+        def write_external_columns_file(input_filename, output_filename):
+            try:
+                with open(input_filename, 'r') as infile:
+                    lines = infile.readlines()
+
+                # find the filter being held, should only be one
+                new_line = []
+
+                for line in lines:
+                    if "HOLD" in line:
+                        # make the HELD filter variable for the absolute ZP calibration
+                        hold_pos = line.find("HOLD")
+                        new_line = line[:hold_pos] + "VARY\n" # Replace everything after and including HOLD with VARY
+                        new_line.append(modified_line)
+
+                if len(new_line) == 1:
+                    # Write held filter to the new columns file
+                    with open(output_filename, 'w') as outfile:
+                        outfile.writelines(new_line)
+                elif len(new_line) == 0:
+                    print("No filters were held for the two step process, try again while holding one of the filters.")
+                    exit()
+                else:
+                    print("Multiple filters were held, only hold one filter.")
+                    exit()
+
+        write_external_columns_file(options.columns, options.columns + ".ext_anchor")
+
 
     run(options.file,options.columns,output_directory=options.output,plots_directory=options.plots,extension=options.extension,racol=options.racol,deccol=options.deccol,bootstrap_num=options.bootstrap, add2MASS=options.add2MASSJ, addSDSS=options.addSDSSgriz, addPanSTARRS=options.addPanSTARRS, addGaia=options.addGaia, number_of_plots=options.numberofplots, sdssUnit=options.sdssUnit, twoStep=options.twoStep)
        
