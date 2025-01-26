@@ -1596,7 +1596,7 @@ if __name__ == '__main__':
 
     if options.twoStep:
         #run with external catalog first for relative ZP's
-        run(options.file,options.columns,output_directory=options.output,plots_directory=options.plots,extension=options.extension,racol=options.racol,deccol=options.deccol,bootstrap_num=options.bootstrap, add2MASS=False, addSDSS=False, addPanSTARRS=False, addGaia=False, number_of_plots=options.numberofplots, sdssUnit=False, twoStep=False)  
+        #run(options.file,options.columns,output_directory=options.output,plots_directory=options.plots,extension=options.extension,racol=options.racol,deccol=options.deccol,bootstrap_num=options.bootstrap, add2MASS=False, addSDSS=False, addPanSTARRS=False, addGaia=False, number_of_plots=options.numberofplots, sdssUnit=False, twoStep=False)  
         
         def write_external_columns_file(input_filename, output_filename):
             try:
@@ -1629,6 +1629,7 @@ if __name__ == '__main__':
                 print(f"An error occurred: {e}")
 
         write_external_columns_file(options.columns, options.columns + ".ext_anchor")
+        exit()
 
 
     run(options.file,options.columns,output_directory=options.output,plots_directory=options.plots,extension=options.extension,racol=options.racol,deccol=options.deccol,bootstrap_num=options.bootstrap, add2MASS=options.add2MASSJ, addSDSS=options.addSDSSgriz, addPanSTARRS=options.addPanSTARRS, addGaia=options.addGaia, number_of_plots=options.numberofplots, sdssUnit=options.sdssUnit, twoStep=options.twoStep)
