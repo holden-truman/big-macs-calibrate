@@ -842,13 +842,13 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
         abs_zp_offset = 0
         for band in relative_zps_info.keys():   
             if relative_zps_info[band][0] == 0: #HOLD band
-                abs_zp_offset =  zps_dict_all[key]
-                zps_dict_all_err[key] = 0
+                abs_zp_offset =  zps_dict_all[band]
+                zps_dict_all_err[band] = 0
 
         for band in relative_zps_info.keys():   
             if relative_zps_info[band][0] != 0: #HOLD band
-                zps_dict_all[key] = abs_zp_offset + relative_zps_info[band][0]
-                zps_dict_all_err[key] = relative_zps_info[band][1]  
+                zps_dict_all[band] = abs_zp_offset + relative_zps_info[band][0]
+                zps_dict_all_err[band] = relative_zps_info[band][1]  
 
 
     if foundSDSS: 
