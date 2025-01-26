@@ -609,7 +609,7 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
                 {'mag':'ab_bp', 'plotName':'Gaia Gbp' , 'filter': 'Gaia_dr3.bp.res', 'mag_err': 'phot_bp_mean_mag_error', 'HOLD_VARY':'HOLD', 'ZP':0.},\
                 {'mag':'ab_rp', 'plotName':'Gaia Grp' , 'filter': 'Gaia_dr3.rp.res', 'mag_err': 'phot_rp_mean_mag_error', 'HOLD_VARY':'HOLD', 'ZP':0.} ]
         '''
-        #holden# confirm the data in these files are correct
+        
         DR = 3 #cDR
         if DR == 3:
             gaia_info = [{'mag':'ab_g', 'plotName':'Gaia G' , 'filter': 'Gaia_dr3.g.res', 'mag_err': 'phot_g_mean_mag_error', 'HOLD_VARY':'HOLD', 'ZP':0.}]
@@ -1021,30 +1021,30 @@ def fit(table, input_info_unsorted, mag_locus,
                 for i in range(len(input_info)):
                     a = input_info[i]['mag']
                     zp_bands[:,:,i] = assign_zp(a,pars,zps,zps_hold)
-                num_prelim = (bands - locus_matrix + zp_bands) / bands_err**2. 
+                num_prelim = (bands - locus_matrix + zp_bands) / bands_err**2. #holden# numerator of eq 6
                 num_prelim[good == 0] = 0.
                 num = (num_prelim.sum(axis=2))
-                denom_prelim = 1. / bands_err**2. 
+                denom_prelim = 1. / bands_err**2. #holden# denom of eq 6
                 denom_prelim[good == 0] = 0.
                 denom = (denom_prelim.sum(axis=2))
                 mean = num / denom
-                mean_array = np.dstack(len(input_info)*[mean])
+                mean_array = np.dstack(len(input_info)*[mean]) #holden# eq 6
 
-                ds_prelim = (bands - locus_matrix + zp_bands - mean_array)**2. #/ ds_err**2. 
+                ds_prelim = (bands - locus_matrix + zp_bands - mean_array)**2. #/ ds_err**2. #holden# numerator of eq 5
                 ds_prelim[good == 0] = 0
                 ''' calculate reduced chi squared '''
                 ds = ds_prelim.sum(axis=2)**0.5 
-                resid_prelim = (bands - locus_matrix + zp_bands - mean_array )**2. / bands_err**2. 
+                resid_prelim = (bands - locus_matrix + zp_bands - mean_array )**2. / bands_err**2. #holden# eq 5
                 plot = (bands -locus_matrix + zp_bands - mean_array ) 
                 resid_prelim[good == 0] = 0
                 resid = resid_prelim.sum(axis=2) / good.sum(axis=2) 
 
-                resid_sum = resid_prelim.sum(axis=2) #/ good.sum(axis=2) 
+                resid_sum = resid_prelim.sum(axis=2) #/ good.sum(axis=2) #holden# eq 5
 
                 ''' these two are not necessarily the same star '''
                 match_locus_index = resid.argmin(axis=1) ## closest locus to each star
                 select_diff = resid[np.arange(len(match_locus_index)),match_locus_index]
-                select_sum = resid_sum[np.arange(len(match_locus_index)),match_locus_index]
+                select_sum = resid_sum[np.arange(len(match_locus_index)),match_locus_index] #holden# eq 5
 
                 select_good = good[np.arange(len(match_locus_index)),match_locus_index]
 
@@ -1054,7 +1054,7 @@ def fit(table, input_info_unsorted, mag_locus,
                 print('good', good.sum())
                                                                                    
                 #chi_squared_total = select_sum.sum()
-                chi_squared_total = np.nansum(select_sum) #holden# verify that it's okay to skip over nan values
+                chi_squared_total = np.nansum(select_sum) #holden# verify that it's okay to skip over nan values #holden# eq 5
                 data_points = select_good.sum()
                 print('data points', data_points)
                 print('stars', len(select_good))
