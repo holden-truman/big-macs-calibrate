@@ -524,6 +524,49 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
     #add in projection
     #inputcat.data.field(racol) - RA)**2. + (inputcat.data.field(deccol) - DEC)**2.)**0.5
     
+    if twoStep:
+        #run with no external catalog in this function
+        run(file,columns_description,output_directory,plots_directory,extension,racol,deccol,end_of_locus_reject,plot_iteration_increment, min_err, bootstrap_num, snpath, night, run, prefix,data_from_sdss=False, addSDSS=False, addPanSTARRS=False, addGaia=False, number_of_plots, add2MASS=False, sdssUnit=False, twoStep=False)
+
+        def parse_file(file_path):
+            bands = []
+            zps = []
+            errors = []
+            
+            # Open the file and read it line by line
+            with open(file_path, 'r') as file:
+                for line in file:
+                    # Skip comment lines and metadata
+                    if line.strip().startswith('#') or "RESULTS" in line:
+                        continue
+
+                    # Split the line into components
+                    parts = line.split()
+                    if len(parts) >= 4:  # Ensure it's a valid data line
+                        band = parts[0]  # First column is the band
+                        zp = float(parts[1])  # Second column is the ZP adjustment
+                        error = float(parts[3])  # Fourth column is the error
+                        
+                        # Append to respective lists
+                        bands.append(band)
+                        zps.append(zp)
+                        errors.append(error)
+            
+            # Create a 2D array
+            result_array = np.array([bands, zps, errors], dtype=object)
+            return result_array
+
+        output_directory + '/' + file.split('/')[-1]  + '.offsets.list'
+
+        relative_zps = parse_file(output_directory)
+
+        # Print the result
+        print("Bands:", relative_zps[0])
+        print("ZP Adjustments:", relative_zps[1])
+        print("Errors:", relative_zps[2])
+        exit()
+
+
     fitSDSS = False
     foundSDSS = 0 
     if addSDSS:
