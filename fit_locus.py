@@ -565,8 +565,6 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
 
         relative_zps = parse_file(offsets_file)
 
-        columns_description = columns_description + ".ext_anchor" #use columns file for absolute ZP calibration
-
 
     fitSDSS = False
     foundSDSS = 0 
@@ -1628,7 +1626,10 @@ if __name__ == '__main__':
             except Exception as e:
                 print(f"An error occurred: {e}")
 
-        write_external_columns_file(options.columns, options.columns + ".ext_anchor")
+        old_columns_file = options.columns
+        options.columns += ".exter_anchor"
+
+        write_external_columns_file(old_columns_file, options.columns)
         exit()
 
 
