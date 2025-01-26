@@ -1510,7 +1510,7 @@ if __name__ == '__main__':
     parser.add_option("-g","--addGaia",action='store_true',help="automatically search for and add Gaia dr2 G band stellar photometry")
     parser.add_option("-w","--numberofplots",help="number of plots to make (default: 10)",default=10)
     parser.add_option("-u","--sdssUnit",help="run SDSS unit test (only works if in coverage)",action='store_true')
-    parser.add_option("-2","--twoStep",action='store_true',help="run 2 step process with external catalogs. Relative ZPs calculated first, then scaled by an external catalog. Hold 1 band in columns file and add 1 external catalog.")
+    parser.add_option("-2","--twoStep",action='store_true',help="run 2 step process with external catalogs. Relative ZPs calculated first, then scaled by an external catalog for abs ZPs. Hold 1 band in columns file and add 1 external catalog.")
     
     import sys
 
