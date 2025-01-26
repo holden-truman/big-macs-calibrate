@@ -1626,7 +1626,7 @@ if __name__ == '__main__':
             except Exception as e:
                 print(f"An error occurred: {e}")
 
-        old_columns_file = options.columns
+        old_columns_file = options.columns.strip()
         new_columns_file = old_columns_file+ ".exter_anchor"
 
         write_external_columns_file(old_columns_file, new_columns_file)
