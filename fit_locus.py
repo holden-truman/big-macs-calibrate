@@ -525,6 +525,7 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
     #inputcat.data.field(racol) - RA)**2. + (inputcat.data.field(deccol) - DEC)**2.)**0.5
     
     if twoStep:
+        #program already ran to get relative ZPs, now get absolute ZPs
         def parse_file(file_path): #function to extract relative ZPs from output file
             bands = []
             zps = []
@@ -552,14 +553,6 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
             # Create a 2D array
             result_array = np.array([bands, zps, errors], dtype=object)
             return result_array
-
-        #run with no external catalog in this function
-        run(file=file,columns_description=columns_description,#output_directory=output_directory,plots_directory=plots_directory,
-        extension=extension,#racol=racol,deccol=deccol,
-        end_of_locus_reject=end_of_locus_reject,plot_iteration_increment=plot_iteration_increment, 
-        min_err=min_err, bootstrap_num=bootstrap_num, #snpath=snpath, night=night, run=run,
-        prefix=prefix,data_from_sdss=data_from_sdss, 
-        addSDSS=False, addPanSTARRS=False, addGaia=False, number_of_plots=number_of_plots, add2MASS=False, sdssUnit=False, twoStep=False)
 
         output_directory + '/' + file.split('/')[-1]  + '.offsets.list'
 
@@ -1598,4 +1591,9 @@ if __name__ == '__main__':
     import utilities
     print('finished importing libraries')
 
-    run(options.file,options.columns,output_directory=options.output,plots_directory=options.plots,extension=options.extension,racol=options.racol,deccol=options.deccol,bootstrap_num=options.bootstrap, add2MASS=options.add2MASSJ, addSDSS=options.addSDSSgriz, addPanSTARRS=options.addPanSTARRS, addGaia=options.addGaia, number_of_plots=options.numberofplots, sdssUnit=options.sdssUnit, twoStep=options.twoStep)    
+    if options.twoStep:
+        #run with external catalog first for relative ZP's
+        run(options.file,options.columns,output_directory=options.output,plots_directory=options.plots,extension=options.extension,racol=options.racol,deccol=options.deccol,bootstrap_num=options.bootstrap, add2MASS=False, addSDSS=False, addPanSTARRS=False, addGaia=False, number_of_plots=options.numberofplots, sdssUnit=False, twoStep=False)  
+        
+    run(options.file,options.columns,output_directory=options.output,plots_directory=options.plots,extension=options.extension,racol=options.racol,deccol=options.deccol,bootstrap_num=options.bootstrap, add2MASS=options.add2MASSJ, addSDSS=options.addSDSSgriz, addPanSTARRS=options.addPanSTARRS, addGaia=options.addGaia, number_of_plots=options.numberofplots, sdssUnit=options.sdssUnit, twoStep=False)
+       
