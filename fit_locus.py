@@ -554,9 +554,9 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
             return result_array
 
         #run with no external catalog in this function
-        run(file=file,columns_description=columns_description,output_directory=output_directory,plots_directory=plots_directory,
+        run(file=file,columns_description=columns_description,output_directory=output_directory,#plots_directory=plots_directory,
         extension=extension,racol=racol,deccol=deccol,end_of_locus_reject=end_of_locus_reject,plot_iteration_increment=plot_iteration_increment, 
-        min_err=min_err, bootstrap_num=bootstrap_num, snpath=snpath, night=night, run=run, prefix=prefix,data_from_sdss=data_from_sdss, 
+        min_err=min_err, bootstrap_num=bootstrap_num, prefix=prefix,data_from_sdss=data_from_sdss, 
         addSDSS=False, addPanSTARRS=False, addGaia=False, number_of_plots=number_of_plots, add2MASS=False, sdssUnit=False, twoStep=False)
 
         output_directory + '/' + file.split('/')[-1]  + '.offsets.list'
