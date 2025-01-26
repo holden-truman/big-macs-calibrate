@@ -561,9 +561,9 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
             else:
                 output_directory = './'
 
-        output_directory + '/' + file.split('/')[-1]  + '.offsets.list'
+        offsets_file = output_directory + '/' + file.split('/')[-1]  + '.offsets.list'
 
-        relative_zps = parse_file(output_directory)
+        relative_zps = parse_file(offsets_file)
 
         # Print the result
         print("Bands:", relative_zps[0])
