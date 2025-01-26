@@ -1627,9 +1627,9 @@ if __name__ == '__main__':
                 print(f"An error occurred: {e}")
 
         old_columns_file = options.columns
-        options.columns += ".exter_anchor"
+        new_columns_file = old_columns_file+ ".exter_anchor"
 
-        write_external_columns_file(old_columns_file, options.columns)
+        write_external_columns_file(old_columns_file, new_columns_file)
         exit()
 
 
