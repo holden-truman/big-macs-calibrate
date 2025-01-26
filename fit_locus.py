@@ -1608,7 +1608,7 @@ if __name__ == '__main__':
                     if "HOLD" in line:
                         # make the HELD filter variable for the absolute ZP calibration
                         hold_pos = line.find("HOLD")
-                        new_line = line[:hold_pos] + "VARY\n" # Replace everything after and including HOLD with VARY
+                        modified_line = line[:hold_pos] + "VARY\n" # Replace everything after and including HOLD with VARY
                         new_line.append(modified_line)
 
                 if len(new_line) == 1:
