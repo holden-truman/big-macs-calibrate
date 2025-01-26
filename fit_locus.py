@@ -846,7 +846,7 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
                 zps_dict_all_err[band] = 0
 
         for band in relative_zps_info.keys():   
-            if relative_zps_info[band][0] != 0: #HOLD band
+            if relative_zps_info[band][0] != 0: #VARY bands
                 zps_dict_all[band] = abs_zp_offset + relative_zps_info[band][0]
                 zps_dict_all_err[band] = relative_zps_info[band][1]  
 
@@ -1403,7 +1403,7 @@ def fit(table, input_info_unsorted, mag_locus,
 
             print(pinit)
 
-            out = scipy.optimize.fmin(errfunc,pinit,maxiter=10000,maxfun=100000,ftol=0.00001,xtol=0.00001,args=()) 
+            out = scipy.optimize.fmin(errfunc,pinit,maxiter=10000,maxfun=100000,ftol=0.00001,xtol=0.00001,args=()) #holden# could change parameters of this to make abs quicker
             print('STARTINGOUT:', out)
             if iteration == 'full':
                 errfunc(out,savefig=(iteration+'_'+outliers+'.png').replace('$',''))
