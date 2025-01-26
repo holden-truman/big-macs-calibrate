@@ -525,11 +525,7 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
     #inputcat.data.field(racol) - RA)**2. + (inputcat.data.field(deccol) - DEC)**2.)**0.5
     
     if twoStep:
-        #run with no external catalog in this function
-        run(file, columns_description, output_directory, plots_directory, extension, racol, deccol, end_of_locus_reject, plot_iteration_increment, min_err, bootstrap_num, snpath, night, prefix, 
-    data_from_sdss=False, addSDSS=False, addPanSTARRS=False, addGaia=False, number_of_plots=None, add2MASS=False, sdssUnit=False, twoStep=False)
-
-        def parse_file(file_path):
+        def parse_file(file_path): #function to extract relative ZPs from output file
             bands = []
             zps = []
             errors = []
@@ -556,6 +552,12 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
             # Create a 2D array
             result_array = np.array([bands, zps, errors], dtype=object)
             return result_array
+
+        #run with no external catalog in this function
+        run(file=file,columns_description=columns_description,output_directory=output_directory,plots_directory=plots_directory,
+        extension=extension,racol=racol,deccol=deccol,end_of_locus_reject=end_of_locus_reject,plot_iteration_increment=plot_iteration_increment, 
+        min_err=min_err, bootstrap_num=bootstrap_num, snpath=snpath, night=night, run=run, prefix=prefix,data_from_sdss=data_from_sdss, 
+        addSDSS=False, addPanSTARRS=False, addGaia=False, number_of_plots=number_of_plots, add2MASS=False, sdssUnit=False, twoStep=False)
 
         output_directory + '/' + file.split('/')[-1]  + '.offsets.list'
 
