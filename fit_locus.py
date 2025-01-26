@@ -554,6 +554,13 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
             result_array = np.array([bands, zps, errors], dtype=object)
             return result_array
 
+        if output_directory is None:
+            fs = file.split('/')
+            if len(fs) > 1:
+                output_directory = '/'.join(fs[:-1])
+            else:
+                output_directory = './'
+
         output_directory + '/' + file.split('/')[-1]  + '.offsets.list'
 
         relative_zps = parse_file(output_directory)
