@@ -1623,10 +1623,10 @@ if __name__ == '__main__':
                 else:
                     print("Multiple filters were held, only hold one filter.")
                     exit()
-        except FileNotFoundError:
-            print(f"Error: The file '{input_filename}' was not found.")
-        except Exception as e:
-            print(f"An error occurred: {e}")
+            except FileNotFoundError:
+                print(f"Error: The file '{input_filename}' was not found.")
+            except Exception as e:
+                print(f"An error occurred: {e}")
 
         write_external_columns_file(options.columns, options.columns + ".ext_anchor")
 
