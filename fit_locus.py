@@ -550,9 +550,11 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
                         zps.append(zp)
                         errors.append(error)
             
-            # Create a 2D array
-            result_array = np.array([bands, zps, errors], dtype=object)
-            return result_array
+            #result_array = np.array([bands, zps, errors], dtype=object)
+            result_dict = {band: (zp, error) for band, zp, error in zip(bands, zps, errors)}
+
+            return result_dict
+
 
         if output_directory is None:
             fs = file.split('/')
@@ -563,7 +565,7 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
 
         offsets_file = output_directory + '/' + file.split('/')[-1]  + '.offsets.list'
 
-        relative_zps = parse_file(offsets_file)
+        relative_zps_info = parse_file(offsets_file)
 
 
     fitSDSS = False
@@ -833,6 +835,21 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
 
 
     output_string = '' 
+
+    if twoStep:
+        #relative_zps_info[band][0] ZP
+        #relative_zps_info[band][1] ZP error
+        abs_zp_offset = 0
+        for band in relative_zps_info.keys():   
+            if relative_zps_info[band][0] == 0: #HOLD band
+                abs_zp_offset =  zps_dict_all[key]
+                zps_dict_all_err[key] = 0
+
+        for band in relative_zps_info.keys():   
+            if relative_zps_info[band][0] != 0: #HOLD band
+                zps_dict_all[key] = abs_zp_offset + relative_zps_info[band][0]
+                zps_dict_all_err[key] = relative_zps_info[band][1]  
+
 
     if foundSDSS: 
         output_string += '#  USED ' + str(foundSDSS) + ' MATCHED SDSS STARS \n'
