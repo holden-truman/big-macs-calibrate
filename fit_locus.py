@@ -500,7 +500,7 @@ def get_catalog_parameters(fulltable, racol, deccol):
     return RA, DEC, RADII.max() 
 
 
-def run(file,columns_description,output_directory=None,plots_directory=None,extension='OBJECTS',racol=None,deccol=None,end_of_locus_reject=1,plot_iteration_increment=50, min_err=0.02, bootstrap_num=0, snpath=None, night=None, run=None, prefix='',data_from_sdss=False, addSDSS=False, addPanSTARRS=False, addGaia=False, number_of_plots=10, add2MASS=False, sdssUnit=False):
+def run(file,columns_description,output_directory=None,plots_directory=None,extension='OBJECTS',racol=None,deccol=None,end_of_locus_reject=1,plot_iteration_increment=50, min_err=0.02, bootstrap_num=0, snpath=None, night=None, run=None, prefix='',data_from_sdss=False, addSDSS=False, addPanSTARRS=False, addGaia=False, number_of_plots=10, add2MASS=False, sdssUnit=False, twoStep=False):
     from importlib import reload
     print(add2MASS, addGaia, addPanSTARRS, addSDSS)
     try: 
@@ -1510,6 +1510,7 @@ if __name__ == '__main__':
     parser.add_option("-g","--addGaia",action='store_true',help="automatically search for and add Gaia dr2 G band stellar photometry")
     parser.add_option("-w","--numberofplots",help="number of plots to make (default: 10)",default=10)
     parser.add_option("-u","--sdssUnit",help="run SDSS unit test (only works if in coverage)",action='store_true')
+    parser.add_option("-2","--twoStep",action='store_true',help="run 2 step process with external catalogs. Relative ZPs calculated first, then scaled by an external catalog. Hold 1 band in columns file and add 1 external catalog.")
     
     import sys
 
@@ -1549,4 +1550,4 @@ if __name__ == '__main__':
     import utilities
     print('finished importing libraries')
 
-    run(options.file,options.columns,output_directory=options.output,plots_directory=options.plots,extension=options.extension,racol=options.racol,deccol=options.deccol,bootstrap_num=options.bootstrap, add2MASS=options.add2MASSJ, addSDSS=options.addSDSSgriz, addPanSTARRS=options.addPanSTARRS, addGaia=options.addGaia, number_of_plots=options.numberofplots, sdssUnit=options.sdssUnit)    
+    run(options.file,options.columns,output_directory=options.output,plots_directory=options.plots,extension=options.extension,racol=options.racol,deccol=options.deccol,bootstrap_num=options.bootstrap, add2MASS=options.add2MASSJ, addSDSS=options.addSDSSgriz, addPanSTARRS=options.addPanSTARRS, addGaia=options.addGaia, number_of_plots=options.numberofplots, sdssUnit=options.sdssUnit, twoStep=options.twoStep)    
