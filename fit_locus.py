@@ -374,10 +374,11 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
             necessary_columns += saveKeys
 
             for column_name in saveKeys: 
-                print(column_name)
+                #print(column_name)
                 array = np.ones(rows) * -99
                 cols.append(fits.Column(name=column_name,format='1E',array=array))
-            exit()
+            #Only has rPSF at this point
+
             coldefs = fits.ColDefs(cols)
             hdu_new = fits.TableHDU.from_columns(coldefs)
 
@@ -387,9 +388,10 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
                 if len(match[i]) == 1:
                     matchedStars += 1
                     for column_name in saveKeys: 
+                        print(column_name)
                         hdu_new.data.field(column_name)[match[i][0]] = catalogStars[column_name][i] #adding nearest match (ref star) to table, hdu_new has normal cat columns, but is there data? and where is it getting it
                         #catalog stars is ref cat
-
+            exit()
             ''' require at least five matched stars '''
             if matchedStars > 3:
                 matched = matchedStars 
