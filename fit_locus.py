@@ -386,7 +386,8 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
                 if len(match[i]) == 1:
                     matchedStars += 1
                     for column_name in saveKeys: 
-                        hdu_new.data.field(column_name)[match[i][0]] = catalogStars[column_name][i]
+                        hdu_new.data.field(column_name)[match[i][0]] = catalogStars[column_name][i] #adding nearest match (ref star) to table
+                        #catalog stars is ref cat
 
             ''' require at least five matched stars '''
             if matchedStars > 3:
@@ -576,6 +577,7 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
             
     foundPanSTARRS = 0 
     if addPanSTARRS:
+        #LOOK fulltable is used, only has matches
         fulltable, foundPanSTARRS, necessary_columns = get_survey_stars(file, fulltable, racol, deccol, necessary_columns, EBV, survey='PanSTARRS')
 
     foundGaia = 0
@@ -723,6 +725,7 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
     print('INPUT FILTERS:', [a['filter'] for a in input_info])
 
     print(input_info)
+    exit()
     mag_locus = utilities.synthesize_expected_locus_for_observations(input_info)
 
     print(mag_locus)
@@ -756,7 +759,7 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
 
     print('INPUT CATALOG', file, 'EXTENSION', extension)
 
-    red_input_info = []
+    red_input_info = [] #LOOK# INPUT INFO!?!?!?!? This is where merge must happen
     blue_input_info = []
     for mag in input_info: 
         if mag['center wavelength'] > 4000:
@@ -788,6 +791,7 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
     os.system('rm ' + plots_directory + '/qc_*png')                                                    
 
     ''' first calibrate redder filters '''
+    #LOOK# Where ZPs get calculated, similar for blue_input
     results, ref_mags, SeqNr = fit(table, red_input_info, mag_locus, min_err=min_err, end_of_locus_reject=end_of_locus_reject, plot_iteration_increment=plot_iteration_increment, bootstrap=True, bootstrap_num=bootstrap_num, plotdir=plots_directory, pre_zps=None, number_of_plots=number_of_plots)
 
     zps_dict_all, zps_dict_all_err, cal_type = update_zps(zps_dict_all,zps_dict_all_err,cal_type,results,'REDDER')
@@ -931,6 +935,7 @@ def fit(table, input_info_unsorted, mag_locus,
     print([a['filter'] for a in vary_input_info])
     print([a['filter'] for a in hold_input_info])
 
+    #LOOK# Input catalog??? It would seem
     input_info = hold_input_info + vary_input_info
 
     zps ={} 
