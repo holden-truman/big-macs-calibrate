@@ -721,9 +721,10 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
             input_info[i]['gallong'] = gallong 
             input_info[i]['gallat'] = gallat 
             print(input_info[i]['mag'], extinction, ' (mag) in field', coeff)
-
+    print("\n\n\nahhhhhhhhhhhhhhhhhhhhhhhhhh")
     print('INPUT FILTERS:', [a['filter'] for a in input_info])
 
+    print("\n\n\nAHHHHHHHHHHHHHHHHHHH")
     print(input_info)
     exit()
     mag_locus = utilities.synthesize_expected_locus_for_observations(input_info)
