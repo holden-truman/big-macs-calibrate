@@ -1077,6 +1077,7 @@ def fit(table, input_info_unsorted, mag_locus,
         #print(bands.shape, locus_matrix.shape)
         number_good_stars = len(locus_matrix)
         print(number_good_stars)
+        exit()
 
         ''' update good matrix after masking '''
         good = np.ones(A_band.shape) 
