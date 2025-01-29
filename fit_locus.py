@@ -397,8 +397,7 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
             if matchedStars > 3:
                 matched = matchedStars 
                 hdu = fits.PrimaryHDU()               
-                #hdulist = fits.HDUList([hdu,hdu_new]) #this is where other bands are added to table (don't think they have data?)
-                hdulist = fits.HDUList([hdu_new])
+                hdulist = fits.HDUList([hdu,hdu_new]) #this is where other bands are added to table (don't think they have data?)
                 print(len(match))
                 import os
                 os.system('rm merge.fits')
