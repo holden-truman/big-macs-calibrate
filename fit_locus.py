@@ -336,7 +336,7 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
     if matched:
         print('making KDTrees')                                                                                                                                                                                                                                
         if survey == 'SDSS' and sdssUnit:
-            ''' make a catalog of all SDSS stars (i.e., not just those matched against catalog stars) '''                                                         
+            ''' make a catalog of all SDSS stars (i.e., not just those matched against catalog stars) ''' #LOOK# is SDSS handled differently?                                                       
             cols = []
             for column_name in returned_keys[2:]: 
                 cols.append(fits.Column(name=column_name,format='1E',array=np.array(catalogStars[column_name])))
@@ -357,7 +357,7 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
 
             kdtree_catalog = spatial.KDTree(data_catalog)
             kdtree_inputcat = spatial.KDTree(data_inputcat)
-            match = kdtree_catalog.query_ball_tree(kdtree_inputcat,2./3600.)
+            match = kdtree_catalog.query_ball_tree(kdtree_inputcat,2./3600.) #LOOK# finding matches with nearest neighbors within 2-arcsec
             print(match)
 
             ''' make catalog with same number of row as inputcat and columns for catalog mags  '''
@@ -382,7 +382,7 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
 
             matchedStars = 0
 
-            for i in range(len(match)):
+            for i in range(len(match)): #LOOK# probably need to change something here, hdu_new is what's used
                 if len(match[i]) == 1:
                     matchedStars += 1
                     for column_name in saveKeys: 
