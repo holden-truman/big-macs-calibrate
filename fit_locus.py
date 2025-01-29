@@ -1036,6 +1036,7 @@ def fit(table, input_info_unsorted, mag_locus,
         good[abs(A_band) == 0] = 0
         good = good[:,0,:]
         good_bands_per_star = good.sum(axis=1) # sum all of the good bands for any given star
+        #LOOK# Worth looking at further
         
 
         ''' figure out the cut-off '''
@@ -1075,6 +1076,7 @@ def fit(table, input_info_unsorted, mag_locus,
 
         #print(bands.shape, locus_matrix.shape)
         number_good_stars = len(locus_matrix)
+        print(number_good_stars)
 
         ''' update good matrix after masking '''
         good = np.ones(A_band.shape) 
