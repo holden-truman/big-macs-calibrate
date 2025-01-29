@@ -1001,7 +1001,7 @@ def fit(table, input_info_unsorted, mag_locus,
                                                                                       
                                                                                       
         print(zps, zps_hold)
-
+        exit()
 
 
         ''' make matrix with a full set of locus points for each star '''    
