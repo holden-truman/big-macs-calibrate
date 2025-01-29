@@ -374,9 +374,10 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
             necessary_columns += saveKeys
 
             for column_name in saveKeys: 
+                print(column_name)
                 array = np.ones(rows) * -99
                 cols.append(fits.Column(name=column_name,format='1E',array=array))
-
+            exit()
             coldefs = fits.ColDefs(cols)
             hdu_new = fits.TableHDU.from_columns(coldefs)
 
@@ -386,7 +387,7 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
                 if len(match[i]) == 1:
                     matchedStars += 1
                     for column_name in saveKeys: 
-                        hdu_new.data.field(column_name)[match[i][0]] = catalogStars[column_name][i] #adding nearest match (ref star) to table
+                        hdu_new.data.field(column_name)[match[i][0]] = catalogStars[column_name][i] #adding nearest match (ref star) to table, hdu_new has normal cat columns, but is there data? and where is it getting it
                         #catalog stars is ref cat
 
             ''' require at least five matched stars '''
@@ -707,7 +708,7 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
 
 
     ''' recombine '''
-    input_info = info_hold + info_vary #LOOK# Has star info for ref and normal cat (does it have bands tho (mags), I think it does)
+    input_info = info_hold + info_vary #LOOK# Has star info for ref and normal cat (does it have bands tho (mags),it might)
 
 
     if RA is not None and DEC is not None:
@@ -761,8 +762,6 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
 
     red_input_info = [] #LOOK# INPUT INFO!?!?!?!? This is where merge must happen
     blue_input_info = []
-    print(f"input info len: {len(input_info)}")
-    exit()
     for mag in input_info: 
         if mag['center wavelength'] > 4000:
             mag['blue/red'] = 'REDDER'
@@ -951,8 +950,8 @@ def fit(table, input_info_unsorted, mag_locus,
 
     ''' for each point in locus, make a list of the locus in each color (locus has same number of points in each color) '''
     ''' just a rearrangement '''
-    locus_list = []
-    ref_locus_list = []
+    locus_list = [] #Locus that is being fit
+    ref_locus_list = [] #locus being fit to (not ref catalog, I think)
     for j in range(number_locus_points):
         o = []
         o_ref = []
