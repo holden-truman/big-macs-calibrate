@@ -1383,7 +1383,7 @@ def fit(table, input_info_unsorted, mag_locus,
 
                 if True:
                     print("input info", input_info)
-                    print("hold input info"hold_input_info)
+                    print("hold input info", hold_input_info)
                     pinit = []                                                                                                               
                     for i in range(len(hold_input_info),len(input_info)):
                         key = input_info[i]['mag'] ## varying magnitudes
