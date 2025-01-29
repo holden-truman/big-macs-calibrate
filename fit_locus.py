@@ -998,11 +998,8 @@ def fit(table, input_info_unsorted, mag_locus,
                     #print(zps_hold[hold_input_info[i]['mag']])
                     #print(iteration)
                 
-                                                                                      
-        print("HERE")                                                                              
+                                                                                                                                                                   
         print(zps, zps_hold)
-        exit()
-
 
         ''' make matrix with a full set of locus points for each star '''    
         locus_matrix = np.array(number_all_stars*[locus_list])
