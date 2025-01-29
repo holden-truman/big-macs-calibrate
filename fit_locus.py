@@ -409,6 +409,12 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
                 returnCat = inputcat
                 matched = 0 
     print(returnCat)
+    
+    for column_name in hdu_new.columns.names:  # Iterating over all column names
+       column_data = hdu_new.data.field(column_name)  # Access the data for the current column
+        print(f"Column: {column_name}")
+        print(column_data)
+        print("-" * 50)  # Separator for readability
     exit()
     
     return returnCat, matched, necessary_columns
