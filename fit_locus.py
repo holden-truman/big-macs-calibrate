@@ -707,7 +707,7 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
 
 
     ''' recombine '''
-    input_info = info_hold + info_vary
+    input_info = info_hold + info_vary #LOOK# Has star info for ref and normal cat (does it have bands tho (mags), I think it does)
 
 
     if RA is not None and DEC is not None:
@@ -726,7 +726,6 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
 
     print("\n\n\nAHHHHHHHHHHHHHHHHHHH")
     print(input_info)
-    exit()
     mag_locus = utilities.synthesize_expected_locus_for_observations(input_info)
 
     print(mag_locus)
@@ -762,6 +761,8 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
 
     red_input_info = [] #LOOK# INPUT INFO!?!?!?!? This is where merge must happen
     blue_input_info = []
+    print(f"input info len: {len(input_info)}")
+    exit()
     for mag in input_info: 
         if mag['center wavelength'] > 4000:
             mag['blue/red'] = 'REDDER'
