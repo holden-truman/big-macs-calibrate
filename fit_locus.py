@@ -999,7 +999,7 @@ def fit(table, input_info_unsorted, mag_locus,
                     #print(iteration)
                 
                                                                                       
-                                                                                      
+        print("HERE")                                                                              
         print(zps, zps_hold)
         exit()
 
