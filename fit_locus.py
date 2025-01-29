@@ -1127,7 +1127,7 @@ def fit(table, input_info_unsorted, mag_locus,
                 spectrum_normalization = mean[np.arange(len(match_locus_index)),match_locus_index]
 
                 print('good', good.sum())
-                exit()
+                
                                                                                    
                 #chi_squared_total = select_sum.sum()
                 chi_squared_total = np.nansum(select_sum) #holden# verify that it's okay to skip over nan values #holden# eq 5
@@ -1515,7 +1515,8 @@ def fit(table, input_info_unsorted, mag_locus,
                 print('NO OUTLYING STARS OR STARS MATCHING BLUE END OF LOCUS, PROCEEDING')
                 keep_fitting = False
 
-
+        print(str(number_good_stars), 'STARS LEFT')
+        exit()
         results[iteration] = dict(zip([a['mag'] for a in input_info],([zps_hold[a['mag']] for a in hold_input_info] + out.tolist())))
         results['ref_mags_' + iteration] = copy(ref_mags)
         results['SeqNr_' + iteration] = copy(SeqNr)
