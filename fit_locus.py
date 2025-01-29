@@ -389,14 +389,16 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
                     matchedStars += 1
                     for column_name in saveKeys: 
                         print(column_name)
-                        hdu_new.data.field(column_name)[match[i][0]] = catalogStars[column_name][i] #adding nearest match (ref star) to table, hdu_new has normal cat columns, but is there data? and where is it getting it
+                        hdu_new.data.field(column_name)[match[i][0]] = catalogStars[column_name][i] #adding nearest match (ref star) to table, hdu_new only has rPSF here
                         #catalog stars is ref cat
-            exit()
+            #Only has rPSF at this point
+
             ''' require at least five matched stars '''
             if matchedStars > 3:
                 matched = matchedStars 
                 hdu = fits.PrimaryHDU()               
-                hdulist = fits.HDUList([hdu,hdu_new])
+                #hdulist = fits.HDUList([hdu,hdu_new]) #this is where other bands are added to table (don't think they have data?)
+                hdulist = fits.HDUList([hdu_new])
                 print(len(match))
                 import os
                 os.system('rm merge.fits')
@@ -407,9 +409,9 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
                 print(str(matchedStars) + ' MATCHES WITH ' + survey  + ' CATALOG')
                 returnCat = inputcat
                 matched = 0 
-   
     print(returnCat)
- 
+    exit()
+    
     return returnCat, matched, necessary_columns
 
 
