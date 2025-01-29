@@ -1073,8 +1073,7 @@ def fit(table, input_info_unsorted, mag_locus,
 
         #print(bands.shape, locus_matrix.shape)
         number_good_stars = len(locus_matrix)
-        print(number_good_stars)
-        exit()
+        print(number_good_stars) #LOOK# still have all stars here
 
         ''' update good matrix after masking '''
         good = np.ones(A_band.shape) 
@@ -1128,6 +1127,7 @@ def fit(table, input_info_unsorted, mag_locus,
                 spectrum_normalization = mean[np.arange(len(match_locus_index)),match_locus_index]
 
                 print('good', good.sum())
+                exit()
                                                                                    
                 #chi_squared_total = select_sum.sum()
                 chi_squared_total = np.nansum(select_sum) #holden# verify that it's okay to skip over nan values #holden# eq 5
