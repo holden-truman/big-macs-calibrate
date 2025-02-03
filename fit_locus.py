@@ -171,7 +171,7 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
             lines = ref_cat.readlines()
             print(lines)
         print(len(lines) - 1, 'STAR(S) FOUND')
-        exit()
+        
         print(lines[0]) #not actually getting all the columns
         print("Re=", lines[0][:-1])
         returned_keys = re.split(r'\,',lines[0][:-1])
@@ -353,6 +353,8 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
 
         else:
             from scipy import spatial 
+            print(catalogStars)
+            exit()
             data_catalog = list(zip(catalogStars['ra'],catalogStars['dec']))
 
             data_inputcat = list(zip(inputcat.data.field(racol),inputcat.data.field(deccol)))
