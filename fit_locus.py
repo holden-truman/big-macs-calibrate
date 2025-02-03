@@ -1516,8 +1516,7 @@ def fit(table, input_info_unsorted, mag_locus,
                 print('NO OUTLYING STARS OR STARS MATCHING BLUE END OF LOCUS, PROCEEDING')
                 keep_fitting = False
 
-        print(str(number_good_stars), 'STARS LEFT') #110 stars here
-        exit()
+        print(str(number_good_stars), 'STARS LEFT') #110 stars here for pan, 692 for Gaia
 
         results[iteration] = dict(zip([a['mag'] for a in input_info],([zps_hold[a['mag']] for a in hold_input_info] + out.tolist())))
         results['ref_mags_' + iteration] = copy(ref_mags)
@@ -1562,8 +1561,8 @@ def fit(table, input_info_unsorted, mag_locus,
     results['errors'] = errors
     results['bootstrapnum'] = bootstrap_num 
 
-    print(str(number_good_stars), 'STARS LEFT') #108 stars here
-    #exit()
+    print(str(number_good_stars), 'STARS LEFT') #108 stars here for pan
+    exit()
 
     return results, results['ref_mags_full'], results['SeqNr_full']
 
