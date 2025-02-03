@@ -1073,8 +1073,8 @@ def fit(table, input_info_unsorted, mag_locus,
 
         #print(bands.shape, locus_matrix.shape)
         number_good_stars = len(locus_matrix)
-        print(number_good_stars) #LOOK# still have all stars here for panstarrs, 
-        exit()
+        print(number_good_stars) #LOOK# still have all stars here for panstarrs and gaia (merge has more than input for gaia, 873) 
+        #exit()
 
         ''' update good matrix after masking '''
         good = np.ones(A_band.shape) 
@@ -1517,7 +1517,8 @@ def fit(table, input_info_unsorted, mag_locus,
                 keep_fitting = False
 
         print(str(number_good_stars), 'STARS LEFT') #110 stars here
-        
+        exit()
+
         results[iteration] = dict(zip([a['mag'] for a in input_info],([zps_hold[a['mag']] for a in hold_input_info] + out.tolist())))
         results['ref_mags_' + iteration] = copy(ref_mags)
         results['SeqNr_' + iteration] = copy(SeqNr)
