@@ -398,7 +398,7 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
                         hdu_new.data.field(column_name)[match[i][0]] = catalogStars[column_name][i] #adding rPSF mags to matched stars
                         print(catalogStars[column_name][i])
                         #catalog stars is ref cat
-            print(range(len(match))
+            print(range(len(match)))
             print(temp)
             exit()
             #Only has rPSF at this point
