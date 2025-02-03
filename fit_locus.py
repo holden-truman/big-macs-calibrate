@@ -1560,8 +1560,8 @@ def fit(table, input_info_unsorted, mag_locus,
     results['errors'] = errors
     results['bootstrapnum'] = bootstrap_num 
 
-    print(str(number_good_stars), 'STARS LEFT') #110 stars here
-    exit()
+    print(str(number_good_stars), 'STARS LEFT') #108 stars here
+    #exit()
 
     return results, results['ref_mags_full'], results['SeqNr_full']
 
