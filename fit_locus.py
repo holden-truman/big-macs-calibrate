@@ -353,8 +353,7 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
 
         else:
             from scipy import spatial 
-            print(catalogStars)
-            exit()
+            
             data_catalog = list(zip(catalogStars['ra'],catalogStars['dec']))
 
             data_inputcat = list(zip(inputcat.data.field(racol),inputcat.data.field(deccol)))
