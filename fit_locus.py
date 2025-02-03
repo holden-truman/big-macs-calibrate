@@ -393,7 +393,7 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
                 if len(match[i]) == 1:
                     matchedStars += 1
                     for column_name in saveKeys: 
-                        temp++
+                        temp = temp + 1
                         #print(column_name)
                         hdu_new.data.field(column_name)[match[i][0]] = catalogStars[column_name][i] #adding rPSF mags to matched stars
                         print(catalogStars[column_name][i])
