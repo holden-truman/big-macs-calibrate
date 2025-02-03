@@ -388,13 +388,18 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
 
             matchedStars = 0
 
+            temp = 0
             for i in range(len(match)): #LOOK# probably need to change something here, hdu_new is what's used
                 if len(match[i]) == 1:
                     matchedStars += 1
                     for column_name in saveKeys: 
-                        print(column_name)
-                        hdu_new.data.field(column_name)[match[i][0]] = catalogStars[column_name][i] #adding nearest match (ref star) to table, hdu_new only has rPSF here
+                        temp++
+                        #print(column_name)
+                        hdu_new.data.field(column_name)[match[i][0]] = catalogStars[column_name][i] #adding rPSF mags to matched stars
+                        print(catalogStars[column_name][i])
                         #catalog stars is ref cat
+            print(range(len(match))
+            print(temp)
             #Only has rPSF at this point
 
             ''' require at least five matched stars '''
