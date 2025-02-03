@@ -400,6 +400,7 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
                         #catalog stars is ref cat
             print(range(len(match))
             print(temp)
+            exit()
             #Only has rPSF at this point
 
             ''' require at least five matched stars '''
