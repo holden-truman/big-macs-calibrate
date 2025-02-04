@@ -394,7 +394,9 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
                         #print(column_name)
                         hdu_new.data.field(column_name)[match[i][0]] = catalogStars[column_name][i] #adding rPSF mags to matched stars
                         if column_name == 'rPSFMag':
-                            print(match[i][0])
+                            print(match[i][0]) # In current form, you can get into the scenario where match[i][0] can be the same for multiple i
+                            # this means that an input cat star is the NN for multiple ref cat stars
+                            # could be fixed by not incrementing matched stars if hdu_new.data.field(column_name)[match[i][0]] != -99 or something
                             print(catalogStars[column_name][i])
                         #catalog stars is ref cat
             print(len(match))
