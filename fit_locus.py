@@ -401,7 +401,7 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
             print(len(saveKeys))
             print(matchedStars)
             print("rPSF Mag ", hdu_new.data.field('rPSFMag')[24])
-            print("W-J-V Mag ", hdu_new.data.field('W-J-V')[24]])
+            print("W-J-V Mag ", hdu_new.data.field('W-J-V')[24])
             exit()
 
             ''' require at least five matched stars '''
