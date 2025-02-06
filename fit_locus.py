@@ -399,12 +399,11 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
                             # could be fixed by not incrementing matched stars if hdu_new.data.field(column_name)[match[i][0]] != -99 or something
                             print(catalogStars[column_name][i])
                         #catalog stars is ref cat
-            print(len(match))
-            print(len(saveKeys))
-            print(matchedStars)
-            print("rPSF Mag ", hdu_new.data.field('rPSFMag')[24])
-            print("W-J-V Mag ", hdu_new.data.field('W-J-V')[24])
-            exit()
+            #print(len(match))
+            #print(len(saveKeys))
+            #print(matchedStars)
+            #print("rPSF Mag ", hdu_new.data.field('rPSFMag')[24])
+            #print("W-J-V Mag ", hdu_new.data.field('W-J-V')[24])
 
             ''' require at least five matched stars '''
             if matchedStars > 3:
@@ -1253,6 +1252,10 @@ def fit(table, input_info_unsorted, mag_locus,
                             return j
 
 		#for [c1_1, c1_2], [c2_1,c2_2] in index_list[:number_of_plots]: 
+        print(index_list)
+        print(c1_1)
+        exit()
+        #print(c1_2)
                 for [c1_1, c1_2], [c2_1,c2_2] in index_list: 
 
                     c1_band1 = c1_1['mag']
