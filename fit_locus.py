@@ -1186,9 +1186,8 @@ def fit(table, input_info_unsorted, mag_locus,
                 
                 #holden# toggle plots
                 if iteration == 'full' and (itr % plot_iteration_increment == 0 or savefig is not None):
-                    import time
                     plot_progress(pars,stat_tot,savefig)
-                    sleep(5)
+                    time.sleep(5)
                 itr += 1
 
                 if residuals:
@@ -1671,6 +1670,7 @@ if __name__ == '__main__':
     from glob import glob
     from copy import copy
     import utilities
+    import time #holden# remove
     print('finished importing libraries')
 
     if options.twoStep:
