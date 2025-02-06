@@ -1185,8 +1185,8 @@ def fit(table, input_info_unsorted, mag_locus,
                 print('iteration', itr)
                 
                 #holden# toggle plots
-                if iteration == 'full' and (itr % plot_iteration_increment == 0 or savefig is not None):
-                    plot_progress(pars,stat_tot,savefig)
+                #if iteration == 'full' and (itr % plot_iteration_increment == 0 or savefig is not None):
+                #    plot_progress(pars,stat_tot,savefig)
                 itr += 1
 
                 if residuals:
@@ -1328,7 +1328,7 @@ def fit(table, input_info_unsorted, mag_locus,
                         plt.clf()                                                                            
                         plt.axes([0.15,0.125,0.95-0.15,0.95-0.125])
 
-                        x_a = c1_1['ttName'] 
+                        x_a = c1_1['plotName'] 
                         x_b = c1_2['plotName'] 
                         y_a = c2_1['plotName'] 
                         y_b = c2_2['plotName'] 
@@ -1560,7 +1560,7 @@ def fit(table, input_info_unsorted, mag_locus,
         results['SeqNr_' + iteration] = copy(SeqNr)
 
 
-        mask = bands_err < 100
+        mask = bands_err < 100 #LOOK CHECK AHHHH
 
     results['redchi'] = redchi
     results['num'] = num        
