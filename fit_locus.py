@@ -1187,7 +1187,7 @@ def fit(table, input_info_unsorted, mag_locus,
                 #holden# toggle plots
                 if iteration == 'full' and (itr % plot_iteration_increment == 0 or savefig is not None):
                     plot_progress(pars,stat_tot,savefig)
-                    time.sleep(5)
+                    #time.sleep(5)
                 itr += 1
 
                 if residuals:
@@ -1261,7 +1261,8 @@ def fit(table, input_info_unsorted, mag_locus,
         #print(c1_2)
                 
                 for [c1_1, c1_2], [c2_1,c2_2] in index_list: 
-
+                    if ()
+                    W-J-B W-J-V W-J-V rPSFMag
                     c1_band1 = c1_1['mag']
                     c1_band2 = c1_2['mag']
                     c2_band1 = c2_1['mag']
@@ -1313,6 +1314,9 @@ def fit(table, input_info_unsorted, mag_locus,
                         y_color = y_color[mask]
                         print(len(x_color))
                         print(len(y_color))
+                        print(c1_band1, c1_band2, c2_band1, c2_band2)
+                        if not (c1_band1, c1_band2, c2_band1, c2_band2) == ("W-J-B", "W-J-V", "W-J-V", "rPSFMag"):
+                            sleep(5)
                         #exit()
                         y_app_mag = y_app_mag[mask]
                         x_err = (x_err_1**2. + x_err_2**2.)**0.5
