@@ -1082,7 +1082,7 @@ def fit(table, input_info_unsorted, mag_locus,
         ''' set errors on bad measurements (value=+-99) equal to 100000. and bands equal to 0 '''
         bands_err[abs(A_band) == 99] = 1000.   
         bands[abs(A_band) == 99] = 0.   
-        print(A_band)
+        #print(A_band)
         #exit()
 
         #print(bands.shape, locus_matrix.shape)
@@ -1290,12 +1290,14 @@ def fit(table, input_info_unsorted, mag_locus,
                         y_err_1 = (bands_err)[:,0,ind(c2_band1)]
                         y_err_2 = (bands_err)[:,0,ind(c2_band2)] #elimator of nonref catalogs
                         
+                        '''
                         print(c2_band2)
                         print("AHHHHH\n\n")
                         print(bands_err)
                         print("AHHHHH\n\n")
                         print(ind(c2_band2))
                         exit()
+                        '''
 
                         mask = (x_err_1<100)*(x_err_2<100)*(y_err_1<100)*(y_err_2<100)
                         print("here")
@@ -1310,7 +1312,7 @@ def fit(table, input_info_unsorted, mag_locus,
                         y_color = y_color[mask]
                         print(len(x_color))
                         print(len(y_color))
-                        exit()
+                        #exit()
                         y_app_mag = y_app_mag[mask]
                         x_err = (x_err_1**2. + x_err_2**2.)**0.5
                         y_err = (y_err_1**2. + y_err_2**2.)**0.5
@@ -1597,7 +1599,7 @@ def fit(table, input_info_unsorted, mag_locus,
     results['bootstrapnum'] = bootstrap_num 
 
     print(str(number_good_stars), 'STARS LEFT') #108 stars here for pan, 715 for gaia
-    #exit()
+    exit()
 
     return results, results['ref_mags_full'], results['SeqNr_full']
 
