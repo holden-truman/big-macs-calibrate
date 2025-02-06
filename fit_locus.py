@@ -1083,7 +1083,7 @@ def fit(table, input_info_unsorted, mag_locus,
         bands_err[abs(A_band) == 99] = 1000.   
         bands[abs(A_band) == 99] = 0.   
         print(A_band)
-        exit()
+        #exit()
 
         #print(bands.shape, locus_matrix.shape)
         number_good_stars = len(locus_matrix)
