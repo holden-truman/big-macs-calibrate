@@ -1253,7 +1253,6 @@ def fit(table, input_info_unsorted, mag_locus,
 
 		#for [c1_1, c1_2], [c2_1,c2_2] in index_list[:number_of_plots]: 
                 print(index_list)
-                print(c1_1)
                 exit()
         #print(c1_2)
                 for [c1_1, c1_2], [c2_1,c2_2] in index_list: 
