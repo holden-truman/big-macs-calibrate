@@ -1311,10 +1311,10 @@ def fit(table, input_info_unsorted, mag_locus,
                         x_color = x_color[mask]
                         y_color = y_color[mask]
                         print(len(x_color))
-                        print(len(y_color))
+                        print(len(y_color)) #unmatchedstars withh get masked out if rPSF is included in c1_1, c1_2, ..., but if not they stay
                         print(c1_band1, c1_band2, c2_band1, c2_band2)
                         if not (c1_band1, c1_band2, c2_band1, c2_band2) == ("W-J-B", "W-J-V", "W-J-V", "rPSFMag"):
-                            exit()
+                            #exit()
                         #exit()
                         y_app_mag = y_app_mag[mask]
                         x_err = (x_err_1**2. + x_err_2**2.)**0.5
@@ -1386,6 +1386,10 @@ def fit(table, input_info_unsorted, mag_locus,
                                    
                                     print(mpl.rcParams['figure.figsize'])
                                     plt.savefig(file)
+                                    if not (c1_band1, c1_band2, c2_band1, c2_band2) == ("W-J-B", "W-J-V", "W-J-V", "rPSFMag"):
+                                        print(file)
+                                        exit()
+                        
 
 
                 def order_plots(a):
