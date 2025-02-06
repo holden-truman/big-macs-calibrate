@@ -1186,6 +1186,7 @@ def fit(table, input_info_unsorted, mag_locus,
                 
                 #holden# toggle plots
                 if iteration == 'full' and (itr % plot_iteration_increment == 0 or savefig is not None):
+                    import time
                     plot_progress(pars,stat_tot,savefig)
                     sleep(5)
                 itr += 1
