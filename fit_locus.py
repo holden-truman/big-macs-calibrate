@@ -1088,7 +1088,6 @@ def fit(table, input_info_unsorted, mag_locus,
         #print(bands.shape, locus_matrix.shape)
         number_good_stars = len(locus_matrix)
         print(number_good_stars) #LOOK# still have all stars here for panstarrs and gaia (merge has more than input for gaia, 873) 
-        #exit()
 
         ''' update good matrix after masking '''
         good = np.ones(A_band.shape) 
@@ -1145,6 +1144,9 @@ def fit(table, input_info_unsorted, mag_locus,
                 
                                                                                    
                 #chi_squared_total = select_sum.sum()
+                print(select_sum)
+                print(len(select_sum))
+                exit()
                 chi_squared_total = np.nansum(select_sum) #holden# verify that it's okay to skip over nan values #holden# eq 5
                 data_points = select_good.sum()
                 print('data points', data_points)
