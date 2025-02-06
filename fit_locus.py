@@ -1286,6 +1286,7 @@ def fit(table, input_info_unsorted, mag_locus,
                         y_err_2 = (bands_err)[:,0,ind(c2_band2)]
 
                         mask = (x_err_1<100)*(x_err_2<100)*(y_err_1<100)*(y_err_2<100)
+                        print("here")
                         print(len(x_color))
                         print(len(y_color))
                         x_color = x_color[mask]
