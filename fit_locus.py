@@ -1261,6 +1261,9 @@ def fit(table, input_info_unsorted, mag_locus,
                     c2_band2 = c2_2['mag']
 
                     print(c1_band1)
+                    print(c1_band2)
+                    print(c2_band1)
+                    print(c2_band2)
                     exit()
 
 
