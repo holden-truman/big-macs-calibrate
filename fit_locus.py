@@ -1254,19 +1254,14 @@ def fit(table, input_info_unsorted, mag_locus,
 		#for [c1_1, c1_2], [c2_1,c2_2] in index_list[:number_of_plots]: 
         #print(c1_2)
                 for [c1_1, c1_2], [c2_1,c2_2] in index_list: 
+                    print(c1_band1, c1_band2, c2_band1, c2_band2)
+                exit()
+                for [c1_1, c1_2], [c2_1,c2_2] in index_list: 
 
                     c1_band1 = c1_1['mag']
                     c1_band2 = c1_2['mag']
                     c2_band1 = c2_1['mag']
                     c2_band2 = c2_2['mag']
-
-                    print(c1_band1)
-                    print(c1_band2)
-                    print(c2_band1)
-                    print(c2_band2)
-                    exit()
-
-
 
                     #print(input_info)
                     #print(ind(c1_band1), ind(c1_band2))
