@@ -1387,7 +1387,7 @@ def fit(table, input_info_unsorted, mag_locus,
                                    
                                     print(mpl.rcParams['figure.figsize'])
                                     plt.savefig(file)
-                                    if not (c1_band1, c1_band2, c2_band1, c2_band2) == ("W-J-B", "W-J-V", "W-J-V", "rPSFMag"):
+                                    if "rPSFMag" in (c1_band1, c1_band2, c2_band1, c2_band2):
                                         print(file)
                                         exit()
                         
