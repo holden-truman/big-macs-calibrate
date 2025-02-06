@@ -1283,7 +1283,11 @@ def fit(table, input_info_unsorted, mag_locus,
                         x_err_1 = (bands_err)[:,0,ind(c1_band1)]
                         x_err_2 = (bands_err)[:,0,ind(c1_band2)]
                         y_err_1 = (bands_err)[:,0,ind(c2_band1)]
-                        y_err_2 = (bands_err)[:,0,ind(c2_band2)]
+                        y_err_2 = (bands_err)[:,0,ind(c2_band2)] #elimator of nonref catalogs
+
+                        print(bands_err)
+                        print(ind(c2_band2))
+                        exit()
 
                         mask = (x_err_1<100)*(x_err_2<100)*(y_err_1<100)*(y_err_2<100)
                         print("here")
