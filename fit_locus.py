@@ -1144,6 +1144,7 @@ def fit(table, input_info_unsorted, mag_locus,
                 
                                                                                    
                 #chi_squared_total = select_sum.sum()
+                print("HERE")
                 print(select_sum)
                 print(len(select_sum))
                 
@@ -1151,7 +1152,6 @@ def fit(table, input_info_unsorted, mag_locus,
                 data_points = select_good.sum()
                 print('data points', data_points)
                 print('stars', len(select_good))
-                print((bands.shape[-1] - 1))
                 degrees_of_freedom = data_points - (bands.shape[-1] - 1) - 2*len(select_good) - 1
                 # degrees of freedom = datapoints - parameters - 1
                 exit()
