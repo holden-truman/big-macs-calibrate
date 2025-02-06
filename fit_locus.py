@@ -1146,14 +1146,14 @@ def fit(table, input_info_unsorted, mag_locus,
                 #chi_squared_total = select_sum.sum()
                 print(select_sum)
                 print(len(select_sum))
-                exit()
+                
                 chi_squared_total = np.nansum(select_sum) #holden# verify that it's okay to skip over nan values #holden# eq 5
                 data_points = select_good.sum()
                 print('data points', data_points)
                 print('stars', len(select_good))
                 degrees_of_freedom = data_points - (bands.shape[-1] - 1) - 2*len(select_good) - 1
                 # degrees of freedom = datapoints - parameters - 1
-
+                exit()
                 ''' two fit parameters for each star: median and choice of closest locus point (I think) '''
                 #redchi = stat_tot / float(max(1,len(bands) - 1))
                 redchi = chi_squared_total / float(degrees_of_freedom)
