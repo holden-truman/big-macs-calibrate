@@ -1286,8 +1286,13 @@ def fit(table, input_info_unsorted, mag_locus,
                         y_err_2 = (bands_err)[:,0,ind(c2_band2)]
 
                         mask = (x_err_1<100)*(x_err_2<100)*(y_err_1<100)*(y_err_2<100)
+                        print(len(x_color))
+                        print(len(y_color))
                         x_color = x_color[mask]
                         y_color = y_color[mask]
+                        print(len(x_color))
+                        print(len(y_color))
+                        exit()
                         y_app_mag = y_app_mag[mask]
                         x_err = (x_err_1**2. + x_err_2**2.)**0.5
                         y_err = (y_err_1**2. + y_err_2**2.)**0.5
@@ -1324,9 +1329,6 @@ def fit(table, input_info_unsorted, mag_locus,
                         plt.ylabel(y_color_name)
 
                         if len(x_color):
-                            print(len(x_color))
-                            print(len(y_color))
-                            exit()
                             plt.scatter(x_color,y_color,color='#0066ff',s=4,marker='o', zorder=20)
                             plt.errorbar(x_color,y_color,xerr=x_err,yerr=y_err,marker=None,fmt='o',ecolor="#e8e8e8",ms=1, mew=1, zorder=1) #,mc='none')   
 
