@@ -1284,7 +1284,8 @@ def fit(table, input_info_unsorted, mag_locus,
                         x_err_2 = (bands_err)[:,0,ind(c1_band2)]
                         y_err_1 = (bands_err)[:,0,ind(c2_band1)]
                         y_err_2 = (bands_err)[:,0,ind(c2_band2)] #elimator of nonref catalogs
-
+                        
+                        print(c2_band2)
                         print("AHHHHH\n\n")
                         print(bands_err)
                         print("AHHHHH\n\n")
