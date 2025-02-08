@@ -1485,16 +1485,17 @@ def fit(table, input_info_unsorted, mag_locus,
 
             print(pinit)
             
-            print("HERE")
-            time.sleep(10)
             out = scipy.optimize.fmin(errfunc,pinit,maxiter=10000,maxfun=100000,ftol=0.00001,xtol=0.00001,args=()) #holden# could change parameters of this to make abs quicker
-            print("STOP")
-            exit()
+            
 
             print('STARTINGOUT:', out)
+            print("HERE")
+            time.sleep(10)
             if iteration == 'full':
                 errfunc(out,savefig=(iteration+'_'+outliers+'.png').replace('$',''))
             #print(out)
+            print("STOP")
+            exit()
 
             #print('starting')      
 
