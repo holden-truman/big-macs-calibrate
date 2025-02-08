@@ -1120,7 +1120,7 @@ def fit(table, input_info_unsorted, mag_locus,
             def optimize_offset_errfunc(offset,pars,residuals=False, savefig=None):
                 return errfunc(pars,offset=offset)
 
-            def errfunc(pars,offset=0,residuals=False,savefig=None):
+            def errfunc(pars,residuals=False,savefig=None, offset=0):
                 pars = pars + offset
                  
                 global itr 
