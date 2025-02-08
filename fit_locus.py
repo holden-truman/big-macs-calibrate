@@ -1495,7 +1495,7 @@ def fit(table, input_info_unsorted, mag_locus,
 
             print('STARTINGOUT:', out)
             if iteration == 'full':
-                errfunc(0,out,savefig=(iteration+'_'+outliers+'.png').replace('$',''))
+                errfunc(out,savefig=(iteration+'_'+outliers+'.png').replace('$',''))
             #print(out)
 
             #print('starting')      
@@ -1505,7 +1505,7 @@ def fit(table, input_info_unsorted, mag_locus,
 
             #[zps_hold[a['mag']] for a in hold_input_info] + 
             print('ENDINGOUT:', list(out))
-            residuals,dist,redchi,end_of_locus, num, ref_mags = errfunc(0,pars=list(out),residuals=True)
+            residuals,dist,redchi,end_of_locus, num, ref_mags = errfunc(pars=list(out),residuals=True)
             #print(dist)
             #print('finished')
             #print('bands' , len(bands))
