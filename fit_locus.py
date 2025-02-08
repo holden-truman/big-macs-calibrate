@@ -411,7 +411,7 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
                     temp_table = Table(hdu_new.data)
 
                     # Filter out rows where rPSFMag == 99
-                    filtered_table = table[table['rPSFMag'] != -99]
+                    filtered_table = temp_table[temp_table['rPSFMag'] != -99]
 
                     # Update the hdu_new data
                     hdu_new.data = filtered_table
