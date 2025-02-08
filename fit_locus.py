@@ -1488,13 +1488,16 @@ def fit(table, input_info_unsorted, mag_locus,
                 else: 
                     pinit = [results['full'][key] for key in [a['mag'] for a in vary_input_info]]
 
-            print("HERE")
             print(pinit)
+            print("HERE")
+            time.sleep(10)            
             #exit()
             if True:
                 initial_offset = .1
                 new_offset = scipy.optimize.fmin(optimize_offset_errfunc,initial_offset,maxiter=10000,maxfun=100000,ftol=0.00001,xtol=0.00001,args=(pinit,)) #holden# could change parameters of this to make abs quicker
                 out = [x + new_offset for x in pinit]
+                print("HERE")
+                print(pinit)
                 print(out)
                 exit()
             else:
