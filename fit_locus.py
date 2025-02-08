@@ -1333,7 +1333,7 @@ def fit(table, input_info_unsorted, mag_locus,
                         if not (c1_band1, c1_band2, c2_band1, c2_band2) == ("W-J-B", "W-J-V", "W-J-V", "rPSFMag"):
                             #exit()
                             pass
-                        #exit()
+                        
                         y_app_mag = y_app_mag[mask]
                         x_err = (x_err_1**2. + x_err_2**2.)**0.5
                         y_err = (y_err_1**2. + y_err_2**2.)**0.5
