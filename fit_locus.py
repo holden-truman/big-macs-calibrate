@@ -1158,9 +1158,9 @@ def fit(table, input_info_unsorted, mag_locus,
                 
                                                                                    
                 #chi_squared_total = select_sum.sum()
-                print("HERE")
-                print(select_sum)
-                print(len(select_sum))
+                #print("HERE")
+                #print(select_sum)
+                #print(len(select_sum))
                 
                 chi_squared_total = np.nansum(select_sum) #holden# verify that it's okay to skip over nan values #holden# eq 5 #means some stars have nans
                 data_points = select_good.sum()
@@ -1314,6 +1314,7 @@ def fit(table, input_info_unsorted, mag_locus,
                         '''
 
                         mask = (x_err_1<100)*(x_err_2<100)*(y_err_1<100)*(y_err_2<100)
+                        '''
                         print("here")
                         print(x_err_1)
                         print(x_err_2)
@@ -1322,11 +1323,12 @@ def fit(table, input_info_unsorted, mag_locus,
                         print(mask)
                         print(len(x_color))
                         print(len(y_color))
+                        '''
                         x_color = x_color[mask]
                         y_color = y_color[mask]
-                        print(len(x_color))
-                        print(len(y_color)) #unmatchedstars withh get masked out if rPSF is included in c1_1, c1_2, ..., but if not they stay
-                        print(c1_band1, c1_band2, c2_band1, c2_band2)
+                        #print(len(x_color))
+                        #print(len(y_color)) #unmatchedstars withh get masked out if rPSF is included in c1_1, c1_2, ..., but if not they stay
+                        #print(c1_band1, c1_band2, c2_band1, c2_band2)
                         if not (c1_band1, c1_band2, c2_band1, c2_band2) == ("W-J-B", "W-J-V", "W-J-V", "rPSFMag"):
                             #exit()
                             pass
