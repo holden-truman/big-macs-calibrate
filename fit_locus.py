@@ -1121,7 +1121,8 @@ def fit(table, input_info_unsorted, mag_locus,
                 return errfunc(pars,offset=offset)
 
             def errfunc(pars,residuals=False,savefig=None, offset=0):
-                pars = pars + offset
+                if not offset == 0:
+                    pars = [x + offset for x in pars]
                  
                 global itr 
                 stat_tot = 0
