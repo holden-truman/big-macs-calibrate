@@ -407,6 +407,15 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
 
             ''' require at least five matched stars '''
             if matchedStars > 3:
+                if True:
+                    temp_table = Table(hdu_new.data)
+
+                    # Filter out rows where rPSFMag == 99
+                    filtered_table = table[table['rPSFMag'] != -99]
+
+                    # Update the hdu_new data
+                    hdu_new.data = filtered_table
+
                 matched = matchedStars 
                 hdu = fits.PrimaryHDU()               
                 hdulist = fits.HDUList([hdu,hdu_new])
@@ -420,6 +429,8 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
                 print(str(matchedStars) + ' MATCHES WITH ' + survey  + ' CATALOG')
                 returnCat = inputcat
                 matched = 0 
+
+    
     print(returnCat)
     
     ''' #all, INCLUDING UNMATCHED, input mags in hdu_new
@@ -1389,7 +1400,7 @@ def fit(table, input_info_unsorted, mag_locus,
                                     plt.savefig(file)
                                     if "ab_g" in (c1_band1, c1_band2, c2_band1, c2_band2):
                                         print(file)
-                                        exit()
+                                        #exit()
                         
 
 
@@ -1608,7 +1619,7 @@ def fit(table, input_info_unsorted, mag_locus,
     results['bootstrapnum'] = bootstrap_num 
 
     print(str(number_good_stars), 'STARS LEFT') #108 stars here for pan, 715 for gaia
-    exit()
+    #exit()
 
     return results, results['ref_mags_full'], results['SeqNr_full']
 
