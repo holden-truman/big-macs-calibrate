@@ -413,8 +413,11 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
                     # Filter out rows where rPSFMag == 99
                     filtered_table = temp_table[temp_table['rPSFMag'] != -99]
 
-                    # Update the hdu_new data
-                    hdu_new.data = filtered_table
+                    # Convert back to a NumPy structured array
+                    filtered_data = filtered_table.as_array()
+
+                    # Create a new BinTableHDU with the filtered data
+                    hdu_new = fits.BinTableHDU(data=filtered_data)
 
                 matched = matchedStars 
                 hdu = fits.PrimaryHDU()               
