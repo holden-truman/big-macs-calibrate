@@ -1488,6 +1488,7 @@ def fit(table, input_info_unsorted, mag_locus,
                 else: 
                     pinit = [results['full'][key] for key in [a['mag'] for a in vary_input_info]]
 
+            print("HERE")
             print(pinit)
             #exit()
             if True:
