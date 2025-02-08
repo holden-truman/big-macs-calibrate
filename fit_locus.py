@@ -1489,13 +1489,9 @@ def fit(table, input_info_unsorted, mag_locus,
             
 
             print('STARTINGOUT:', out)
-            print("HERE")
-            time.sleep(10)
             if iteration == 'full':
                 errfunc(out,savefig=(iteration+'_'+outliers+'.png').replace('$',''))
             #print(out)
-            print("STOP")
-            exit()
 
             #print('starting')      
 
