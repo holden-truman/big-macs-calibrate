@@ -1117,10 +1117,11 @@ def fit(table, input_info_unsorted, mag_locus,
         outliers = 'no outlier rejection'
 
         while keep_fitting:
+            def optimize_offset_errfunc(offset,pars,residuals=False, savefig=None):
+                return errfunc(pars,offset=offset)
 
-            def errfunc(offset,pars,residuals=False,savefig=None):
-                if True:
-                    pars = pars + offset
+            def errfunc(pars,offset=0,residuals=False,savefig=None):
+                pars = pars + offset
                  
                 global itr 
                 stat_tot = 0
@@ -1489,12 +1490,12 @@ def fit(table, input_info_unsorted, mag_locus,
             print(pinit)
             #exit()
             initial_offset = .1
-            out = scipy.optimize.fmin(errfunc,initial_offset,maxiter=10000,maxfun=100000,ftol=0.00001,xtol=0.00001,args=(pinit,)) #holden# could change parameters of this to make abs quicker
+            out = scipy.optimize.fmin(optimize_offset_errfunc,initial_offset,maxiter=10000,maxfun=100000,ftol=0.00001,xtol=0.00001,args=(pinit,)) #holden# could change parameters of this to make abs quicker
             
 
             print('STARTINGOUT:', out)
             if iteration == 'full':
-                errfunc(out,savefig=(iteration+'_'+outliers+'.png').replace('$',''))
+                errfunc(0,out,savefig=(iteration+'_'+outliers+'.png').replace('$',''))
             #print(out)
 
             #print('starting')      
@@ -1504,7 +1505,7 @@ def fit(table, input_info_unsorted, mag_locus,
 
             #[zps_hold[a['mag']] for a in hold_input_info] + 
             print('ENDINGOUT:', list(out))
-            residuals,dist,redchi,end_of_locus, num, ref_mags = errfunc(pars=list(out),residuals=True)
+            residuals,dist,redchi,end_of_locus, num, ref_mags = errfunc(0,pars=list(out),residuals=True)
             #print(dist)
             #print('finished')
             #print('bands' , len(bands))
