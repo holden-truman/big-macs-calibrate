@@ -1118,7 +1118,10 @@ def fit(table, input_info_unsorted, mag_locus,
 
         while keep_fitting:
 
-            def errfunc(pars,residuals=False,savefig=None):    
+            def errfunc(offset,pars,residuals=False,savefig=None):
+                if True (
+                    pars = pars + offset
+                )    
                 global itr 
                 stat_tot = 0
                 zp_bands = np.zeros((number_good_stars,number_locus_points,len(input_info))) 
@@ -1484,8 +1487,9 @@ def fit(table, input_info_unsorted, mag_locus,
                     pinit = [results['full'][key] for key in [a['mag'] for a in vary_input_info]]
 
             print(pinit)
-            exit()
-            out = scipy.optimize.fmin(errfunc,pinit,maxiter=10000,maxfun=100000,ftol=0.00001,xtol=0.00001,args=()) #holden# could change parameters of this to make abs quicker
+            #exit()
+            initial_offset = .1
+            out = scipy.optimize.fmin(errfunc,initial_offset,maxiter=10000,maxfun=100000,ftol=0.00001,xtol=0.00001,args=(pinit,)) #holden# could change parameters of this to make abs quicker
             
 
             print('STARTINGOUT:', out)
