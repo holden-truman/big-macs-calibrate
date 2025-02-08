@@ -1118,6 +1118,8 @@ def fit(table, input_info_unsorted, mag_locus,
 
         while keep_fitting:
             def optimize_offset_errfunc(offset,pars,residuals=False, savefig=None):
+                print(pars)
+                exit()
                 return errfunc(pars,offset=offset)
 
             def errfunc(pars,residuals=False,savefig=None, offset=0):
