@@ -1492,7 +1492,7 @@ def fit(table, input_info_unsorted, mag_locus,
             print(pinit)
             #exit()
             initial_offset = .1
-            out = scipy.optimize.fmin(optimize_offset_errfunc,initial_offset,maxiter=10000,maxfun=100000,ftol=0.00001,xtol=0.00001,args=(pinit,)) #holden# could change parameters of this to make abs quicker
+            out = pinit + scipy.optimize.fmin(optimize_offset_errfunc,initial_offset,maxiter=10000,maxfun=100000,ftol=0.00001,xtol=0.00001,args=(pinit,)) #holden# could change parameters of this to make abs quicker
             
 
             print('STARTINGOUT:', out)
