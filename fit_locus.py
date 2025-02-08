@@ -1321,13 +1321,13 @@ def fit(table, input_info_unsorted, mag_locus,
                         print(y_err_1)
                         print(y_err_2)
                         print(mask)
+                        '''
                         print(len(x_color))
                         print(len(y_color))
-                        '''
                         x_color = x_color[mask]
                         y_color = y_color[mask]
-                        #print(len(x_color))
-                        #print(len(y_color)) #unmatchedstars withh get masked out if rPSF is included in c1_1, c1_2, ..., but if not they stay
+                        print(len(x_color))
+                        print(len(y_color)) #unmatchedstars withh get masked out if rPSF is included in c1_1, c1_2, ..., but if not they stay
                         #print(c1_band1, c1_band2, c2_band1, c2_band2)
                         if not (c1_band1, c1_band2, c2_band1, c2_band2) == ("W-J-B", "W-J-V", "W-J-V", "rPSFMag"):
                             #exit()
