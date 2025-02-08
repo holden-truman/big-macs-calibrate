@@ -1484,7 +1484,7 @@ def fit(table, input_info_unsorted, mag_locus,
                     pinit = [results['full'][key] for key in [a['mag'] for a in vary_input_info]]
 
             print(pinit)
-            
+            exit()
             out = scipy.optimize.fmin(errfunc,pinit,maxiter=10000,maxfun=100000,ftol=0.00001,xtol=0.00001,args=()) #holden# could change parameters of this to make abs quicker
             
 
