@@ -1119,9 +1119,9 @@ def fit(table, input_info_unsorted, mag_locus,
         while keep_fitting:
 
             def errfunc(offset,pars,residuals=False,savefig=None):
-                if True (
+                if True:
                     pars = pars + offset
-                )    
+                 
                 global itr 
                 stat_tot = 0
                 zp_bands = np.zeros((number_good_stars,number_locus_points,len(input_info))) 
