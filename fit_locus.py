@@ -949,6 +949,7 @@ def fit(table, input_info_unsorted, mag_locus,
     os.system('mkdir -p ' + plotdir)
     import numpy as np
     from functools import reduce
+    import time
 
 
     params = {'backend' : 'ps',
@@ -1485,7 +1486,7 @@ def fit(table, input_info_unsorted, mag_locus,
             print(pinit)
             
             print("HERE")
-            sleep(10)
+            time.sleep(10)
             out = scipy.optimize.fmin(errfunc,pinit,maxiter=10000,maxfun=100000,ftol=0.00001,xtol=0.00001,args=()) #holden# could change parameters of this to make abs quicker
             print("STOP")
             exit()
