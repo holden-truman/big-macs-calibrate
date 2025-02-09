@@ -834,9 +834,9 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
     ''' first calibrate redder filters '''
     #LOOK# Where ZPs get calculated, similar for blue_input
     if (twoStep):
-        prior_zps = [info[0] for info in relative_zps_info.values()]
-        prior_zps = [np.float64(val) for val in prior_zps]
-        results, ref_mags, SeqNr = fit(table, red_input_info, mag_locus, min_err=min_err, end_of_locus_reject=end_of_locus_reject, plot_iteration_increment=plot_iteration_increment, bootstrap=True, bootstrap_num=bootstrap_num, plotdir=plots_directory, pre_zps=None, number_of_plots=number_of_plots, prior_zps=prior_zps)
+        relative_zps = [info[0] for info in relative_zps_info.values()]
+        relative_zps = [np.float64(val) for val in relative_zps]
+        results, ref_mags, SeqNr = fit(table, red_input_info, mag_locus, min_err=min_err, end_of_locus_reject=end_of_locus_reject, plot_iteration_increment=plot_iteration_increment, bootstrap=True, bootstrap_num=bootstrap_num, plotdir=plots_directory, pre_zps=None, number_of_plots=number_of_plots, relative_zps=relative_zps)
     else:
         results, ref_mags, SeqNr = fit(table, red_input_info, mag_locus, min_err=min_err, end_of_locus_reject=end_of_locus_reject, plot_iteration_increment=plot_iteration_increment, bootstrap=True, bootstrap_num=bootstrap_num, plotdir=plots_directory, pre_zps=None, number_of_plots=number_of_plots)
 
@@ -952,7 +952,7 @@ def fit(table, input_info_unsorted, mag_locus,
         number_of_plots = 10,
         fast=True,
         publish=True ,
-        prior_zps=None           
+        relative_zps=None           
         ):
 
     os.system('mkdir -p ' + plotdir)
@@ -1456,7 +1456,7 @@ def fit(table, input_info_unsorted, mag_locus,
 
 
             if iteration == 'full': 
-
+                # Could move this block to the not twoStep section?
                 if True:
                     print("input info", input_info)
                     print("hold input info", hold_input_info)
@@ -1497,13 +1497,13 @@ def fit(table, input_info_unsorted, mag_locus,
                     pinit = [results['full'][key] for key in [a['mag'] for a in vary_input_info]]
 
             print(pinit)
-            if prior_zps is not None:
-                initial_offset = .1
-                new_offset = scipy.optimize.fmin(optimize_offset_errfunc,initial_offset,maxiter=10000,maxfun=100000,ftol=0.00001,xtol=0.00001,args=(prior_zps,)) #holden# could change parameters of this to make abs quicker
-                out = np.array([np.float64(val + new_offset) for val in prior_zps])
+            if relative_zps is not None:
+                initial_offset = 0
+                new_offset = scipy.optimize.fmin(optimize_offset_errfunc,initial_offset,maxiter=10000,maxfun=100000,ftol=0.00001,xtol=0.00001,args=(relative_zps,)) #holden# could change parameters of this to make abs quicker
+                out = np.array([np.float64(val + new_offset) for val in relative_zps])
                 print("HERE")
                 print(pinit)
-                print(prior_zps)
+                print(relative_zps)
                 print(out)
                 #exit()
             else:
