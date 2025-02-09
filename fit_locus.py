@@ -795,7 +795,7 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
             #band_order = ['W-J-B', 'W-J-V', 'W-C-RC', 'W-C-IC', 'W-S-Z+']
             red_vary_input_info = list(filter(lambda x: x['HOLD_VARY'] == 'VARY', red_input_info))
             blue_vary_input_info = list(filter(lambda x: x['HOLD_VARY'] == 'VARY', red_input_info))
-            for i in range(red_vary_input_info)::
+            for i in range(red_vary_input_info):
                 band = red_vary_input_info[i]['mag']
                 red_band_order.append[band]
 
