@@ -1535,13 +1535,13 @@ def fit(table, input_info_unsorted, mag_locus,
                     pinit = [results['full'][key] for key in [a['mag'] for a in vary_input_info]]
 
             print(pinit)
-            if relative_zps is not None:
+            if red_relative_zps is not None:
                 initial_offset = 0
                 new_offset = scipy.optimize.fmin(optimize_offset_errfunc,initial_offset,maxiter=10000,maxfun=100000,ftol=0.00001,xtol=0.00001,args=(relative_zps,)) #holden# could change parameters of this to make abs quicker
-                out = np.array([np.float64(val + new_offset) for val in relative_zps])
+                out = np.array([np.float64(val + new_offset) for val in red_relative_zps])
                 print("HERE")
                 print(pinit)
-                print(relative_zps)
+                print(red_relative_zps)
                 print(out)
                 #exit()
             else:
