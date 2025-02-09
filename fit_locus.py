@@ -799,22 +799,22 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
 
     #program already ran to get relative ZPs, now get absolute ZPs
     def parse_file(file_path): #function to extract relative ZPs from output file
-            red_band_order = []
-            blue_band_order = []
-            #band_order = ['W-J-B', 'W-J-V', 'W-C-RC', 'W-C-IC', 'W-S-Z+']
-            red_vary_input_info = list(filter(lambda x: x['HOLD_VARY'] == 'VARY', red_input_info))
-            blue_vary_input_info = list(filter(lambda x: x['HOLD_VARY'] == 'VARY', red_input_info))
-            for i in range(red_vary_input_info):
-                band = red_vary_input_info[i]['mag']
-                red_band_order.append[band]
+        red_band_order = []
+        blue_band_order = []
+        #band_order = ['W-J-B', 'W-J-V', 'W-C-RC', 'W-C-IC', 'W-S-Z+']
+        red_vary_input_info = list(filter(lambda x: x['HOLD_VARY'] == 'VARY', red_input_info))
+        blue_vary_input_info = list(filter(lambda x: x['HOLD_VARY'] == 'VARY', red_input_info))
+        for i in range(red_vary_input_info):
+            band = red_vary_input_info[i]['mag']
+            red_band_order.append[band]
 
-            for i in range(len(blue_vary_input_info)):
-                band = blue_vary_input_info[i]['mag']
-                blue_band_order.append[band]  
+        for i in range(len(blue_vary_input_info)):
+            band = blue_vary_input_info[i]['mag']
+            blue_band_order.append[band]  
             
-            print("red",red_band_order)
-            print("blue",blue_band_order)
-            exit()
+        print("red",red_band_order)
+        print("blue",blue_band_order)
+        exit()
             '''
             with open(columns_description, 'r') as columns_file: #look at columns file for correct ordering of relative ZPs
                 for line in columns_file:
@@ -824,35 +824,35 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
                     # Split the line into components
                     parts = line.split()
                     if len(parts) >= 4:  # Ensure it's a valid line containing band info
-                        band = parts[0]  # first thing is band, only part we need here
-                        band_order.append(band)
-            '''
+                    band = parts[0]  # first thing is band, only part we need here
+                    band_order.append(band)
+        '''
 
-            bands = [None] * len(band_order)
-            zps = [None] * len(band_order)
-            errors = [None] * len(band_order)
+        bands = [None] * len(band_order)
+        zps = [None] * len(band_order)
+        errors = [None] * len(band_order)
             
-            with open(file_path, 'r') as results_file:
-                for line in results_file:
-                    # Skip comment lines and metadata
-                    if line.strip().startswith('#') or "RESULTS" in line:
-                        continue
+        with open(file_path, 'r') as results_file:
+            for line in results_file:
+                # Skip comment lines and metadata
+                if line.strip().startswith('#') or "RESULTS" in line:
+                    continue
 
-                    # Split the line into components
-                    parts = line.split()
-                    if len(parts) >= 4:  # Ensure it's a valid data line
-                        band = parts[0]  # First column is the band
-                        zp = float(parts[1])  # Second column is the ZP
-                        error = float(parts[3])  # Fourth column is the error on ZP
-                        
-                        bands[band_order.index(band)] = band
-                        zps[band_order.index(band)] = zp
-                        errors[band_order.index(band)] = error
+                # Split the line into components
+                parts = line.split()
+                if len(parts) >= 4:  # Ensure it's a valid data line
+                    band = parts[0]  # First column is the band
+                    zp = float(parts[1])  # Second column is the ZP
+                    error = float(parts[3])  # Fourth column is the error on ZP
+                    
+                    bands[band_order.index(band)] = band
+                    zps[band_order.index(band)] = zp
+                    errors[band_order.index(band)] = error
 
-            result_dict = {band: (zp, error) for band, zp, error in zip(bands, zps, errors)}
-            return result_dict
+        result_dict = {band: (zp, error) for band, zp, error in zip(bands, zps, errors)}
+        return result_dict
 
-        red_relative_zps_info = parse_file(offsets_file)
+    red_relative_zps_info = parse_file(offsets_file)
 
     ''' first calibrate redder filters '''
     #LOOK# Where ZPs get calculated, similar for blue_input
