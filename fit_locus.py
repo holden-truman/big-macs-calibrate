@@ -806,11 +806,11 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
         blue_vary_input_info = list(filter(lambda x: x['HOLD_VARY'] == 'VARY', red_input_info))
         for i in range(len(red_vary_input_info)):
             band = red_vary_input_info[i]['mag']
-            red_band_order.append[band]
+            red_band_order.append(band)
 
         for i in range(len(blue_vary_input_info)):
             band = blue_vary_input_info[i]['mag']
-            blue_band_order.append[band]  
+            blue_band_order.append(band)  
             
         print("red",red_band_order)
         print("blue",blue_band_order)
