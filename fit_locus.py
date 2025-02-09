@@ -577,6 +577,9 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
                     if len(parts) >= 4:  # Ensure it's a valid line containing band info
                         band = parts[0]  # first thing is band, only part we need here
                         band_order.append(band)
+            
+            print(band_order)
+            exit()
 
             bands = [None] * len(band_order)
             zps = [None] * len(band_order)
