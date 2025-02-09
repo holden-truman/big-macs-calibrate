@@ -815,8 +815,8 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
         print("red",red_band_order)
         print("blue",blue_band_order)
         exit()
-            '''
-            with open(columns_description, 'r') as columns_file: #look at columns file for correct ordering of relative ZPs
+        '''
+        with open(columns_description, 'r') as columns_file: #look at columns file for correct ordering of relative ZPs
                 for line in columns_file:
                     # Skip comment lines
                     if line.strip().startswith('#'):
