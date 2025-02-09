@@ -563,14 +563,11 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
     #add in projection
     #inputcat.data.field(racol) - RA)**2. + (inputcat.data.field(deccol) - DEC)**2.)**0.5
     
-    prior_rel_zps = []
     if twoStep:
         #program already ran to get relative ZPs, now get absolute ZPs
         def parse_file(file_path): #function to extract relative ZPs from output file
             # Desired band order
             band_order = ['W-J-B', 'W-J-V', 'W-C-RC', 'W-C-IC', 'W-S-Z+']
-
-            prior_rel_zps = [None] * len(band_order)
 
             bands = [None] * len(band_order)
             zps = [None] * len(band_order)
@@ -594,10 +591,7 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
                         print(band)
                         bands[band_order.index(band)] = band
                         zps[band_order.index(band)] = zp
-                        prior_rel_zps[band_order.index(band)] = zp
                         errors[band_order.index(band)] = error
-            print(bands)
-            exit()
             #result_array = np.array([bands, zps, errors], dtype=object)
             result_dict = {band: (zp, error) for band, zp, error in zip(bands, zps, errors)}
 
@@ -839,7 +833,11 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
 
     ''' first calibrate redder filters '''
     #LOOK# Where ZPs get calculated, similar for blue_input
-    results, ref_mags, SeqNr = fit(table, red_input_info, mag_locus, min_err=min_err, end_of_locus_reject=end_of_locus_reject, plot_iteration_increment=plot_iteration_increment, bootstrap=True, bootstrap_num=bootstrap_num, plotdir=plots_directory, pre_zps=None, number_of_plots=number_of_plots)
+    if (twoStep):
+        prior_zps = [info[0] for info in relative_zps_info.values()]
+        results, ref_mags, SeqNr = fit(table, red_input_info, mag_locus, min_err=min_err, end_of_locus_reject=end_of_locus_reject, plot_iteration_increment=plot_iteration_increment, bootstrap=True, bootstrap_num=bootstrap_num, plotdir=plots_directory, pre_zps=None, number_of_plots=number_of_plots, prior_zps=prior_zps)
+    else:
+        results, ref_mags, SeqNr = fit(table, red_input_info, mag_locus, min_err=min_err, end_of_locus_reject=end_of_locus_reject, plot_iteration_increment=plot_iteration_increment, bootstrap=True, bootstrap_num=bootstrap_num, plotdir=plots_directory, pre_zps=None, number_of_plots=number_of_plots, prior_zps=)
 
     zps_dict_all, zps_dict_all_err, cal_type = update_zps(zps_dict_all,zps_dict_all_err,cal_type,results,'REDDER')
 
@@ -952,7 +950,8 @@ def fit(table, input_info_unsorted, mag_locus,
         pre_zps=None,
         number_of_plots = 10,
         fast=True,
-        publish=True            
+        publish=True ,
+        prior_zps=None           
         ):
 
     os.system('mkdir -p ' + plotdir)
@@ -1500,12 +1499,13 @@ def fit(table, input_info_unsorted, mag_locus,
             #print("HERE")
             #time.sleep(10)            
             #exit()
-            if False:
+            if prior_zps is not None:
                 initial_offset = .1
-                new_offset = scipy.optimize.fmin(optimize_offset_errfunc,initial_offset,maxiter=10000,maxfun=100000,ftol=0.00001,xtol=0.00001,args=(pinit,)) #holden# could change parameters of this to make abs quicker
-                out = [x + new_offset for x in pinit]
+                new_offset = scipy.optimize.fmin(optimize_offset_errfunc,initial_offset,maxiter=10000,maxfun=100000,ftol=0.00001,xtol=0.00001,args=(prior_zps,)) #holden# could change parameters of this to make abs quicker
+                out = [x + new_offset for x in prior_zps]
                 print("HERE")
                 print(pinit)
+                print(prior_zps)
                 print(out)
                 exit()
             else:
