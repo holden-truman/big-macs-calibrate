@@ -1496,9 +1496,11 @@ def fit(table, input_info_unsorted, mag_locus,
                         #print('diff:', diff)
                         print('median indtrumental', median_instrumental)
                         print('median locus', median_locus)
+                        for i in range(len(mag_locus)):
+                            print("band: {mag_locus[i]}")
                         pinit.append(median_locus - median_instrumental)
 
-
+                exit()
                 #$pinit = [0 for key in [a['mag'] for a in vary_input_info]]
             else:
                 ''' add random offset of 1.0 mag '''
