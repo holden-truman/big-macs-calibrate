@@ -814,7 +814,7 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
         
         print(red_band_order)
         print(blue_band_order)
-        exit()
+        #exit()
         '''
         with open(columns_description, 'r') as columns_file: #look at columns file for correct ordering of relative ZPs
                 for line in columns_file:
@@ -1794,6 +1794,6 @@ if __name__ == '__main__':
 
         write_external_columns_file(old_columns_file, options.columns)
 
-
+    exit()
     run(options.file,options.columns,output_directory=options.output,plots_directory=options.plots,extension=options.extension,racol=options.racol,deccol=options.deccol,bootstrap_num=options.bootstrap, add2MASS=options.add2MASSJ, addSDSS=options.addSDSSgriz, addPanSTARRS=options.addPanSTARRS, addGaia=options.addGaia, number_of_plots=options.numberofplots, sdssUnit=options.sdssUnit, twoStep=options.twoStep)
        
