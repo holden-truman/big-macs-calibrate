@@ -571,6 +571,7 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
             vary_bands = list(filter(lambda x: x['HOLD_VARY'] == 'VARY', input_info_unsorted))
             band_order = [results['full'][key] for key in [a['mag'] for a in vary_bands]]
             print(band_order)
+            exit()
             '''
             with open(columns_description, 'r') as columns_file: #look at columns file for correct ordering of relative ZPs
                 for line in columns_file:
