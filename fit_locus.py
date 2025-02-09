@@ -739,7 +739,7 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
 
 
     offset_list = output_directory + '/' + file.split('/')[-1]  + '.offsets.list'
-    offset_list_file = open(offset_list,'w')
+    #offset_list_file = open(offset_list,'w')
 
     print(file)
     #fulltable = fits.open(file)[extension]
