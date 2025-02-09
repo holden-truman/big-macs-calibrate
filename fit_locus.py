@@ -568,7 +568,6 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
         def parse_file(file_path): #function to extract relative ZPs from output file
             band_order = utilities.parse_columns(columns_description)
             print(band_order)
-            exit()
             '''
             with open(columns_description, 'r') as columns_file: #look at columns file for correct ordering of relative ZPs
                 for line in columns_file:
