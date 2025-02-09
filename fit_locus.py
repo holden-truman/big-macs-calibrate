@@ -1495,10 +1495,10 @@ def fit(table, input_info_unsorted, mag_locus,
                         #print('diff:', diff)
                         print('median indtrumental', median_instrumental)
                         print('median locus', median_locus)
-                        for i in range(len(mag_locus)):
-                            print(f"band: {mag_locus[i]}")
+                        for x in range(len(mag_locus)):
+                            #print(f"band: {mag_locus[x]}")
                         pinit.append(median_locus - median_instrumental)
-
+                print(input_info)
                 exit()
                 #$pinit = [0 for key in [a['mag'] for a in vary_input_info]]
             else:
