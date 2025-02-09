@@ -873,7 +873,7 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
         blue_relative_zps = [info[0] for info in blue_relative_zps_info.values()]
         blue_relative_zps = [np.float64(val) for val in blue_relative_zps]
         
-        results, ref_mags, SeqNr = fit(table, red_input_info, mag_locus, min_err=min_err, end_of_locus_reject=end_of_locus_reject, plot_iteration_increment=plot_iteration_increment, bootstrap=True, bootstrap_num=bootstrap_num, plotdir=plots_directory, pre_zps=None, number_of_plots=number_of_plots, relative_zps=relative_zps)
+        results, ref_mags, SeqNr = fit(table, red_input_info, mag_locus, min_err=min_err, end_of_locus_reject=end_of_locus_reject, plot_iteration_increment=plot_iteration_increment, bootstrap=True, bootstrap_num=bootstrap_num, plotdir=plots_directory, pre_zps=None, number_of_plots=number_of_plots, relative_zps=red_relative_zps)
     else:
         results, ref_mags, SeqNr = fit(table, red_input_info, mag_locus, min_err=min_err, end_of_locus_reject=end_of_locus_reject, plot_iteration_increment=plot_iteration_increment, bootstrap=True, bootstrap_num=bootstrap_num, plotdir=plots_directory, pre_zps=None, number_of_plots=number_of_plots)
 
