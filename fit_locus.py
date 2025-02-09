@@ -566,6 +566,15 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
     if twoStep:
         pass #do nothing, get relative ZPs later
 
+    if output_directory is None:
+            fs = file.split('/')
+            if len(fs) > 1:
+                output_directory = '/'.join(fs[:-1])
+            else:
+                output_directory = './'
+
+        offsets_file = output_directory + '/' + file.split('/')[-1]  + '.offsets.list'
+
 
     fitSDSS = False
     foundSDSS = 0 
@@ -842,16 +851,6 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
 
             result_dict = {band: (zp, error) for band, zp, error in zip(bands, zps, errors)}
             return result_dict
-
-
-        if output_directory is None:
-            fs = file.split('/')
-            if len(fs) > 1:
-                output_directory = '/'.join(fs[:-1])
-            else:
-                output_directory = './'
-
-        offsets_file = output_directory + '/' + file.split('/')[-1]  + '.offsets.list'
 
         red_relative_zps_info = parse_file(offsets_file)
 
