@@ -799,7 +799,7 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
 
     #program already ran to get relative ZPs, now get absolute ZPs
     def parse_file(file_path): #function to extract relative ZPs from output file
-        red_band_order = []
+        red_band_order = [] #bands have to be in right order for fit function to work
         blue_band_order = []
         #band_order = ['W-J-B', 'W-J-V', 'W-C-RC', 'W-C-IC', 'W-S-Z+']
         red_vary_input_info = list(filter(lambda x: x['HOLD_VARY'] == 'VARY', red_input_info))
@@ -812,9 +812,6 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
             band = blue_vary_input_info[i]['mag']
             blue_band_order.append(band)  
             
-        print("red",red_band_order)
-        print("blue",blue_band_order)
-        exit()
         '''
         with open(columns_description, 'r') as columns_file: #look at columns file for correct ordering of relative ZPs
                 for line in columns_file:
