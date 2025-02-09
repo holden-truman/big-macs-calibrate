@@ -407,7 +407,7 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
 
             ''' require at least five matched stars '''
             if matchedStars > 3:
-                if False:
+                if False: #turn to true if you want to remove nonmatches
                     temp_table = Table(hdu_new.data)
 
                     # Filter out rows where rPSFMag == 99
