@@ -563,6 +563,7 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
     #add in projection
     #inputcat.data.field(racol) - RA)**2. + (inputcat.data.field(deccol) - DEC)**2.)**0.5
     
+    prior_rel_zps = []
     if twoStep:
         #program already ran to get relative ZPs, now get absolute ZPs
         def parse_file(file_path): #function to extract relative ZPs from output file
@@ -585,10 +586,12 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
                         error = float(parts[3])  # Fourth column is the error
                         
                         # Append to respective lists
+                        print(band)
                         bands.append(band)
                         zps.append(zp)
+                        prior_rel_zps.append(zp)
                         errors.append(error)
-            
+            exit()
             #result_array = np.array([bands, zps, errors], dtype=object)
             result_dict = {band: (zp, error) for band, zp, error in zip(bands, zps, errors)}
 
@@ -1715,7 +1718,7 @@ if __name__ == '__main__':
     print('finished importing libraries')
 
     if options.twoStep:
-        #run with external catalog first for relative ZP's
+        #run without external catalog first for relative ZP's
         run(options.file,options.columns,output_directory=options.output,plots_directory=options.plots,extension=options.extension,racol=options.racol,deccol=options.deccol,bootstrap_num=options.bootstrap, add2MASS=False, addSDSS=False, addPanSTARRS=False, addGaia=False, number_of_plots=options.numberofplots, sdssUnit=False, twoStep=False)  
         
         def write_external_columns_file(input_filename, output_filename):
