@@ -567,11 +567,14 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
         #program already ran to get relative ZPs, now get absolute ZPs
         def parse_file(file_path): #function to extract relative ZPs from output file
             # Desired band order
-            band_order = ['W-J-B', 'W-J-V', 'W-C-RC', 'W-C-IC', 'W-S-Z+']
+            #band_order = ['W-J-B', 'W-J-V', 'W-C-RC', 'W-C-IC', 'W-S-Z+']
 
-            bands = [None] * len(band_order)
-            zps = [None] * len(band_order)
-            errors = [None] * len(band_order)
+            #bands = [None] * len(band_order)
+            #zps = [None] * len(band_order)
+            #errors = [None] * len(band_order)
+            bands = []
+            zps = []
+            errors = []
             
             # Open the file and read it line by line
             with open(file_path, 'r') as file:
@@ -589,9 +592,13 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
                         
                         # Append to respective lists
                         print(band)
-                        bands[band_order.index(band)] = band
-                        zps[band_order.index(band)] = zp
-                        errors[band_order.index(band)] = error
+                        #bands[band_order.index(band)] = band
+                        #zps[band_order.index(band)] = zp
+                        #errors[band_order.index(band)] = error
+                        bands.append(band)
+                        zps.append(zp)
+                        errors.append(error)
+                        
             #result_array = np.array([bands, zps, errors], dtype=object)
             result_dict = {band: (zp, error) for band, zp, error in zip(bands, zps, errors)}
 
