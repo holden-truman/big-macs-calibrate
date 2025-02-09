@@ -569,7 +569,7 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
             band_order = []
             with open(columns_description, 'r') as columns_file: #look at columns file for correct ordering of relative ZPs
                 for line in columns_file:
-                    # Skip comment lines and metadata
+                    # Skip comment lines
                     if line.strip().startswith('#'):
                         continue
                     # Split the line into components
