@@ -566,17 +566,22 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
     if twoStep:
         #program already ran to get relative ZPs, now get absolute ZPs
         def parse_file(file_path): #function to extract relative ZPs from output file
-            # Desired band order
-            #band_order = ['W-J-B', 'W-J-V', 'W-C-RC', 'W-C-IC', 'W-S-Z+']
+            band_order = []
+            with open(columns_description, 'r'): #look at columns file for correct ordering of relative ZPs
+                for line in file:
+                    # Skip comment lines and metadata
+                    if line.strip().startswith('#') in line:
+                        continue
+                    # Split the line into components
+                    parts = line.split()
+                    if len(parts) >= 4:  # Ensure it's a valid line containing band info
+                        band = parts[0]  # first thing is band, only part we need here
+                        band_order.append(band)
 
-            #bands = [None] * len(band_order)
-            #zps = [None] * len(band_order)
-            #errors = [None] * len(band_order)
-            bands = []
-            zps = []
-            errors = []
+            bands = [None] * len(band_order)
+            zps = [None] * len(band_order)
+            errors = [None] * len(band_order)
             
-            # Open the file and read it line by line
             with open(file_path, 'r') as file:
                 for line in file:
                     # Skip comment lines and metadata
@@ -587,19 +592,13 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
                     parts = line.split()
                     if len(parts) >= 4:  # Ensure it's a valid data line
                         band = parts[0]  # First column is the band
-                        zp = float(parts[1])  # Second column is the ZP adjustment
-                        error = float(parts[3])  # Fourth column is the error
+                        zp = float(parts[1])  # Second column is the ZP
+                        error = float(parts[3])  # Fourth column is the error on ZP
                         
-                        # Append to respective lists
-                        print(band)
-                        #bands[band_order.index(band)] = band
-                        #zps[band_order.index(band)] = zp
-                        #errors[band_order.index(band)] = error
-                        bands.append(band)
-                        zps.append(zp)
-                        errors.append(error)
-                        
-            #result_array = np.array([bands, zps, errors], dtype=object)
+                        bands[band_order.index(band)] = band
+                        zps[band_order.index(band)] = zp
+                        errors[band_order.index(band)] = error
+
             result_dict = {band: (zp, error) for band, zp, error in zip(bands, zps, errors)}
 
             return result_dict
