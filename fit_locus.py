@@ -825,9 +825,13 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
                     band_order.append(band)
         '''
 
-        red_bands = [None] * len(band_order)
-        red_zps = [None] * len(band_order)
-        red_errors = [None] * len(band_order)
+        red_bands = [None] * len(red_band_order)
+        red_zps = [None] * len(red_band_order)
+        red_errors = [None] * len(red_band_order)
+
+        blue_bands = [None] * len(blue_band_order)
+        blue_zps = [None] * len(blue_band_order)
+        blue_errors = [None] * len(blue_band_order)
             
         with open(file_path, 'r') as results_file:
             for line in results_file:
