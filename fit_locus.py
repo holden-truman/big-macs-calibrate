@@ -567,11 +567,11 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
         pass #do nothing, get relative ZPs later
 
     if output_directory is None:
-            fs = file.split('/')
-            if len(fs) > 1:
-                output_directory = '/'.join(fs[:-1])
-            else:
-                output_directory = './'
+        fs = file.split('/')
+        if len(fs) > 1:
+            output_directory = '/'.join(fs[:-1])
+        else:
+            output_directory = './'
 
         offsets_file = output_directory + '/' + file.split('/')[-1]  + '.offsets.list'
 
