@@ -595,7 +595,7 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
                         bands[band_order.index(band)] = band
                         zps[band_order.index(band)] = zp
                         prior_rel_zps[band_order.index(band)] = zp
-                        errors[band_order.index(band)] = err
+                        errors[band_order.index(band)] = error
             print(bands)
             exit()
             #result_array = np.array([bands, zps, errors], dtype=object)
