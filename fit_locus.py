@@ -828,9 +828,9 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
                     band_order.append(band)
         '''
 
-        bands = [None] * len(band_order)
-        zps = [None] * len(band_order)
-        errors = [None] * len(band_order)
+        red_bands = [None] * len(band_order)
+        red_zps = [None] * len(band_order)
+        red_errors = [None] * len(band_order)
             
         with open(file_path, 'r') as results_file:
             for line in results_file:
@@ -841,24 +841,37 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
                 # Split the line into components
                 parts = line.split()
                 if len(parts) >= 4:  # Ensure it's a valid data line
-                    band = parts[0]  # First column is the band
-                    zp = float(parts[1])  # Second column is the ZP
-                    error = float(parts[3])  # Fourth column is the error on ZP
-                    
-                    bands[band_order.index(band)] = band
-                    zps[band_order.index(band)] = zp
-                    errors[band_order.index(band)] = error
+                    if ("REDDER" in line)
+                        band = parts[0]  # First column is the band
+                        zp = float(parts[1])  # Second column is the ZP
+                        error = float(parts[3])  # Fourth column is the error on ZP
+                        
+                        red_bands[red_band_order.index(band)] = band
+                        red_zps[red_band_order.index(band)] = zp
+                        red_errors[red_band_order.index(band)] = error
+                    elif ("BLUER/RESTRICTED" in line)
+                        band = parts[0]  # First column is the band
+                        zp = float(parts[1])  # Second column is the ZP
+                        error = float(parts[3])  # Fourth column is the error on ZP
+                        
+                        blue_bands[red_band_order.index(band)] = band
+                        blue_zps[red_band_order.index(band)] = zp
+                        blue_errors[red_band_order.index(band)] = error
 
-        result_dict = {band: (zp, error) for band, zp, error in zip(bands, zps, errors)}
-        return result_dict
-
-    red_relative_zps_info = parse_file(offsets_file)
+        red_result_dict = {band: (zp, error) for band, zp, error in zip(red_bands, red_zps, red_errors)}
+        blue_result_dict = {band: (zp, error) for band, zp, error in zip(blue_bands, blue_zps, blue_errors)}
+        return red_result_dict, blue_result_dict
 
     ''' first calibrate redder filters '''
     #LOOK# Where ZPs get calculated, similar for blue_input
     if (twoStep):
-        relative_zps = [info[0] for info in red_relative_zps_info.values()]
-        relative_zps = [np.float64(val) for val in relative_zps]
+        red_relative_zps_info, blue_relative_zps_info = parse_file(offsets_file)
+        
+        red_relative_zps = [info[0] for info in red_relative_zps_info.values()]
+        red_relative_zps = [np.float64(val) for val in red_relative_zps]
+        blue_relative_zps = [info[0] for info in blue_relative_zps_info.values()]
+        blue_relative_zps = [np.float64(val) for val in blue_relative_zps]
+        
         results, ref_mags, SeqNr = fit(table, red_input_info, mag_locus, min_err=min_err, end_of_locus_reject=end_of_locus_reject, plot_iteration_increment=plot_iteration_increment, bootstrap=True, bootstrap_num=bootstrap_num, plotdir=plots_directory, pre_zps=None, number_of_plots=number_of_plots, relative_zps=relative_zps)
     else:
         results, ref_mags, SeqNr = fit(table, red_input_info, mag_locus, min_err=min_err, end_of_locus_reject=end_of_locus_reject, plot_iteration_increment=plot_iteration_increment, bootstrap=True, bootstrap_num=bootstrap_num, plotdir=plots_directory, pre_zps=None, number_of_plots=number_of_plots)
@@ -896,8 +909,11 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
 
 
         print(red_input_info)
-
-        results, ref_mags, SeqNr = fit(table, red_input_info + blue_input_info, mag_locus, min_err=min_err, end_of_locus_reject=end_of_locus_reject, plot_iteration_increment=plot_iteration_increment, bootstrap=True, bootstrap_num=bootstrap_num, plotdir=plots_directory, pre_zps=None, number_of_plots=number_of_plots)
+        
+        if twoStep:
+            results, ref_mags, SeqNr = fit(table, red_input_info + blue_input_info, mag_locus, min_err=min_err, end_of_locus_reject=end_of_locus_reject, plot_iteration_increment=plot_iteration_increment, bootstrap=True, bootstrap_num=bootstrap_num, plotdir=plots_directory, pre_zps=None, number_of_plots=number_of_plots, relative_zps=red_relative_zps + blue_relative_zps)
+        else:
+            results, ref_mags, SeqNr = fit(table, red_input_info + blue_input_info, mag_locus, min_err=min_err, end_of_locus_reject=end_of_locus_reject, plot_iteration_increment=plot_iteration_increment, bootstrap=True, bootstrap_num=bootstrap_num, plotdir=plots_directory, pre_zps=None, number_of_plots=number_of_plots)
 
         print(results)
 
@@ -971,7 +987,7 @@ def fit(table, input_info_unsorted, mag_locus,
         bootstrap_num=0, 
         plotdir='.', 
         save_bootstrap_plots=False, 
-        pre_zps=None,
+        pre_zps=None, #HOLDEN# Look into this
         number_of_plots = 10,
         fast=True,
         publish=True ,
