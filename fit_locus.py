@@ -566,11 +566,13 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
     if twoStep:
         #program already ran to get relative ZPs, now get absolute ZPs
         def parse_file(file_path): #function to extract relative ZPs from output file
-            #band_order = utilities.parse_columns(columns_description)
+            band_order = []
             #band_order = ['W-J-B', 'W-J-V', 'W-C-RC', 'W-C-IC', 'W-S-Z+']
-            vary_bands = list(filter(lambda x: x['HOLD_VARY'] == 'VARY', input_info_unsorted))
-            band_order = [results['full'][key] for key in [a['mag'] for a in vary_bands]]
+            for i in range(len(hold_input_info),len(input_info)):
+                band = input_info[i]['mag']
+                band_order.append[band]
             print(band_order)
+            exit()
             '''
             with open(columns_description, 'r') as columns_file: #look at columns file for correct ordering of relative ZPs
                 for line in columns_file:
@@ -1495,12 +1497,7 @@ def fit(table, input_info_unsorted, mag_locus,
                         #print('diff:', diff)
                         print('median indtrumental', median_instrumental)
                         print('median locus', median_locus)
-                        for x in range(len(mag_locus)):
-                            pass
-                            #print(f"band: {mag_locus[x]}")
                         pinit.append(median_locus - median_instrumental)
-                print(input_info[0])
-                exit()
                 #$pinit = [0 for key in [a['mag'] for a in vary_input_info]]
             else:
                 ''' add random offset of 1.0 mag '''
