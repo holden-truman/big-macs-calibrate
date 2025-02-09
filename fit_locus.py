@@ -886,7 +886,7 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
 
     output_string = '' 
 
-    if twoStep:
+    if twoStep and False:
         #relative_zps_info[band][0] ZP
         #relative_zps_info[band][1] ZP error
         abs_zp_offset = 0
