@@ -568,8 +568,21 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
         def parse_file(file_path): #function to extract relative ZPs from output file
             band_order = []
             #band_order = ['W-J-B', 'W-J-V', 'W-C-RC', 'W-C-IC', 'W-S-Z+']
-            for i in range(len(hold_input_info),len(input_info)):
-                band = input_info[i]['mag']
+
+            temp_red_input_info = []
+            temp_blue_input_info = []
+            for mag in input_info: 
+                if mag['center wavelength'] > 4000:
+                    mag['blue/red'] = 'REDDER'
+                    red_input_info.append(mag)
+                else: 
+                    mag['blue/red'] = 'BLUER/RESTRICTED'
+                    blue_input_info.append(mag)
+
+            red_vary_input_info = list(filter(lambda x: x['HOLD_VARY'] == 'VARY', temp_red_input_info))
+            blue_vary_input_info = list(filter(lambda x: x['HOLD_VARY'] == 'VARY', temp_blue_input_info))
+            for i in range(len(red_vary_input_info)):
+                band = red_vary_input_info[i]['mag']
                 band_order.append[band]
             print(band_order)
             exit()
@@ -620,7 +633,7 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
 
         offsets_file = output_directory + '/' + file.split('/')[-1]  + '.offsets.list'
 
-        relative_zps_info = parse_file(offsets_file)
+        red_relative_zps_info = parse_file(offsets_file)
 
 
     fitSDSS = False
@@ -847,7 +860,7 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
     ''' first calibrate redder filters '''
     #LOOK# Where ZPs get calculated, similar for blue_input
     if (twoStep):
-        relative_zps = [info[0] for info in relative_zps_info.values()]
+        relative_zps = [info[0] for info in red_relative_zps_info.values()]
         relative_zps = [np.float64(val) for val in relative_zps]
         results, ref_mags, SeqNr = fit(table, red_input_info, mag_locus, min_err=min_err, end_of_locus_reject=end_of_locus_reject, plot_iteration_increment=plot_iteration_increment, bootstrap=True, bootstrap_num=bootstrap_num, plotdir=plots_directory, pre_zps=None, number_of_plots=number_of_plots, relative_zps=relative_zps)
     else:
@@ -900,18 +913,18 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
     output_string = '' 
 
     if twoStep and False:
-        #relative_zps_info[band][0] ZP
-        #relative_zps_info[band][1] ZP error
+        #red_relative_zps_info[band][0] ZP
+        #red_relative_zps_info[band][1] ZP error
         abs_zp_offset = 0
-        for band in relative_zps_info.keys():   
-            if relative_zps_info[band][0] == 0: #HOLD band
+        for band in red_relative_zps_info.keys():   
+            if red_relative_zps_info[band][0] == 0: #HOLD band
                 abs_zp_offset =  zps_dict_all[band]
                 zps_dict_all_err[band] = 0
 
-        for band in relative_zps_info.keys():   
-            if relative_zps_info[band][0] != 0: #VARY bands
-                zps_dict_all[band] = abs_zp_offset + relative_zps_info[band][0]
-                zps_dict_all_err[band] = relative_zps_info[band][1]  
+        for band in red_relative_zps_info.keys():   
+            if red_relative_zps_info[band][0] != 0: #VARY bands
+                zps_dict_all[band] = abs_zp_offset + red_relative_zps_info[band][0]
+                zps_dict_all_err[band] = red_relative_zps_info[band][1]  
 
 
     if foundSDSS: 
