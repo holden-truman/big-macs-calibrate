@@ -811,7 +811,10 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
         for i in range(len(blue_vary_input_info)):
             band = blue_vary_input_info[i]['mag']
             blue_band_order.append(band)  
-            
+        
+        print(red_band_order)
+        print(blue_band_order)
+        exit()
         '''
         with open(columns_description, 'r') as columns_file: #look at columns file for correct ordering of relative ZPs
                 for line in columns_file:
