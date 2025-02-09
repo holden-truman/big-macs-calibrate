@@ -591,7 +591,7 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
                         zps.append(zp)
                         prior_rel_zps.append(zp)
                         errors.append(error)
-            exit()
+            #exit()
             #result_array = np.array([bands, zps, errors], dtype=object)
             result_dict = {band: (zp, error) for band, zp, error in zip(bands, zps, errors)}
 
