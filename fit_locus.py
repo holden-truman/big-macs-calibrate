@@ -835,6 +835,7 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
     #LOOK# Where ZPs get calculated, similar for blue_input
     if (twoStep):
         prior_zps = [info[0] for info in relative_zps_info.values()]
+        prior_zps = [np.float64(val) for val in prior_zps]
         results, ref_mags, SeqNr = fit(table, red_input_info, mag_locus, min_err=min_err, end_of_locus_reject=end_of_locus_reject, plot_iteration_increment=plot_iteration_increment, bootstrap=True, bootstrap_num=bootstrap_num, plotdir=plots_directory, pre_zps=None, number_of_plots=number_of_plots, prior_zps=prior_zps)
     else:
         results, ref_mags, SeqNr = fit(table, red_input_info, mag_locus, min_err=min_err, end_of_locus_reject=end_of_locus_reject, plot_iteration_increment=plot_iteration_increment, bootstrap=True, bootstrap_num=bootstrap_num, plotdir=plots_directory, pre_zps=None, number_of_plots=number_of_plots)
