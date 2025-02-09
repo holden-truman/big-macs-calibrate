@@ -563,12 +563,14 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
     #add in projection
     #inputcat.data.field(racol) - RA)**2. + (inputcat.data.field(deccol) - DEC)**2.)**0.5
     
-    prior_rel_zps = [None] * 5
+    prior_rel_zps = []]
     if twoStep:
         #program already ran to get relative ZPs, now get absolute ZPs
         def parse_file(file_path): #function to extract relative ZPs from output file
             # Desired band order
             band_order = ['W-J-B', 'W-J-V', 'W-C-RC', 'W-C-IC', 'W-S-Z+']
+
+            prior_rel_zps = [None] * len(band_order)
 
             bands = [None] * len(band_order)
             zps = [None] * len(band_order)
