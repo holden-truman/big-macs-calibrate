@@ -567,8 +567,8 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
         #program already ran to get relative ZPs, now get absolute ZPs
         def parse_file(file_path): #function to extract relative ZPs from output file
             band_order = []
-            with open(columns_description, 'r'): #look at columns file for correct ordering of relative ZPs
-                for line in file:
+            with open(columns_description, 'r') as columns_file: #look at columns file for correct ordering of relative ZPs
+                for line in columns_file:
                     # Skip comment lines and metadata
                     if line.strip().startswith('#') in line:
                         continue
@@ -582,8 +582,8 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
             zps = [None] * len(band_order)
             errors = [None] * len(band_order)
             
-            with open(file_path, 'r') as file:
-                for line in file:
+            with open(file_path, 'r') as results_file:
+                for line in results_file:
                     # Skip comment lines and metadata
                     if line.strip().startswith('#') or "RESULTS" in line:
                         continue
