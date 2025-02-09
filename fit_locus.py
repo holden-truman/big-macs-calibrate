@@ -1496,6 +1496,7 @@ def fit(table, input_info_unsorted, mag_locus,
                         print('median indtrumental', median_instrumental)
                         print('median locus', median_locus)
                         for x in range(len(mag_locus)):
+                            pass
                             #print(f"band: {mag_locus[x]}")
                         pinit.append(median_locus - median_instrumental)
                 print(input_info)
