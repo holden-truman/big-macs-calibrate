@@ -737,10 +737,6 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
 
     print(mag_locus)
 
-
-    offset_list = output_directory + '/' + file.split('/')[-1]  + '.offsets.list'
-    #offset_list_file = open(offset_list,'w')
-
     print(file)
     #fulltable = fits.open(file)[extension]
 
@@ -971,7 +967,8 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
  
     print('NUMBER OF BOOTSTRAPS:', bootstrap_num)
     print('IF ERROR IS -99, NEED TO HAVE > 1 BOOTSTRAP')
-
+    offset_list = output_directory + '/' + file.split('/')[-1]  + '.offsets.list'
+    offset_list_file = open(offset_list,'w')
     offset_list_file.write(output_string)
     offset_list_file.close()
 
