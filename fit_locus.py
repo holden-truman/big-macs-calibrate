@@ -787,13 +787,14 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
         ahh = False
         for key in results['full'].keys(): #list(filter(lambda x: x['HOLD_VARY']=='VARY', input_info)): 
             if results['hold_vary'][key] == 'VARY':
+                print(key, red_or_blue)
                 if (key == "W-C-RC"):
                     ahh = True
                     print(key, red_or_blue)
-                    exit()
                 zps_dict_all[key] = results['full'][key]
                 zps_dict_all_err[key] = results['errors'][key]
                 cal_type[key] = red_or_blue
+        exit()
         return zps_dict_all, zps_dict_all_err, cal_type
 
     ''' clear out plotting directory '''
