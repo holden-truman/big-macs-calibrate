@@ -877,7 +877,7 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
         results, ref_mags, SeqNr = fit(table, red_input_info, mag_locus, min_err=min_err, end_of_locus_reject=end_of_locus_reject, plot_iteration_increment=plot_iteration_increment, bootstrap=True, bootstrap_num=bootstrap_num, plotdir=plots_directory, pre_zps=None, number_of_plots=number_of_plots, relative_zps=red_relative_zps)
     else:
         results, ref_mags, SeqNr = fit(table, red_input_info, mag_locus, min_err=min_err, end_of_locus_reject=end_of_locus_reject, plot_iteration_increment=plot_iteration_increment, bootstrap=True, bootstrap_num=bootstrap_num, plotdir=plots_directory, pre_zps=None, number_of_plots=number_of_plots)
-
+    
     zps_dict_all, zps_dict_all_err, cal_type = update_zps(zps_dict_all,zps_dict_all_err,cal_type,results,'REDDER')
 
     print(len(ref_mags), len(SeqNr))
@@ -919,7 +919,8 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
 
         print(results)
 
-        zps_dict_all, zps_dict_all_err, cal_type = update_zps(zps_dict_all,zps_dict_all_err,cal_type, results,'BLUER')
+        #zps_dict_all, zps_dict_all_err, cal_type = update_zps(zps_dict_all,zps_dict_all_err,cal_type, results,'BLUER')
+        zps_dict_all, zps_dict_all_err, cal_type = update_zps(zps_dict_all,zps_dict_all_err,cal_type, results,'REDDER')
 
         print(results)
         print(zps_dict_all)
