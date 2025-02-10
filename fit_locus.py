@@ -785,10 +785,12 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
         #if not combo['hold'] in zps_dict_all:
         #    zps_dict_all[combo['hold']] = 0.
         for key in results['full'].keys(): #list(filter(lambda x: x['HOLD_VARY']=='VARY', input_info)): 
+            print(results['hold_vary'][key], key, red_or_blue)
             if results['hold_vary'][key] == 'VARY':
                 zps_dict_all[key] = results['full'][key]
                 zps_dict_all_err[key] = results['errors'][key]
                 cal_type[key] = red_or_blue
+        exit()
         return zps_dict_all, zps_dict_all_err, cal_type
 
     ''' clear out plotting directory '''
