@@ -795,7 +795,7 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
                 cal_type[key] = red_or_blue
         if red_or_blue == "BLUER":
             print(cal_type)
-            exit()
+            #exit()
         return zps_dict_all, zps_dict_all_err, cal_type
 
     ''' clear out plotting directory '''
@@ -935,7 +935,8 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
                 zps_dict_all[band] = abs_zp_offset + red_relative_zps_info[band][0]
                 zps_dict_all_err[band] = red_relative_zps_info[band][1]  
 
-
+    print(cal_type)
+    exit()
     if foundSDSS: 
         output_string += '#  USED ' + str(foundSDSS) + ' MATCHED SDSS STARS \n'
     if found2MASS:
