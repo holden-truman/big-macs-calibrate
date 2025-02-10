@@ -776,6 +776,8 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
             #u-band does, but it shouldn't be used (also isn't working, says RC is BLUER for some reason), need to test two-step for this
             mag['blue/red'] = 'BLUER/RESTRICTED' 
             blue_input_info.append(mag)
+    print(red_input_info)
+    print(blue_input_info)
     exit()
     print(blue_input_info)
 
