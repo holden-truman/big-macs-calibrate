@@ -778,7 +778,7 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
             blue_input_info.append(mag)
     print(red_input_info)
     print(blue_input_info)
-    exit()
+    #exit()
     print(blue_input_info)
 
     ''' designate which filter zeropoints to be held constant when matching bands '''
@@ -963,10 +963,13 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
         #print(filt_hold['mag'] + ' HELD ' + str(filt_hold['ZP']) ) 
         print("HERE, ", filt_hold['mag'])
         print(input_info)
-        if input_info[filt_hold['mag']]['center wavelength'] > 4000:
-            hold_cal_type = 'REDDER'
-        else:
-            hold_cal_type = 'BLUER'
+        for band in input_info:
+            if band['name'] == filt_hold['mag']:
+                hold_cal_type = band['blue/red']
+                if hold_cal_type == "BLUER/RESTRICTED":
+                    hold_cal_type == "BLUER"
+                break;
+                
         output_string += filt_hold['mag'] + ' ' + str(filt_hold['ZP']) + ' +- -99 ' + hold_cal_type + '\n'              
    
     print(output_string)
