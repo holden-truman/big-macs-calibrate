@@ -919,8 +919,7 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
 
         print(results)
 
-        #zps_dict_all, zps_dict_all_err, cal_type = update_zps(zps_dict_all,zps_dict_all_err,cal_type, results,'BLUER')
-        zps_dict_all, zps_dict_all_err, cal_type = update_zps(zps_dict_all,zps_dict_all_err,cal_type, results,'REDDER')
+        zps_dict_all, zps_dict_all_err, cal_type = update_zps(zps_dict_all,zps_dict_all_err,cal_type, results,'BLUER')
 
         print(results)
         print(zps_dict_all)
