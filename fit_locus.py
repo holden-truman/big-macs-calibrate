@@ -365,8 +365,8 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
 
             ''' make catalog with same number of row as inputcat and columns for catalog mags  '''
             rows = len(inputcat.data)
-            for column_name in returned_keys[2:]: 
-                print(column_name)
+            #for column_name in returned_keys[2:]: 
+            #    print(column_name)
             
             cols = []
             for column_name in necessary_columns: #inputcat.columns:
@@ -393,12 +393,14 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
                     for column_name in saveKeys: 
                         #print(column_name)
                         hdu_new.data.field(column_name)[match[i][0]] = catalogStars[column_name][i] #adding rPSF mags to matched stars
+                        '''
                         if column_name == 'rPSFMag':
                             print(match[i][0]) # In current form, you can get into the scenario where match[i][0] can be the same for multiple i
                             # this means that an input cat star is the NN for multiple ref cat stars
                             # could be fixed by not incrementing matched stars if hdu_new.data.field(column_name)[match[i][0]] != -99 or something
                             print(catalogStars[column_name][i])
                         #catalog stars is ref cat
+                        '''
             #print(len(match))
             #print(len(saveKeys))
             #print(matchedStars)
@@ -728,16 +730,13 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
             input_info[i]['gallong'] = gallong 
             input_info[i]['gallat'] = gallat 
             print(input_info[i]['mag'], extinction, ' (mag) in field', coeff)
-    print("\n\n\nahhhhhhhhhhhhhhhhhhhhhhhhhh")
-    print('INPUT FILTERS:', [a['filter'] for a in input_info])
+    
 
-    print("\n\n\nAHHHHHHHHHHHHHHHHHHH")
     print(input_info)
     mag_locus = utilities.synthesize_expected_locus_for_observations(input_info)
 
     print(mag_locus)
 
-    print(file)
     #fulltable = fits.open(file)[extension]
 
     #mask = ((fulltable.data.field('Xpos-SUBARU-W-J-V')- 5000)**2. +  (fulltable.data.field('Ypos-SUBARU-W-J-V') - 5000.)**2.)**0.5 < 2000
@@ -764,10 +763,7 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
 
     red_input_info = []
     blue_input_info = []
-    print("HERE")
     for mag in input_info: 
-        print(mag)
-        print("HERE2")
         if mag['center wavelength'] > 4000:
             mag['blue/red'] = 'REDDER'
             red_input_info.append(mag)
@@ -776,10 +772,6 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
             #u-band does, but it shouldn't be used (also isn't working, says RC is BLUER for some reason), need to test two-step for this
             mag['blue/red'] = 'BLUER/RESTRICTED' 
             blue_input_info.append(mag)
-    print(red_input_info)
-    print(blue_input_info)
-    #exit()
-    print(blue_input_info)
 
     ''' designate which filter zeropoints to be held constant when matching bands '''
     zps_dict_all = {} 
@@ -791,16 +783,9 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
         #    zps_dict_all[combo['hold']] = 0.
         for key in results['full'].keys(): #list(filter(lambda x: x['HOLD_VARY']=='VARY', input_info)): 
             if results['hold_vary'][key] == 'VARY':
-                print(key, red_or_blue)
-                if (key == "W-C-RC"):
-                    ahh = True
-                    print(key, red_or_blue)
                 zps_dict_all[key] = results['full'][key]
                 zps_dict_all_err[key] = results['errors'][key]
                 cal_type[key] = red_or_blue
-        if red_or_blue == "BLUER":
-            print(cal_type)
-            #exit()
         return zps_dict_all, zps_dict_all_err, cal_type
 
     ''' clear out plotting directory '''
@@ -916,8 +901,6 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
         else:
             results, ref_mags, SeqNr = fit(table, red_input_info + blue_input_info, mag_locus, min_err=min_err, end_of_locus_reject=end_of_locus_reject, plot_iteration_increment=plot_iteration_increment, bootstrap=True, bootstrap_num=bootstrap_num, plotdir=plots_directory, pre_zps=None, number_of_plots=number_of_plots)
 
-        print(results)
-
         zps_dict_all, zps_dict_all_err, cal_type = update_zps(zps_dict_all,zps_dict_all_err,cal_type, results,'BLUER')
 
         print(results)
@@ -961,15 +944,13 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
     ''' write out the magnitude zeropoints that were held constant during the fit '''
     for filt_hold in info_hold:    
         #print(filt_hold['mag'] + ' HELD ' + str(filt_hold['ZP']) ) 
-        print("HERE, ", filt_hold['mag'])
-        print(input_info)
         for band in input_info:
             if band['name'] == filt_hold['mag']:
                 hold_cal_type = band['blue/red']
                 if hold_cal_type == "BLUER/RESTRICTED":
                     hold_cal_type == "BLUER"
                 break;
-                
+
         output_string += filt_hold['mag'] + ' ' + str(filt_hold['ZP']) + ' +- -99 ' + hold_cal_type + '\n'              
    
     print(output_string)
@@ -1366,24 +1347,9 @@ def fit(table, input_info_unsorted, mag_locus,
                         y_err_1 = (bands_err)[:,0,ind(c2_band1)]
                         y_err_2 = (bands_err)[:,0,ind(c2_band2)] #elimator of nonref catalogs
                         
-                        '''
-                        print(c2_band2)
-                        print("AHHHHH\n\n")
-                        print(bands_err)
-                        print("AHHHHH\n\n")
-                        print(ind(c2_band2))
-                        exit()
-                        '''
 
                         mask = (x_err_1<100)*(x_err_2<100)*(y_err_1<100)*(y_err_2<100)
-                        '''
-                        print("here")
-                        print(x_err_1)
-                        print(x_err_2)
-                        print(y_err_1)
-                        print(y_err_2)
-                        print(mask)
-                        '''
+            
                         print(len(x_color))
                         print(len(y_color))
                         x_color = x_color[mask]
@@ -1391,9 +1357,6 @@ def fit(table, input_info_unsorted, mag_locus,
                         print(len(x_color))
                         print(len(y_color)) #unmatchedstars withh get masked out if rPSF is included in c1_1, c1_2, ..., but if not they stay
                         #print(c1_band1, c1_band2, c2_band1, c2_band2)
-                        if not (c1_band1, c1_band2, c2_band1, c2_band2) == ("W-J-B", "W-J-V", "W-J-V", "rPSFMag"):
-                            #exit()
-                            pass
                         
                         y_app_mag = y_app_mag[mask]
                         x_err = (x_err_1**2. + x_err_2**2.)**0.5
@@ -1465,9 +1428,7 @@ def fit(table, input_info_unsorted, mag_locus,
                                    
                                     print(mpl.rcParams['figure.figsize'])
                                     plt.savefig(file)
-                                    if "ab_g" in (c1_band1, c1_band2, c2_band1, c2_band2):
-                                        print(file)
-                                        #exit()
+                                    
                         
 
 
@@ -1547,10 +1508,8 @@ def fit(table, input_info_unsorted, mag_locus,
                 initial_offset = 0
                 new_offset = scipy.optimize.fmin(optimize_offset_errfunc,initial_offset,maxiter=10000,maxfun=100000,ftol=0.00001,xtol=0.00001,args=(relative_zps,)) #holden# could change parameters of this to make abs quicker
                 out = np.array([np.float64(val + new_offset) for val in relative_zps])
-                print("HERE")
-                print(pinit)
-                print(relative_zps)
-                print(out)
+                print("rel zps: ", relative_zps)
+                print("abs zps: ", out)
                 #exit()
             else:
                 out = scipy.optimize.fmin(errfunc,pinit,maxiter=10000,maxfun=100000,ftol=0.00001,xtol=0.00001,args=())
@@ -1654,7 +1613,7 @@ def fit(table, input_info_unsorted, mag_locus,
         results['SeqNr_' + iteration] = copy(SeqNr)
 
 
-        mask = bands_err < 100 #LOOK CHECK AHHHH
+        mask = bands_err < 100 #Filters out nonmatches in ext cat plots (plots w/ those band(s))
         print()
 
     results['redchi'] = redchi
@@ -1694,7 +1653,6 @@ def fit(table, input_info_unsorted, mag_locus,
     results['bootstrapnum'] = bootstrap_num 
 
     print(str(number_good_stars), 'STARS LEFT') #108 stars here for pan, 715 for gaia
-    #exit()
 
     return results, results['ref_mags_full'], results['SeqNr_full']
 
@@ -1799,6 +1757,5 @@ if __name__ == '__main__':
 
         write_external_columns_file(old_columns_file, options.columns)
 
-    #exit()
     run(options.file,options.columns,output_directory=options.output,plots_directory=options.plots,extension=options.extension,racol=options.racol,deccol=options.deccol,bootstrap_num=options.bootstrap, add2MASS=options.add2MASSJ, addSDSS=options.addSDSSgriz, addPanSTARRS=options.addPanSTARRS, addGaia=options.addGaia, number_of_plots=options.numberofplots, sdssUnit=options.sdssUnit, twoStep=options.twoStep)
        
