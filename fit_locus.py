@@ -854,7 +854,7 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
                         red_bands[red_band_order.index(band)] = band
                         red_zps[red_band_order.index(band)] = zp
                         red_errors[red_band_order.index(band)] = error
-                    elif ("BLUER/RESTRICTED" in line):
+                    elif ("BLUER" in line):
                         band = parts[0]  # First column is the band
                         zp = float(parts[1])  # Second column is the ZP
                         error = float(parts[3])  # Fourth column is the error on ZP
