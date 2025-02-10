@@ -784,7 +784,6 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
     def update_zps(zps_dict_all,zps_dict_all_err, cal_type, results, red_or_blue):
         #if not combo['hold'] in zps_dict_all:
         #    zps_dict_all[combo['hold']] = 0.
-        ahh = False
         for key in results['full'].keys(): #list(filter(lambda x: x['HOLD_VARY']=='VARY', input_info)): 
             if results['hold_vary'][key] == 'VARY':
                 print(key, red_or_blue)
@@ -794,8 +793,8 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
                 zps_dict_all[key] = results['full'][key]
                 zps_dict_all_err[key] = results['errors'][key]
                 cal_type[key] = red_or_blue
-        if ahh:
-            exit()
+        print(cal_type)
+        exit()
         return zps_dict_all, zps_dict_all_err, cal_type
 
     ''' clear out plotting directory '''
