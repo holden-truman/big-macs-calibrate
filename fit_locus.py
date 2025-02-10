@@ -769,7 +769,9 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
             mag['blue/red'] = 'REDDER'
             red_input_info.append(mag)
         else: 
-            mag['blue/red'] = 'BLUER/RESTRICTED'
+            #holden# is there any band that is appropriate for bigmacs that would fit this? 
+            #u-band does, but it shouldn't be used, need to test two-step for this
+            mag['blue/red'] = 'BLUER/RESTRICTED' 
             blue_input_info.append(mag)
 
     print(blue_input_info)
