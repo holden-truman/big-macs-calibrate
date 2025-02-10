@@ -62,7 +62,7 @@ def gaia_query(file, query, EBV, DR):
 
     colors = ['g','bp','rp']
 
-    Av = 3.1 * EBV #holden# is this still correct for DR3? Looks like it, both extinction at 550nm
+    Av = 3.1 * EBV
     bp_rp = gaia_data['bp_rp']
 	# calculate the extinction (Gaia Data Release 2:Observational Hertzsprung-Russell diagrams)
     if (DR == 2):
