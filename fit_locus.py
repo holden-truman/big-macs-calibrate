@@ -793,8 +793,9 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
                 zps_dict_all[key] = results['full'][key]
                 zps_dict_all_err[key] = results['errors'][key]
                 cal_type[key] = red_or_blue
-        print(cal_type)
-        exit()
+        if red_or_blue == "BLUER":
+            print(cal_type)
+            exit()
         return zps_dict_all, zps_dict_all_err, cal_type
 
     ''' clear out plotting directory '''
