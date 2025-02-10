@@ -764,7 +764,9 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
 
     red_input_info = []
     blue_input_info = []
+    print("HERE")
     for mag in input_info: 
+        print(mag)
         if mag['center wavelength'] > 4000:
             mag['blue/red'] = 'REDDER'
             red_input_info.append(mag)
@@ -773,7 +775,7 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
             #u-band does, but it shouldn't be used (also isn't working, says RC is BLUER for some reason), need to test two-step for this
             mag['blue/red'] = 'BLUER/RESTRICTED' 
             blue_input_info.append(mag)
-
+    exit()
     print(blue_input_info)
 
     ''' designate which filter zeropoints to be held constant when matching bands '''
