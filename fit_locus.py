@@ -956,7 +956,7 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
     ''' write out the magnitude zeropoints that were held constant during the fit '''
     for filt_hold in info_hold:    
         #print(filt_hold['mag'] + ' HELD ' + str(filt_hold['ZP']) ) 
-        print("HERE")
+        print("HERE, ", filt_hold['mag'])
         print(input_info)
         if input_info[filt_hold['mag']]['center wavelength'] > 4000:
             hold_cal_type = 'REDDER'
