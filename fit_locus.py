@@ -378,7 +378,7 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
 
             matchedStars = 0
 
-            for i in range(len(match)): #LOOK# probably need to change something here, hdu_new is what's used
+            for i in range(len(match)): #LOOK# probably need to change something here for double matches
                 if len(match[i]) == 1:
                     matchedStars += 1
                     for column_name in saveKeys: 
@@ -575,7 +575,6 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
             
     foundPanSTARRS = 0 
     if addPanSTARRS:
-        #LOOK fulltable is used, only has matches
         fulltable, foundPanSTARRS, necessary_columns = get_survey_stars(file, fulltable, racol, deccol, necessary_columns, EBV, survey='PanSTARRS')
 
     foundGaia = 0
@@ -705,7 +704,7 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
 
 
     ''' recombine '''
-    input_info = info_hold + info_vary #LOOK# Has star info for ref and normal cat (does it have bands tho (mags),it might)
+    input_info = info_hold + info_vary
 
 
     if RA is not None and DEC is not None:
@@ -838,7 +837,7 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
         return red_result_dict, blue_result_dict
 
     ''' first calibrate redder filters '''
-    #LOOK# Where ZPs get calculated, similar for blue_input
+    # Where red ZPs get calculated, similar for blue_input
     if (twoStep):
         red_relative_zps_info, blue_relative_zps_info = parse_file(offsets_file)
         
@@ -1002,7 +1001,6 @@ def fit(table, input_info_unsorted, mag_locus,
     print([a['filter'] for a in vary_input_info])
     print([a['filter'] for a in hold_input_info])
 
-    #LOOK# Input catalog??? It would seem
     input_info = hold_input_info + vary_input_info
 
     zps ={} 
@@ -1088,7 +1086,6 @@ def fit(table, input_info_unsorted, mag_locus,
         good[abs(A_band) == 0] = 0
         good = good[:,0,:]
         good_bands_per_star = good.sum(axis=1) # sum all of the good bands for any given star
-        #LOOK# Worth looking at further
         
 
         ''' figure out the cut-off '''
@@ -1129,7 +1126,7 @@ def fit(table, input_info_unsorted, mag_locus,
 
         #print(bands.shape, locus_matrix.shape)
         number_good_stars = len(locus_matrix)
-        print(number_good_stars) #LOOK# still have all stars here for panstarrs and gaia (merge has more than input for gaia, 873) 
+        print(number_good_stars) # still have all stars here for panstarrs and gaia
 
         ''' update good matrix after masking '''
         good = np.ones(A_band.shape) 
