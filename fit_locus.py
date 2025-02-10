@@ -194,13 +194,6 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
                     catalogStars[returned_keys[i]].append(float(res[i]))
 
     elif survey == 'Gaia':
-        """
-        #holden# figure out how to get this to work
-        SELECT ra, dec, bp_rp, \
-                phot_g_mean_flux, phot_g_mean_flux_error,  \
-                            phot_bp_mean_flux, phot_bp_mean_flux_error, \
-                            phot_rp_mean_flux, phot_rp_mean_flux_error \
-        """
         import sqlcl
         ''' Gaia ADQL, Radius in degrees. Color excess cut:
         https://gea.esac.esa.int/archive/documentation/GDR2/Data_processing/chap_cu5pho/sec_cu5pho_qa/ssec_cu5pho_excessflux.html '''
@@ -224,7 +217,7 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
                             + str(color_range)
             #AND phot_g_mean_mag<=19
         elif DR==3: 
-            #holden# maybe need to do something wit C*, bp_rp_excess_factor https://www.aanda.org/articles/aa/full_html/2023/06/aa43680-22/aa43680-22.html#R27
+            #holden# Using C* to filter off of bp_rp_excess_factor https://www.aanda.org/articles/aa/full_html/2023/06/aa43680-22/aa43680-22.html#R27
             #Looks like that is the way to filter of off BP/RP flux excess, rather than equations similar to DR2("do not take in consideration the uncertainties on the flux excess factor")
             #https://gea.esac.esa.int/archive/documentation/GEDR3/Data_processing/chap_cu5pho/cu5pho_sec_photProc/cu5pho_ssec_photVal.html
     
@@ -252,8 +245,6 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
             #see https://scholar.google.com/scholar_lookup?title=Gaia+Early+Data+Release+3+-+Photometric+content+and+validation&author=Riello+M.+De+Angeli+F.+Evans+D.+W.&journal=A%26A&volume=649&pages=A3&publication_year=2021&issn=0004-6361%2C1432-0746&doi=10.1051%2F0004-6361%2F202039587
             #sction 9.4 for information about filtering with c_star, stddev is estimated using a power-law
 
-            #holden# try again with mag 19 instead of 22 with strict excess_factor filter
-            #465 found stars with no c_star filter at mag 22 cut, but bad ZPs ~.45 too big uniformly
 
 
 # Uncomment the following line if additional filters are needed
@@ -438,13 +429,12 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
     
     print(returnCat)
     
-    ''' #all, INCLUDING UNMATCHED, input mags in hdu_new
+    ''' #print all, INCLUDING UNMATCHED, input mags in hdu_new
     for column_name in hdu_new.columns.names:  # Iterating over all column names
         column_data = hdu_new.data.field(column_name)  # Access the data for the current column
         print(f"Column: {column_name}")
         print(column_data)
         print("-" * 50)  # Separator for readability
-    exit()
     '''
     
     return returnCat, matched, necessary_columns
@@ -475,7 +465,7 @@ def galactic_extinction_and_coordinates(RA,DEC):
         ''' scan for Galactic coordinates '''
         found = False 
 
-        text = text.decode('utf-8') #holden# I think this is right
+        text = text.decode('utf-8')
         for l in text.split('\n'): 
             if found:
                 res = re.split(r'\s+',l)
@@ -503,7 +493,6 @@ def galactic_extinction_and_coordinates(RA,DEC):
 
 
 ''' sort each set by center wavelength '''
-#holden# NOT USED ANYMORE
 def sort_wavelength(x,y):
     if x['center wavelength']>y['center wavelength']:
         return 1
@@ -1484,7 +1473,7 @@ def fit(table, input_info_unsorted, mag_locus,
 
                         print(key, len(diff))
                   
-                        if len(diff) == 0: #holden# this is always zero for gaia, need to figure out why (am I not anchoring to a band? or am I anchoring to all?)
+                        if len(diff) == 0:
                             print('no stars have good measurements in relevant bands') #error here
                             raise Exception 
                         median_instrumental = np.nanmedian(diff) #holden# verify that this is okay
@@ -1506,7 +1495,7 @@ def fit(table, input_info_unsorted, mag_locus,
             print(pinit)
             if relative_zps is not None:
                 initial_offset = 0
-                new_offset = scipy.optimize.fmin(optimize_offset_errfunc,initial_offset,maxiter=10000,maxfun=100000,ftol=0.00001,xtol=0.00001,args=(relative_zps,)) #holden# could change parameters of this to make abs quicker
+                new_offset = scipy.optimize.fmin(optimize_offset_errfunc,initial_offset,maxiter=10000,maxfun=100000,ftol=0.00001,xtol=0.00001,args=(relative_zps,)) 
                 out = np.array([np.float64(val + new_offset) for val in relative_zps])
                 print("rel zps: ", relative_zps)
                 print("abs zps: ", out)
@@ -1721,7 +1710,6 @@ if __name__ == '__main__':
     from glob import glob
     from copy import copy
     import utilities
-    import time #holden# remove
     print('finished importing libraries')
 
     if options.twoStep: #could put in the fit function, like how blue locus is done (blue locus might also validate two step strategy)
