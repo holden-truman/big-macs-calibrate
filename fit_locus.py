@@ -767,6 +767,7 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
     print("HERE")
     for mag in input_info: 
         print(mag)
+        print("HERE2")
         if mag['center wavelength'] > 4000:
             mag['blue/red'] = 'REDDER'
             red_input_info.append(mag)
