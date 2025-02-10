@@ -816,19 +816,6 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
         
         print(red_band_order)
         print(blue_band_order)
-        #exit()
-        '''
-        with open(columns_description, 'r') as columns_file: #look at columns file for correct ordering of relative ZPs
-                for line in columns_file:
-                    # Skip comment lines
-                    if line.strip().startswith('#'):
-                        continue
-                    # Split the line into components
-                    parts = line.split()
-                    if len(parts) >= 4:  # Ensure it's a valid line containing band info
-                    band = parts[0]  # first thing is band, only part we need here
-                    band_order.append(band)
-        '''
 
         red_bands = [None] * len(red_band_order)
         red_zps = [None] * len(red_band_order)
@@ -860,9 +847,9 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
                         zp = float(parts[1])  # Second column is the ZP
                         error = float(parts[3])  # Fourth column is the error on ZP
                         
-                        blue_bands[red_band_order.index(band)] = band
-                        blue_zps[red_band_order.index(band)] = zp
-                        blue_errors[red_band_order.index(band)] = error
+                        blue_bands[blue_band_order.index(band)] = band
+                        blue_zps[blue_band_order.index(band)] = zp
+                        blue_errors[blue_band_order.index(band)] = error
 
         red_result_dict = {band: (zp, error) for band, zp, error in zip(red_bands, red_zps, red_errors)}
         blue_result_dict = {band: (zp, error) for band, zp, error in zip(blue_bands, blue_zps, blue_errors)}
