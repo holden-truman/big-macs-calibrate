@@ -1760,7 +1760,7 @@ if __name__ == '__main__':
     import time #holden# remove
     print('finished importing libraries')
 
-    if options.twoStep:
+    if options.twoStep: #could put in the fit function, like how blue locus is done (blue locus might also validate two step strategy)
         #run without external catalog first for relative ZP's
         run(options.file,options.columns,output_directory=options.output,plots_directory=options.plots,extension=options.extension,racol=options.racol,deccol=options.deccol,bootstrap_num=options.bootstrap, add2MASS=False, addSDSS=False, addPanSTARRS=False, addGaia=False, number_of_plots=options.numberofplots, sdssUnit=False, twoStep=False)  
         
