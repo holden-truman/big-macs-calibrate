@@ -1530,7 +1530,17 @@ if __name__ == '__main__':
 
     (options, args) = parser.parse_args(args)
     '''
+    import argparse
 
+    usage = """usage: python fit_locus.py [options] --help
+
+    Given catalog of stellar magnitudes and total (atmosphere+mirrors+optics+filter+CCD) response,
+    computes expected stellar locus, and fits for zeropoint calibration.
+    Requires description of the columns in the input FITS table.
+
+    Example: python fit_locus.py -f stars.fits -c stars.columns -e 1 -b 10
+    """
+    
     parser = argparse.ArgumentParser(description=usage, formatter_class=argparse.RawTextHelpFormatter)
 
     parser.add_argument("-f", "--file", help="FITS catalog file")
