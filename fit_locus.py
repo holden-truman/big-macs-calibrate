@@ -202,9 +202,9 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
         import sqlcl
         ''' Gaia ADQL, Radius in degrees. Color excess cut:
         https://gea.esac.esa.int/archive/documentation/GDR2/Data_processing/chap_cu5pho/sec_cu5pho_qa/ssec_cu5pho_excessflux.html '''
-        if addGaia2:
+        if survey == 'Gaia2':
             DR = 2
-        elif addGaia3:
+        elif survey == 'Gaia3':
             DR = 3 
         if DR == 3:
             color_range = "AND bp_rp >  -0.06 AND bp_rp < 2.5"
