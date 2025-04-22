@@ -202,7 +202,10 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
         import sqlcl
         ''' Gaia ADQL, Radius in degrees. Color excess cut:
         https://gea.esac.esa.int/archive/documentation/GDR2/Data_processing/chap_cu5pho/sec_cu5pho_qa/ssec_cu5pho_excessflux.html '''
-        DR = 3 #Release of Gaia to be Used, make sure to change res file too #cDR
+        if addGaia2:
+            DR = 2
+        elif addGaia3:
+            DR = 3 
         if DR == 3:
             color_range = "AND bp_rp >  -0.06 AND bp_rp < 2.5"
         else:
@@ -502,7 +505,7 @@ def get_catalog_parameters(fulltable, racol, deccol):
 
 def run(file,columns_description,output_directory=None,plots_directory=None,extension='OBJECTS',racol=None,deccol=None,end_of_locus_reject=1,plot_iteration_increment=50, min_err=0.02, bootstrap_num=0, snpath=None, night=None, run=None, prefix='',data_from_sdss=False, addSDSS=False, addPanSTARRS=False, addGaia=False, number_of_plots=10, add2MASS=False, sdssUnit=False):
     from importlib import reload
-    print(add2MASS, addGaia, addPanSTARRS, addSDSS)
+    print(add2MASS, addGaia2, addGaia3, addPanSTARRS, addSDSS)
     try: 
         extension = int(extension)
     except: pass
@@ -535,8 +538,10 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
         fulltable, foundPanSTARRS, necessary_columns = get_survey_stars(file, fulltable, racol, deccol, necessary_columns, EBV, survey='PanSTARRS')
 
     foundGaia = 0
-    if addGaia:
-        fulltable, foundGaia, necessary_columns = get_survey_stars(file, fulltable, racol, deccol, necessary_columns, EBV, survey='Gaia')
+    if addGaia2:
+        fulltable, foundGaia, necessary_columns = get_survey_stars(file, fulltable, racol, deccol, necessary_columns, EBV, survey='Gaia2')
+    if addGaia3:
+        fulltable, foundGaia, necessary_columns = get_survey_stars(file, fulltable, racol, deccol, necessary_columns, EBV, survey='Gaia3')
             
     found2MASS = 0 
     if add2MASS:
@@ -592,7 +597,7 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
             if filt_dict['mag'] not in [f['mag'] for f in input_info]:
                 input_info += [filt_dict]
 
-    if addGaia and foundGaia:
+    if (addGaia2 or addGaia3) and foundGaia:
         for i in range(len(input_info)):
             input_info[i]['HOLD_VARY'] = 'VARY'
 
@@ -611,9 +616,9 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
         '''
         
         DR = 3 #cDR
-        if DR == 3:
+        if addGaia3:
             gaia_info = [{'mag':'ab_g', 'plotName':'Gaia G' , 'filter': 'Gaia_dr3.g.res', 'mag_err': 'phot_g_mean_mag_error', 'HOLD_VARY':'HOLD', 'ZP':0.}]
-        elif DR == 2:
+        elif addGaia2:
             gaia_info = [{'mag':'ab_g', 'plotName':'Gaia G' , 'filter': 'Gaia_dr2_revised.g.res', 'mag_err': 'phot_g_mean_mag_error', 'HOLD_VARY':'HOLD', 'ZP':0.}]
 
         for filt_dict in gaia_info:
@@ -1507,7 +1512,8 @@ if __name__ == '__main__':
     parser.add_option("-s","--addSDSSgriz",action='store_true',help="automatically search for and add SDSS griz stellar photometry, if available")
     parser.add_option("-j","--add2MASSJ",action='store_true',help="automatically search for and add 2MASS J stellar photometry, if available")
     parser.add_option("-a","--addPanSTARRS",action='store_true',help="automatically search for and add PanSTARRS griz stellar photometry, if available")
-    parser.add_option("-g","--addGaia",action='store_true',help="automatically search for and add Gaia dr2 G band stellar photometry")
+    parser.add_option("-g2","--addGaia2",action='store_true',help="automatically search for and add Gaia dr2 G band stellar photometry")
+    parser.add_option("-g3","--addGaia3",action='store_true',help="automatically search for and add Gaia dr3 G band stellar photometry")
     parser.add_option("-w","--numberofplots",help="number of plots to make (default: 10)",default=10)
     parser.add_option("-u","--sdssUnit",help="run SDSS unit test (only works if in coverage)",action='store_true')
     
@@ -1549,4 +1555,4 @@ if __name__ == '__main__':
     import utilities
     print('finished importing libraries')
 
-    run(options.file,options.columns,output_directory=options.output,plots_directory=options.plots,extension=options.extension,racol=options.racol,deccol=options.deccol,bootstrap_num=options.bootstrap, add2MASS=options.add2MASSJ, addSDSS=options.addSDSSgriz, addPanSTARRS=options.addPanSTARRS, addGaia=options.addGaia, number_of_plots=options.numberofplots, sdssUnit=options.sdssUnit)    
+    run(options.file,options.columns,output_directory=options.output,plots_directory=options.plots,extension=options.extension,racol=options.racol,deccol=options.deccol,bootstrap_num=options.bootstrap, add2MASS=options.add2MASSJ, addSDSS=options.addSDSSgriz, addPanSTARRS=options.addPanSTARRS, addGaia2=options.addGaia2, addGaia3=options.addGaia3, number_of_plots=options.numberofplots, sdssUnit=options.sdssUnit)    
