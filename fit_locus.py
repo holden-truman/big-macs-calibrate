@@ -503,7 +503,7 @@ def get_catalog_parameters(fulltable, racol, deccol):
     return RA, DEC, RADII.max() 
 
 
-def run(file,columns_description,output_directory=None,plots_directory=None,extension='OBJECTS',racol=None,deccol=None,end_of_locus_reject=1,plot_iteration_increment=50, min_err=0.02, bootstrap_num=0, snpath=None, night=None, run=None, prefix='',data_from_sdss=False, addSDSS=False, addPanSTARRS=False, addGaia=False, number_of_plots=10, add2MASS=False, sdssUnit=False):
+def run(file,columns_description,output_directory=None,plots_directory=None,extension='OBJECTS',racol=None,deccol=None,end_of_locus_reject=1,plot_iteration_increment=50, min_err=0.02, bootstrap_num=0, snpath=None, night=None, run=None, prefix='',data_from_sdss=False, addSDSS=False, addPanSTARRS=False, addGaia2=False, addGaia3=False number_of_plots=10, add2MASS=False, sdssUnit=False):
     from importlib import reload
     print(add2MASS, addGaia2, addGaia3, addPanSTARRS, addSDSS)
     try: 
@@ -1540,7 +1540,7 @@ if __name__ == '__main__':
 
     Example: python fit_locus.py -f stars.fits -c stars.columns -e 1 -b 10
     """
-    
+
     parser = argparse.ArgumentParser(description=usage, formatter_class=argparse.RawTextHelpFormatter)
 
     parser.add_argument("-f", "--file", help="FITS catalog file")
