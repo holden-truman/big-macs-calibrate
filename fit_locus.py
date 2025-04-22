@@ -191,7 +191,7 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
                 for i in range(len(res)): 
                     catalogStars[returned_keys[i]].append(float(res[i]))
 
-    elif survey == 'Gaia':
+    elif survey == 'Gaia2' or survey == 'Gaia3':
         """
         #holden# figure out how to get this to work
         SELECT ra, dec, bp_rp, \
