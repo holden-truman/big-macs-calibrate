@@ -1492,7 +1492,7 @@ if __name__ == '__main__':
     #all(subarudir,cluster,DETECT_FILTER,AP_TYPE,magtype)
 
 #if True: # __name__ == '__main__':
-
+    '''
     from optparse import OptionParser
 
     usage = "usage: python fit_locus.py [options] --help \n\nGiven catalog of stellar magnitudes and total (atmosphere+mirrors+optics+filter+CCD) response, \ncomputes expected stellar locus, and fits for zeropoint calibration. \nRequires description of the columns in the input FITS table.\n\nExample: python fit_locus.py -f stars.fits -c stars.columns -e 1 -b 10"
@@ -1516,7 +1516,6 @@ if __name__ == '__main__':
     parser.add_option("-g3","--addGaia3",action='store_true',help="automatically search for and add Gaia dr3 G band stellar photometry")
     parser.add_option("-w","--numberofplots",help="number of plots to make (default: 10)",default=10)
     parser.add_option("-u","--sdssUnit",help="run SDSS unit test (only works if in coverage)",action='store_true')
-    
     import sys
 
     args = sys.argv     
@@ -1530,6 +1529,30 @@ if __name__ == '__main__':
     #args = ['-f','MACS1347-11.stars.calibrated.cat','-c','MACS1347-11.columns','-e','1','-b','0','-l','False']
 
     (options, args) = parser.parse_args(args)
+    '''
+
+    parser = argparse.ArgumentParser(description=usage, formatter_class=argparse.RawTextHelpFormatter)
+
+    parser.add_argument("-f", "--file", help="FITS catalog file")
+    parser.add_argument("-e", "--extension", help="extension of FITS file containing stellar magnitudes (number or name) (default: 1)", default=1)
+    parser.add_argument("-b", "--bootstrap", type=int, help="number of bootstraps for error estimation (default: 0)", default=0)
+    parser.add_argument("-c", "--columns", help="column description file")
+    parser.add_argument("-o", "--output", help="output calibration file directory location, if different from directory containing catalog file", default=None)
+    parser.add_argument("-p", "--plots", help="destination directory for plots, if different from /output directory/PLOTS", default=None)
+    parser.add_argument("-r", "--racol", help="name of column in FITS file with object RA in DEGREES (default: X_WORLD)", default='X_WORLD')
+    parser.add_argument("-d", "--deccol", help="name of column in FITS file with object DEC in DEGREES (default: Y_WORLD)", default='Y_WORLD')
+    parser.add_argument("-z", "--SN", help="snpath", default=None)
+    parser.add_argument("-t", "--run", help="run", default=None)
+    parser.add_argument("-n", "--night", help="night", default=None)
+    parser.add_argument("-s", "--addSDSSgriz", action='store_true', help="automatically search for and add SDSS griz stellar photometry, if available")
+    parser.add_argument("-j", "--add2MASSJ", action='store_true', help="automatically search for and add 2MASS J stellar photometry, if available")
+    parser.add_argument("-a", "--addPanSTARRS", action='store_true', help="automatically search for and add PanSTARRS griz stellar photometry, if available")
+    parser.add_argument("-g2", dest="addGaia2", action='store_true', help="automatically search for and add Gaia dr2 G band stellar photometry")
+    parser.add_argument("-g3", dest="addGaia3", action='store_true', help="automatically search for and add Gaia dr3 G band stellar photometry")
+    parser.add_argument("-w", "--numberofplots", help="number of plots to make (default: 10)", default=10)
+    parser.add_argument("-u", "--sdssUnit", help="run SDSS unit test (only works if in coverage)", action='store_true')
+
+    options = parser.parse_args()
 
     if options.file is None: 
         parser.error('you must specify an input FITS catalog file')
