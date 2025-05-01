@@ -111,9 +111,6 @@ def gaia_query(file, query, EBV, DR):
     ''' 
     
     for c in colors:
-        gaia_data.add_column(gaia_data['phot_' + c + '_mean_mag'])
-        gaia_data.add_column(gaia_data['phot_' + c + '_mean_mag_error'])
-        
         gaia_data.remove_column('phot_' + c +'_mean_flux')
         gaia_data.remove_column('phot_' + c +'_mean_flux_error')
         
