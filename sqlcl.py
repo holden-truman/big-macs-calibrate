@@ -97,6 +97,7 @@ def gaia_query(file, query, EBV, DR):
     gaia_data.add_column(a_rp)
 
 	# calculate magnitude  and err
+    '''
     for c in colors:
         ab_mag = Table.Column( name='ab_' + c, data = -2.5*np.log10( gaia_data['phot_' + c + '_mean_flux'] ) + zps_ab[c]  - gaia_data['a_' + c]) ## zp and ext
         ab_mag = Table.Column( name='ab_' + c, data = -2.5*np.log10( gaia_data['phot_' + c + '_mean_flux'] ) + zps_ab[c] ) ## zp but no ext
@@ -104,6 +105,14 @@ def gaia_query(file, query, EBV, DR):
         
         gaia_data.add_column(ab_mag)
         gaia_data.add_column(mag_err)
+        
+        gaia_data.remove_column('phot_' + c +'_mean_flux')
+        gaia_data.remove_column('phot_' + c +'_mean_flux_error')
+    ''' 
+    
+    for c in colors:
+        gaia_data.add_column(gaia_data['phot_' + c + '_mean_mag'])
+        gaia_data.add_column(gaia_data['phot_' + c + '_mean_mag_error'])
         
         gaia_data.remove_column('phot_' + c +'_mean_flux')
         gaia_data.remove_column('phot_' + c +'_mean_flux_error')
