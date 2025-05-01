@@ -231,7 +231,7 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
     
             #c_star mean is 0 (the ABS stuff is c_star, the excess factor - parens)
             query = f"""
-            SELECT dr3.ra, dr3.dec, dr3.bp_rp, dr3.phot_g_mean_mag, dr3.phot_bp_mean_mag, dr3.phot_rp_mean_mag,
+            SELECT dr3.ra, dr3.dec, dr3.bp_rp,
                 dr3.phot_g_mean_flux, dr3.phot_g_mean_flux_error,
                 dr3.phot_bp_mean_flux, dr3.phot_bp_mean_flux_error,
                 dr3.phot_rp_mean_flux, dr3.phot_rp_mean_flux_error
@@ -240,7 +240,7 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
                     POINT('ICRS', ra, dec),
                     BOX('ICRS', {RA}, {DEC}, {RAD}, {RAD})
                 )
-                AND phot_g_mean_mag <= 19
+                AND phot_g_mean_mag <= 21
                 AND phot_bp_mean_mag >= 5
                 AND phot_rp_mean_mag >= 5
                 AND (
@@ -250,29 +250,6 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
                 )
                 {color_range}
             """
-
-            '''
-            query = f"""
-            SELECT dr3.ra, dr3.dec, dr3.bp_rp, 
-                dr3.phot_g_mean_flux, dr3.phot_g_mean_flux_error,
-                dr3.phot_bp_mean_flux, dr3.phot_bp_mean_flux_error,
-                dr3.phot_rp_mean_flux, dr3.phot_rp_mean_flux_error
-            FROM gaiadr3.gaia_source AS dr3
-            WHERE 1 = CONTAINS(
-                    POINT('ICRS', ra, dec),
-                    BOX('ICRS', {RA}, {DEC}, {RAD}, {RAD})
-                )
-                AND dr3.phot_g_mean_mag <= 19
-                AND dr3.phot_bp_mean_mag >= 5
-                AND dr3.phot_rp_mean_mag >= 5
-                AND (
-                   ( bp_rp >= 4.0 AND ABS(dr3.phot_bp_rp_excess_factor-(1.057572+0.1405537*bp_rp))<(0.0059898 + 8.817481e-12 * POWER(dr3.phot_g_mean_mag,7.618399)) ) OR
-                   ( bp_rp < 0.5 AND ABS(dr3.phot_bp_rp_excess_factor-(1.154360+0.033772*bp_rp+0.32277*bp_rp*bp_rp))<(0.0059898 + 8.817481e-12 * POWER(dr3.phot_g_mean_mag,7.618399)) ) OR
-                   ( bp_rp >= 0.5 AND bp_rp < 4.0 AND ABS(dr3.phot_bp_rp_excess_factor-(1.162004+.011464*bp_rp+0.049255*bp_rp*bp_rp-0.005879*bp_rp*bp_rp*bp_rp))<(0.0059898 + 8.817481e-12 * POWER(dr3.phot_g_mean_mag,7.618399))  )
-                )
-                {color_range}
-            """
-            '''
             #see https://scholar.google.com/scholar_lookup?title=Gaia+Early+Data+Release+3+-+Photometric+content+and+validation&author=Riello+M.+De+Angeli+F.+Evans+D.+W.&journal=A%26A&volume=649&pages=A3&publication_year=2021&issn=0004-6361%2C1432-0746&doi=10.1051%2F0004-6361%2F202039587
             #sction 9.4 for information about filtering with c_star, stddev is estimated using a power-law
 
