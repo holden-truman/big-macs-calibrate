@@ -230,6 +230,7 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
             #https://gea.esac.esa.int/archive/documentation/GEDR3/Data_processing/chap_cu5pho/cu5pho_sec_photProc/cu5pho_ssec_photVal.html
     
             #c_star mean is 0 (the ABS stuff is c_star, the excess factor - parens)
+            #normally mag lim of 19
             query = f"""
             SELECT dr3.ra, dr3.dec, dr3.bp_rp,
                 dr3.phot_g_mean_flux, dr3.phot_g_mean_flux_error,
