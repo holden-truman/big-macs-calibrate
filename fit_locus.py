@@ -254,7 +254,6 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
             '''
             query = f"""
             SELECT dr3.ra, dr3.dec, dr3.bp_rp, 
-                dr3.photo_g_mean_mag,
                 dr3.phot_g_mean_flux, dr3.phot_g_mean_flux_error,
                 dr3.phot_bp_mean_flux, dr3.phot_bp_mean_flux_error,
                 dr3.phot_rp_mean_flux, dr3.phot_rp_mean_flux_error
