@@ -110,6 +110,7 @@ def gaia_query(file, query, EBV, DR):
         gaia_data.remove_column('phot_' + c +'_mean_flux_error')
     ''' 
     
+    '''
     for c in colors:
         ab_mag = Table.Column( name='ab_' + c, data = gaia_data['phot_' + c + '_mean_mag'] )
         mag_err = Table.Column( name = 'phot_'+ c + '_mean_mag_error', data = 2.5 * gaia_data['phot_'+ c +'_mean_flux_error'] / gaia_data['phot_' + c +'_mean_flux'] )
@@ -118,7 +119,17 @@ def gaia_query(file, query, EBV, DR):
         gaia_data.remove_column('phot_' + c +'_mean_mag')
         gaia_data.remove_column('phot_' + c +'_mean_flux')
         gaia_data.remove_column('phot_' + c +'_mean_flux_error')
+    '''
+    for c in colors:
+        ab_mag = Table.Column( name='ab_' + c, data = -2.5*np.log10( gaia_data['phot_' + c + '_mean_flux'] ) + zps_ab[c]  - gaia_data['a_' + c]) #correct for reddening
+        mag_err = Table.Column( name = 'phot_'+ c + '_mean_mag_error', data = 2.5 * gaia_data['phot_'+ c +'_mean_flux_error'] / gaia_data['phot_' + c +'_mean_flux'] )
         
+        gaia_data.add_column(ab_mag)
+        gaia_data.add_column(mag_err)
+        
+        gaia_data.remove_column('phot_' + c +'_mean_flux')
+        gaia_data.remove_column('phot_' + c +'_mean_flux_error')
+
     gaia_data.write(file + '.cut.csv', format='ascii.csv', overwrite=True)
     #gaia_data.write(file + '.csv', format='ascii.csv', overwrite=True)
 
