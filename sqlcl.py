@@ -111,6 +111,9 @@ def gaia_query(file, query, EBV, DR):
     ''' 
     
     for c in colors:
+        mag_err = Table.Column( name = 'phot_'+ c + '_mean_mag_error', data = 2.5 * gaia_data['phot_'+ c +'_mean_flux_error'] / gaia_data['phot_' + c +'_mean_flux'] )
+        gaia_data.add_column(mag_err)
+
         gaia_data.remove_column('phot_' + c +'_mean_flux')
         gaia_data.remove_column('phot_' + c +'_mean_flux_error')
         
