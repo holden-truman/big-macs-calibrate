@@ -1461,7 +1461,7 @@ def fit(table, input_info_unsorted, mag_locus,
 
         print(SeqNr)
         print(SeqNr.shape)
-        exit()
+        #exit()
 
         results[iteration] = dict(zip([a['mag'] for a in input_info],([zps_hold[a['mag']] for a in hold_input_info] + out.tolist())))
         results['ref_mags_' + iteration] = copy(ref_mags)
