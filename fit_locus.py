@@ -408,11 +408,11 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
                     matchedStars += 1
                     for column_name in saveKeys: 
                         hdu_new.data.field(column_name)[match[i][0]] = catalogStars[column_name][i]
-
-            print(hdu_new)
-            print(hdu_new.shape)
-            exit()
             
+            df = hdu_new.data.to_pandas()
+            df.to_csv('test_output.csv', index=False)
+            exit()
+
             ''' require at least five matched stars '''
             if matchedStars > 3:
                 matched = matchedStars 
