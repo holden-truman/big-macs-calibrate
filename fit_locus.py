@@ -408,13 +408,14 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
                     matchedStars += 1
                     for column_name in saveKeys: 
                         hdu_new.data.field(column_name)[match[i][0]] = catalogStars[column_name][i]
-            import pandas as pd
-            from astropy.table import Table
+            
+            if True: #use this to see matches
+                import pandas as pd
+                from astropy.table import Table
 
-            table = Table(hdu_new.data)
-            df = table.to_pandas()
-            df.to_csv('test_output.csv', index=False)
-            exit()
+                table = Table(hdu_new.data)
+                df = table.to_pandas()
+                df.to_csv('cat_and_matches.csv', index=False)
 
             ''' require at least five matched stars '''
             if matchedStars > 3:
