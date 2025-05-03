@@ -1460,6 +1460,7 @@ def fit(table, input_info_unsorted, mag_locus,
                 keep_fitting = False
 
         print(SeqNr)
+        print(SeqNr.shape)
         exit()
 
         results[iteration] = dict(zip([a['mag'] for a in input_info],([zps_hold[a['mag']] for a in hold_input_info] + out.tolist())))
