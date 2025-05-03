@@ -207,7 +207,6 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
         elif survey == 'Gaia3':
             DR = 3 
         if DR == 3:
-            '''
             color_range = f"""
             AND (
                    ( bp_rp >= 4.0 AND ABS(dr3.phot_bp_rp_excess_factor-(1.057572+0.1405537*bp_rp))<(0.0059898 + 8.817481e-12 * POWER(dr3.phot_g_mean_mag,7.618399)) ) OR
@@ -215,7 +214,7 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
                    ( bp_rp >= 0.5 AND bp_rp < 4.0 AND ABS(dr3.phot_bp_rp_excess_factor-(1.162004+.011464*bp_rp+0.049255*bp_rp*bp_rp-0.005879*bp_rp*bp_rp*bp_rp))<(0.0059898 + 8.817481e-12 * POWER(dr3.phot_g_mean_mag,7.618399))  )
                 )
             AND bp_rp >  -0.06 AND bp_rp < 2.5"""
-            '''
+            
 
             #see https://scholar.google.com/scholar_lookup?title=Gaia+Early+Data+Release+3+-+Photometric+content+and+validation&author=Riello+M.+De+Angeli+F.+Evans+D.+W.&journal=A%26A&volume=649&pages=A3&publication_year=2021&issn=0004-6361%2C1432-0746&doi=10.1051%2F0004-6361%2F202039587
             #sction 9.4 for information about filtering with c_star, stddev is estimated using a power-law
@@ -233,15 +232,6 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
                             WHERE 1=CONTAINS( POINT('ICRS',ra,dec), BOX('ICRS'," + str(RA) + "," + str(DEC) + "," + str(RAD) + ", " + str(RAD) + ")) \
                             AND phot_g_mean_mag<=19 AND phot_bp_mean_mag>=5 AND phot_rp_mean_mag>=5 \
                             AND phot_bp_rp_excess_factor > (1.0 + 0.015*bp_rp*bp_rp) AND phot_bp_rp_excess_factor < (1.3 + 0.06*bp_rp*bp_rp) " \
-                            + str(color_range)
-            
-            query = "SELECT ra, dec, bp_rp, \
-                phot_g_mean_flux, phot_g_mean_flux_error,  \
-                            phot_bp_mean_flux, phot_bp_mean_flux_error, \
-                            phot_rp_mean_flux, phot_rp_mean_flux_error \
-                            FROM gaiadr" + str(DR) + ".gaia_source \
-                            WHERE 1=CONTAINS( POINT('ICRS',ra,dec), BOX('ICRS'," + str(RA) + "," + str(DEC) + "," + str(RAD) + ", " + str(RAD) + ")) \
-                            AND phot_g_mean_mag<=19 AND phot_bp_mean_mag>=5 AND phot_rp_mean_mag>=5 " \
                             + str(color_range)
             
         elif DR==3: 
