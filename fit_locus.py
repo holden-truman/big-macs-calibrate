@@ -214,8 +214,12 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
                    ( bp_rp >= 0.5 AND bp_rp < 4.0 AND ABS(dr3.phot_bp_rp_excess_factor-(1.162004+.011464*bp_rp+0.049255*bp_rp*bp_rp-0.005879*bp_rp*bp_rp*bp_rp))<(0.0059898 + 8.817481e-12 * POWER(dr3.phot_g_mean_mag,7.618399))  )
                 )
             AND bp_rp >  -0.06 AND bp_rp < 2.5"""
-
             #color_range = ""
+            quality_range = f""" 
+            AND phot_g_mean_flux_over_error > 50
+            AND phot_bp_mean_flux_over_error > 20
+            AND phot_rp_mean_flux_over_error > 20
+            """
             
 
             #see https://scholar.google.com/scholar_lookup?title=Gaia+Early+Data+Release+3+-+Photometric+content+and+validation&author=Riello+M.+De+Angeli+F.+Evans+D.+W.&journal=A%26A&volume=649&pages=A3&publication_year=2021&issn=0004-6361%2C1432-0746&doi=10.1051%2F0004-6361%2F202039587
@@ -257,6 +261,7 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
                 AND phot_bp_mean_mag >= 5
                 AND phot_rp_mean_mag >= 5
                 {color_range}
+                {quality_range}
             """
             #holden# try again with mag 19 instead of 22 with strict excess_factor filter
             #465 found stars with no c_star filter at mag 22 cut, but bad ZPs ~.45 too big uniformly
