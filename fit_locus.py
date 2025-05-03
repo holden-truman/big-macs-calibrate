@@ -305,7 +305,8 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
                 res = re.split(',',line)
                 for i in range(len(res)): 
                     catalogStars[returned_keys[i]].append(float(res[i]))
-               
+        print(catalogStars)
+        exit()
     elif survey == '2MASS':
         if True or RADIUS > 59:
             RADIUS = 59
@@ -1458,6 +1459,7 @@ def fit(table, input_info_unsorted, mag_locus,
             else:
                 print('NO OUTLYING STARS OR STARS MATCHING BLUE END OF LOCUS, PROCEEDING')
                 keep_fitting = False
+
 
 
         results[iteration] = dict(zip([a['mag'] for a in input_info],([zps_hold[a['mag']] for a in hold_input_info] + out.tolist())))

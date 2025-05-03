@@ -83,15 +83,19 @@ def gaia_query(file, query, EBV, DR):
 
 
     k_g, k_bp, k_rp = 0.0, 0.0, 0.0
+
     for i in range(len(c_terms)):
         k_g += coeffs['kg'][i] * c_terms[i]
         k_bp += coeffs['kbp'][i] * c_terms[i]
         k_rp += coeffs['krp'][i] * c_terms[i]
     
+    
     a_g = Table.Column( name = 'a_g', data = k_g * Av)
     a_bp = Table.Column( name = 'a_bp', data = k_bp * Av)
     a_rp = Table.Column( name = 'a_rp', data = k_rp * Av)
     
+ 
+
     gaia_data.add_column(a_g)
     gaia_data.add_column(a_bp)
     gaia_data.add_column(a_rp)
@@ -110,16 +114,6 @@ def gaia_query(file, query, EBV, DR):
         gaia_data.remove_column('phot_' + c +'_mean_flux_error')
     ''' 
     
-    '''
-    for c in colors:
-        ab_mag = Table.Column( name='ab_' + c, data = gaia_data['phot_' + c + '_mean_mag'] )
-        mag_err = Table.Column( name = 'phot_'+ c + '_mean_mag_error', data = 2.5 * gaia_data['phot_'+ c +'_mean_flux_error'] / gaia_data['phot_' + c +'_mean_flux'] )
-        gaia_data.add_column(mag_err)
-
-        gaia_data.remove_column('phot_' + c +'_mean_mag')
-        gaia_data.remove_column('phot_' + c +'_mean_flux')
-        gaia_data.remove_column('phot_' + c +'_mean_flux_error')
-    '''
     for c in colors:
         ab_mag = Table.Column( name='ab_' + c, data = -2.5*np.log10( gaia_data['phot_' + c + '_mean_flux'] ) + zps_ab[c]  - gaia_data['a_' + c]) #correct for reddening
         mag_err = Table.Column( name = 'phot_'+ c + '_mean_mag_error', data = 2.5 * gaia_data['phot_'+ c +'_mean_flux_error'] / gaia_data['phot_' + c +'_mean_flux'] )
