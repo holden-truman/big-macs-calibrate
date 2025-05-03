@@ -403,6 +403,7 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
                 table = Table(hdu_new.data)
                 df = table.to_pandas()
                 df.to_csv(f"{file}.matches.csv", index=False)
+                exit()
 
             ''' require at least five matched stars '''
             if matchedStars > 3:
