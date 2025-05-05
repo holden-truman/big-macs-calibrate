@@ -220,6 +220,7 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
             AND phot_bp_mean_flux_over_error > 20
             AND phot_rp_mean_flux_over_error > 20
             """
+            quality_range = "" #not sure if I should use this
             
 
             #see https://scholar.google.com/scholar_lookup?title=Gaia+Early+Data+Release+3+-+Photometric+content+and+validation&author=Riello+M.+De+Angeli+F.+Evans+D.+W.&journal=A%26A&volume=649&pages=A3&publication_year=2021&issn=0004-6361%2C1432-0746&doi=10.1051%2F0004-6361%2F202039587
