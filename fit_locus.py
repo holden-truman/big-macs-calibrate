@@ -258,7 +258,7 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
                     POINT('ICRS', ra, dec),
                     BOX('ICRS', {RA}, {DEC}, {RAD}, {RAD})
                 )
-                AND phot_g_mean_mag <= 19
+                AND phot_g_mean_mag <= 21
                 AND phot_bp_mean_mag >= 5
                 AND phot_rp_mean_mag >= 5
                 {color_range}
@@ -673,7 +673,7 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
 
 
     ''' separate into mag ZPs to be held fixed and varied '''
-    info_hold = list(filter(lambda x: x['HOLD_VARY'] == 'HOLD',input_info)) #make sure r and g show up here        
+    info_hold = list(filter(lambda x: x['HOLD_VARY'] == 'HOLD',input_info))   
     info_vary = list(filter(lambda x: x['HOLD_VARY'] == 'VARY',input_info))        
 
     #info_hold.sort(sort_wavelength) 
