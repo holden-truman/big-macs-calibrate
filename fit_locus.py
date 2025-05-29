@@ -258,7 +258,7 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
                     POINT('ICRS', ra, dec),
                     BOX('ICRS', {RA}, {DEC}, {RAD}, {RAD})
                 )
-                AND phot_g_mean_mag <= 21
+                AND phot_g_mean_mag <= 19
                 AND phot_bp_mean_mag >= 5
                 AND phot_rp_mean_mag >= 5
                 {color_range}
