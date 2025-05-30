@@ -577,7 +577,7 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
             output_directory = './'
 
     if plots_directory is None: 
-        plots_directory = output_directory + '/PLOTS/'
+        #plots_directory = output_directory + '/PLOTS/'
 
     reload(utilities)
 
@@ -764,8 +764,9 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
         return zps_dict_all, zps_dict_all_err, cal_type
 
     ''' clear out plotting directory '''
-    import os        
-    os.system('rm ' + plots_directory + '/qc_*png')                                                    
+    import os     
+    if (plots_directory is not None):   
+        os.system('rm ' + plots_directory + '/qc_*png')                                                    
 
     ''' first calibrate redder filters '''
     results, ref_mags, SeqNr = fit(table, red_input_info, mag_locus, min_err=min_err, end_of_locus_reject=end_of_locus_reject, plot_iteration_increment=plot_iteration_increment, bootstrap=True, bootstrap_num=bootstrap_num, plotdir=plots_directory, pre_zps=None, number_of_plots=number_of_plots)
@@ -1115,7 +1116,7 @@ def fit(table, input_info_unsorted, mag_locus,
                 print('iteration', itr)
                 
                 #holden# toggle plots
-                if iteration == 'full' and (itr % plot_iteration_increment == 0) and savefig is not None:
+                if iteration == 'full' and (itr % plot_iteration_increment == 0) and plots_directory is not None:
                     plot_progress(pars,stat_tot,savefig)
                 itr += 1
 
