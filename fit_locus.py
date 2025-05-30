@@ -225,9 +225,9 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
 
             #see https://scholar.google.com/scholar_lookup?title=Gaia+Early+Data+Release+3+-+Photometric+content+and+validation&author=Riello+M.+De+Angeli+F.+Evans+D.+W.&journal=A%26A&volume=649&pages=A3&publication_year=2021&issn=0004-6361%2C1432-0746&doi=10.1051%2F0004-6361%2F202039587
             #sction 9.4 for information about filtering with c_star, stddev is estimated using a power-law
-        else:
+        else: #DR2
             #color_range = "AND bp_rp >  0.6 AND bp_rp < 1.6"
-            color_range = ""
+            color_range = "AND phot_bp_rp_excess_factor > (1.0 + 0.015*bp_rp*bp_rp) AND phot_bp_rp_excess_factor < (1.3 + 0.06*bp_rp*bp_rp)"
         
         RAD = RADIUS / 60
         if DR == 2:
@@ -237,8 +237,7 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
                             phot_rp_mean_flux, phot_rp_mean_flux_error \
                             FROM gaiadr" + str(DR) + ".gaia_source \
                             WHERE 1=CONTAINS( POINT('ICRS',ra,dec), BOX('ICRS'," + str(RA) + "," + str(DEC) + "," + str(RAD) + ", " + str(RAD) + ")) \
-                            AND phot_g_mean_mag<=19 AND phot_bp_mean_mag>=5 AND phot_rp_mean_mag>=5 \
-                            AND phot_bp_rp_excess_factor > (1.0 + 0.015*bp_rp*bp_rp) AND phot_bp_rp_excess_factor < (1.3 + 0.06*bp_rp*bp_rp) " \
+                            AND phot_g_mean_mag<=19 AND phot_bp_mean_mag>=5 AND phot_rp_mean_mag>=5 " \
                             + str(color_range)
             
         elif DR==3: 
