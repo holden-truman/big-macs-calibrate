@@ -231,7 +231,7 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
         
         RAD = RADIUS / 60
         if DR == 2:
-            query = "SELECT ra, dec, bp_rp, \
+            query = "SELECT source_id, ra, dec, bp_rp, \
                 phot_g_mean_flux, phot_g_mean_flux_error,  \
                             phot_bp_mean_flux, phot_bp_mean_flux_error, \
                             phot_rp_mean_flux, phot_rp_mean_flux_error \
@@ -249,7 +249,7 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
             #c_star mean is 0 (the ABS stuff is c_star, the excess factor - parens)
             #normally mag lim of 19
             query = f"""
-            SELECT dr3.ra, dr3.dec, dr3.bp_rp,
+            SELECT dr3.source_id, dr3.ra, dr3.dec, dr3.bp_rp,
                 dr3.phot_g_mean_flux, dr3.phot_g_mean_flux_error,
                 dr3.phot_bp_mean_flux, dr3.phot_bp_mean_flux_error,
                 dr3.phot_rp_mean_flux, dr3.phot_rp_mean_flux_error
@@ -278,6 +278,8 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
 
         with open(file + '.cut.csv') as ref_cat:
             lines = ref_cat.readlines()
+        
+        quit()
         print(len(lines) - 1, 'STAR(S) FOUND')
         
         returned_keys = re.split(r'\,',lines[0][:-1])
