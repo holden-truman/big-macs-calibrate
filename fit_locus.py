@@ -279,7 +279,6 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
         with open(file + '.cut.csv') as ref_cat:
             lines = ref_cat.readlines()
         
-        quit()
         print(len(lines) - 1, 'STAR(S) FOUND')
         
         returned_keys = re.split(r'\,',lines[0][:-1])
