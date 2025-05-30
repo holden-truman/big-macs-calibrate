@@ -578,6 +578,7 @@ def run(file,columns_description,output_directory=None,plots_directory=None,exte
 
     if plots_directory is None: 
         #plots_directory = output_directory + '/PLOTS/'
+        pass
 
     reload(utilities)
 
