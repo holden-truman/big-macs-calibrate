@@ -229,7 +229,7 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
             #color_range = "AND bp_rp >  0.6 AND bp_rp < 1.6"
             color_range = "AND phot_bp_rp_excess_factor > (1.0 + 0.015*bp_rp*bp_rp) AND phot_bp_rp_excess_factor < (1.3 + 0.06*bp_rp*bp_rp)"
         
-        color_range = ""
+        #color_range = "" #uncomment to get rid of all 'cuts' - kind of
 
         RAD = RADIUS / 60
         if DR == 2:
