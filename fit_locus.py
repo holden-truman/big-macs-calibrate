@@ -1117,7 +1117,7 @@ def fit(table, input_info_unsorted, mag_locus,
                 print('iteration', itr)
                 
                 #holden# toggle plots
-                if iteration == 'full' and (itr % plot_iteration_increment == 0) and plots_directory is not None:
+                if iteration == 'full' and (itr % plot_iteration_increment == 0) and plotdir is not None:
                     plot_progress(pars,stat_tot,savefig)
                 itr += 1
 
