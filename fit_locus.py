@@ -162,7 +162,7 @@ def get_survey_stars(file, inputcat, racol, deccol, necessary_columns, EBV, surv
             pan_bands += c
         print("Query PanSTARRS " + pan_bands + " for reference")
         print(cmd)
-        
+        #t
         import sqlcl
 
         ref_cat_name = sqlcl.pan_query(file, cmd, RA, DEC)
